@@ -6,6 +6,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class MainJFrame extends JFrame {
+    private JMenu MelvinLeBg;
     private Container frameContainer;
     private WelcomeJPanel welcomeJPanel;
     private JMenuBar menuBar;
