@@ -18,7 +18,7 @@ public class MainJFrame extends JFrame {
     public MainJFrame() {
         // fenetre
         super("Welcome");
-        setBounds(100,100,1000,750);
+        setBounds(100,50,1000,750);
 
         // Container
         frameContainer = this.getContentPane();
@@ -63,6 +63,8 @@ public class MainJFrame extends JFrame {
             }
         });
         setVisible(true);
+
+        new FormJFrame();
     }
 
     private class Research1Listener implements ActionListener {
@@ -75,4 +77,5 @@ public class MainJFrame extends JFrame {
             setVisible(true);
         }
     }
+
 }
