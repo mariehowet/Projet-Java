@@ -2,16 +2,18 @@ package View;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class MainJFrame extends JFrame {
-    private JMenu MelvinLeBg;
     private Container frameContainer;
     private WelcomeJPanel welcomeJPanel;
     private JMenuBar menuBar;
-    private JMenu menu1, menu2, menu3;
-    private JMenuItem item1, item2, item3;
+    private JMenu researchMenu, findFlightMenu, monitoringFlightMenu;
+    private JMenuItem research1, research2, research3;
+    private Research1JPanel research1JPanel;
 
     public MainJFrame() {
         // fenetre
@@ -31,20 +33,27 @@ public class MainJFrame extends JFrame {
         setJMenuBar(menuBar);
 
         // Options menu
-        menu1 = new JMenu("Menu 1");
-        menu2 = new JMenu("Menu 2");
-        menu3 = new JMenu("Menu 3");
-        menuBar.add(menu1);
-        menuBar.add(menu2);
-        menuBar.add(menu3);
+        researchMenu = new JMenu("Recherches");
+        findFlightMenu = new JMenu("Trouver un vol");
+        monitoringFlightMenu = new JMenu("Suivi d'un vol");
 
-        // Items menu 1
-        item1 = new JMenuItem("Item 1");
-        item2 = new JMenuItem("Item 1");
-        item3 = new JMenuItem("Item 1");
-        menu1.add(item1);
-        menu1.add(item2);
-        menu1.add(item3);
+        menuBar.add(researchMenu);
+        menuBar.add(findFlightMenu);
+        menuBar.add(monitoringFlightMenu);
+
+        // Item : recherche 1
+        research1 = new JMenuItem("Recherche 1");
+        research1.addActionListener(new Research1Listener());
+        researchMenu.add(research1);
+
+        // Items menu recherches
+
+        research2 = new JMenuItem("Recherche 2");
+        research3 = new JMenuItem("Recherche 3");
+
+        researchMenu.add(research2);
+        researchMenu.add(research3);
+
 
         // Affichage
         this.addWindowListener(new WindowAdapter() {
@@ -54,5 +63,16 @@ public class MainJFrame extends JFrame {
             }
         });
         setVisible(true);
+    }
+
+    private class Research1Listener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            frameContainer.removeAll();
+            research1JPanel = new Research1JPanel(frameContainer);
+            frameContainer.add(research1JPanel, BorderLayout.CENTER);
+            setVisible(true);
+        }
     }
 }
