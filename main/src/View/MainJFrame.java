@@ -13,7 +13,7 @@ public class MainJFrame extends JFrame {
     private JMenuBar menuBar;
     private JMenu researchMenu, findFlightMenu, monitoringFlightMenu;
     private JMenuItem research1, research2, research3;
-    private Research1JPanel research1JPanel;
+    private ResearchJPanel research1JPanel,research2JPanel;
 
     public MainJFrame() {
         // fenetre
@@ -43,12 +43,18 @@ public class MainJFrame extends JFrame {
 
         // Item : recherche 1
         research1 = new JMenuItem("Recherche 1");
-        research1.addActionListener(new Research1Listener());
+        research1JPanel = new Research1JPanel(frameContainer);
+        research1.addActionListener(new ResearchListener(research1JPanel));
         researchMenu.add(research1);
+
+        // Item : recherche 2
+        research2 = new JMenuItem("Recherche 2");
+        research2JPanel = new Research2JPanel(frameContainer);
+        research2.addActionListener(new ResearchListener(research2JPanel));
+        researchMenu.add(research2);
 
         // Items menu recherches
 
-        research2 = new JMenuItem("Recherche 2");
         research3 = new JMenuItem("Recherche 3");
 
         researchMenu.add(research2);
@@ -67,13 +73,15 @@ public class MainJFrame extends JFrame {
         new FormJFrame();
     }
 
-    private class Research1Listener implements ActionListener {
-
+    private class ResearchListener implements ActionListener {
+        ResearchJPanel researchJPanel;
+        public ResearchListener(ResearchJPanel researchJPanel) {
+            this.researchJPanel = researchJPanel;
+        }
         @Override
         public void actionPerformed(ActionEvent e) {
             frameContainer.removeAll();
-            research1JPanel = new Research1JPanel(frameContainer);
-            frameContainer.add(research1JPanel, BorderLayout.CENTER);
+            frameContainer.add(researchJPanel, BorderLayout.CENTER);
             setVisible(true);
         }
     }
