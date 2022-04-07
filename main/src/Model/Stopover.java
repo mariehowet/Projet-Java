@@ -1,4 +1,4 @@
-package Data;
+package Model;
 
 public class Stopover {
     private Flight flight;

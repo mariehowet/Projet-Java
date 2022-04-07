@@ -1,4 +1,4 @@
-package Data;
+package Model;
 
 import java.util.HashSet;
 
