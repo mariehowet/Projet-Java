@@ -13,7 +13,6 @@ public class MainJFrame extends JFrame {
     private JMenuBar menuBar;
     private JMenu researchMenu, findFlightMenu, monitoringFlightMenu;
     private JMenuItem research1, research2, research3;
-    private Research1JPanel research1JPanel;
 
     public MainJFrame() {
         // fenetre
@@ -43,17 +42,19 @@ public class MainJFrame extends JFrame {
 
         // Item : recherche 1
         research1 = new JMenuItem("Recherche 1");
-        research1.addActionListener(new Research1Listener());
+        research1.addActionListener(new ResearchListener(1));
         researchMenu.add(research1);
 
-        // Items menu recherches
-
+        // Item : recherche 2
         research2 = new JMenuItem("Recherche 2");
+        research2.addActionListener(new ResearchListener( 2));
+        researchMenu.add(research2);
+
+        // Item : recherche 3
         research3 = new JMenuItem("Recherche 3");
 
-        researchMenu.add(research2);
+        research3.addActionListener(new ResearchListener(3));
         researchMenu.add(research3);
-
 
         // Affichage
         this.addWindowListener(new WindowAdapter() {
@@ -67,13 +68,22 @@ public class MainJFrame extends JFrame {
         new FormJFrame();
     }
 
-    private class Research1Listener implements ActionListener {
-
+    private class ResearchListener implements ActionListener {
+        int  numPanel;
+        public ResearchListener(int numPanel) {
+            this.numPanel = numPanel;
+        }
         @Override
         public void actionPerformed(ActionEvent e) {
             frameContainer.removeAll();
-            research1JPanel = new Research1JPanel(frameContainer);
-            frameContainer.add(research1JPanel, BorderLayout.CENTER);
+            switch (numPanel) {
+                case 1 :  frameContainer.add(new Research1JPanel(frameContainer), BorderLayout.CENTER);
+                break;
+                case 2 :  frameContainer.add(new Research2JPanel(frameContainer), BorderLayout.CENTER);
+                    break;
+                case 3 :  frameContainer.add(new Research3JPanel(frameContainer), BorderLayout.CENTER);
+                    break;
+            }
             setVisible(true);
         }
     }

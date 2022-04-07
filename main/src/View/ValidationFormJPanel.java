@@ -1,11 +1,10 @@
 package View;
 
 import javax.swing.*;
-import java.awt.*;
 
-public class ValidationFormPanel extends JPanel {
+public class ValidationFormJPanel extends JPanel {
     JButton validation;
-    public ValidationFormPanel() {
+    public ValidationFormJPanel() {
         validation = new JButton("Valider");
         add(validation);
     }
