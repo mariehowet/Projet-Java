@@ -26,7 +26,7 @@ public class Research3JPanel extends ResearchJPanel{
 
         // Panel d'affichage
         //  !!! BD !!!
-        String [][] data = new String[][]{
+        String [][] data = new String[][]{ // devra etre du JTable grace à la BD
                 { "ID Booking" , "Date Booking", "Numéro vol", 	"Aéroport départ", 	"Aéroport arrivée", " Date départ", "Type Siège", "Prix Siège",	"Prix Vol",	"Prix Total"},
                 { "ID Booking" , "Date Booking", "Numéro vol", 	"Aéroport départ", 	"Aéroport arrivée", " Date départ", "Type Siège", "Prix Siège",	"Prix Vol",	"Prix Total"},
                 { "ID Booking" , "Date Booking", "Numéro vol", 	"Aéroport départ", 	"Aéroport arrivée", " Date départ", "Type Siège", "Prix Siège",	"Prix Vol",	"Prix Total"},
