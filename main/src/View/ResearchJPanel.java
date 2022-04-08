@@ -33,6 +33,7 @@ public class ResearchJPanel extends JPanel {
     }
     private class ResearchListener implements ActionListener {
         JPanel jpanel;
+
         public ResearchListener(JPanel jpanel) {
             this.jpanel = jpanel;
         }
@@ -41,6 +42,7 @@ public class ResearchJPanel extends JPanel {
             frameContainer.revalidate();
             frameContainer.repaint();
             jpanel.add(answersJPanel, BorderLayout.CENTER);
+
         }
     }
 }

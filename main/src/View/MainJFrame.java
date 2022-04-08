@@ -59,7 +59,7 @@ public class MainJFrame extends JFrame {
 
         // Find Flight
         menuIemFlightMenu = new JMenuItem("Aller à la recherche");
-        menuIemFlightMenu.addActionListener(new FindFlightListener());
+        menuIemFlightMenu.addActionListener(new ResearchListener(4));
         findFlightMenu.add(menuIemFlightMenu);
 
         // Affichage
@@ -89,20 +89,12 @@ public class MainJFrame extends JFrame {
                     break;
                 case 3 :  frameContainer.add(new Research3JPanel(frameContainer), BorderLayout.CENTER);
                     break;
+                case 4 : frameContainer.add(new FindFlight(frameContainer), BorderLayout.CENTER);
+                    break;
             }
             setVisible(true);
 
 
-        }
-    }
-
-    private class FindFlightListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            frameContainer.removeAll();
-            frameContainer.add(new FindFlight(frameContainer), BorderLayout.CENTER);
-            setVisible(true);
         }
     }
 

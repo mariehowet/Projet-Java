@@ -15,10 +15,11 @@ public class WelcomeJPanel extends JPanel {
 
         this.add(label);
         JPanel test = new JPanel();
-        JLabel image = new JLabel(new ImageIcon("jetbrains://idea/navigate/reference?project=Projet-GitHub&path=Images/plane2.jpg"));
-        image.setBounds(0,0,710,444);
+        JLabel image = new JLabel(new ImageIcon("D:\\IESN informatique de gestion\\IG 2\\Q2\\PPOO avancé\\Projet\\Projet-GitHub\\main\\src\\Images\\plane2.jpg"));
+        image.setSize(710,444);
         test.add(image);
         add(test);
+
 
     }
 
