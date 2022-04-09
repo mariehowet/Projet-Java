@@ -7,14 +7,15 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+
 public class MainJFrame extends JFrame {
     private Container frameContainer;
     private WelcomeJPanel welcomeJPanel;
     private JMenuBar menuBar;
     private JMenu researchMenu, findFlightMenu, monitoringFlightMenu;
-    private JMenuItem research1, research2, research3;
+    private JMenuItem research1, research2, research3, menuIemFlightMenu;
 
-    public MainJFrame() {
+    public MainJFrame(){
         // fenetre
         super("Welcome");
         setBounds(100,50,1000,750);
@@ -56,6 +57,11 @@ public class MainJFrame extends JFrame {
         research3.addActionListener(new ResearchListener(3));
         researchMenu.add(research3);
 
+        // Find Flight
+        menuIemFlightMenu = new JMenuItem("Aller à la recherche");
+        menuIemFlightMenu.addActionListener(new ResearchListener(4));
+        findFlightMenu.add(menuIemFlightMenu);
+
         // Affichage
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -83,8 +89,12 @@ public class MainJFrame extends JFrame {
                     break;
                 case 3 :  frameContainer.add(new Research3JPanel(frameContainer), BorderLayout.CENTER);
                     break;
+                case 4 : frameContainer.add(new FindFlight(frameContainer), BorderLayout.CENTER);
+                    break;
             }
             setVisible(true);
+
+
         }
     }
 
