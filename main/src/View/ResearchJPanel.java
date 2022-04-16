@@ -25,15 +25,14 @@ public class ResearchJPanel extends JPanel {
         researchPanel.setLayout(new FlowLayout());
         researchPanel.setVisible(true);
 
-
         // Affichage
         this.setBounds(100,100,1000,750);
         setLayout(new BorderLayout());
         setVisible(true);
     }
+
     private class ResearchListener implements ActionListener {
         JPanel jpanel;
-
         public ResearchListener(JPanel jpanel) {
             this.jpanel = jpanel;
         }
@@ -42,7 +41,6 @@ public class ResearchJPanel extends JPanel {
             frameContainer.revalidate();
             frameContainer.repaint();
             jpanel.add(answersJPanel, BorderLayout.CENTER);
-
         }
     }
 }

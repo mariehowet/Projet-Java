@@ -1,5 +1,7 @@
 package View;
 
+import sun.awt.windows.ThemeReader;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,12 +15,12 @@ public class MainJFrame extends JFrame {
     private WelcomeJPanel welcomeJPanel;
     private JMenuBar menuBar;
     private JMenu researchMenu, findFlightMenu, monitoringFlightMenu;
-    private JMenuItem research1, research2, research3, menuIemFlightMenu;
+    private JMenuItem research1, research2, research3, menuIemFlightMenu, monitoringFlight;
 
     public MainJFrame(){
         // fenetre
         super("Welcome");
-        setBounds(100,50,1000,750);
+        setBounds(0,0,1000,750);
 
         // Container
         frameContainer = this.getContentPane();
@@ -53,7 +55,6 @@ public class MainJFrame extends JFrame {
 
         // Item : recherche 3
         research3 = new JMenuItem("Recherche 3");
-
         research3.addActionListener(new ResearchListener(3));
         researchMenu.add(research3);
 
@@ -61,6 +62,11 @@ public class MainJFrame extends JFrame {
         menuIemFlightMenu = new JMenuItem("Aller à la recherche");
         menuIemFlightMenu.addActionListener(new ResearchListener(4));
         findFlightMenu.add(menuIemFlightMenu);
+
+        // Monitoring
+        monitoringFlight = new JMenuItem(" Suivez votre vol en direct !");
+        monitoringFlight.addActionListener(new ThreadListener());
+        monitoringFlightMenu.add(monitoringFlight);
 
         // Affichage
         this.addWindowListener(new WindowAdapter() {
@@ -75,27 +81,38 @@ public class MainJFrame extends JFrame {
     }
 
     private class ResearchListener implements ActionListener {
-        int  numPanel;
+        int numPanel;
+
         public ResearchListener(int numPanel) {
             this.numPanel = numPanel;
         }
+
         @Override
         public void actionPerformed(ActionEvent e) {
             frameContainer.removeAll();
             switch (numPanel) {
-                case 1 :  frameContainer.add(new Research1JPanel(frameContainer), BorderLayout.CENTER);
-                break;
-                case 2 :  frameContainer.add(new Research2JPanel(frameContainer), BorderLayout.CENTER);
+                case 1:
+                    frameContainer.add(new Research1JPanel(frameContainer), BorderLayout.CENTER);
                     break;
-                case 3 :  frameContainer.add(new Research3JPanel(frameContainer), BorderLayout.CENTER);
+                case 2:
+                    frameContainer.add(new Research2JPanel(frameContainer), BorderLayout.CENTER);
                     break;
-                case 4 : frameContainer.add(new FindFlight(frameContainer), BorderLayout.CENTER);
+                case 3:
+                    frameContainer.add(new Research3JPanel(frameContainer), BorderLayout.CENTER);
+                    break;
+                case 4:
+                    frameContainer.add(new FindFlight(frameContainer), BorderLayout.CENTER);
                     break;
             }
             setVisible(true);
-
-
         }
     }
-
+    private class ThreadListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+                new ThreadJFrame();
+        }
+    }
 }
+
+

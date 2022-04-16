@@ -47,8 +47,6 @@ public class Research3JPanel extends ResearchJPanel{
         String [] columnNames = new String[]{ "ID Booking" , "Date Booking", "Numéro vol", 	"Aéroport départ", 	"Aéroport arrivée", " Date départ", "Type Siège", "Prix Siège",	"Prix Vol",	"Prix Total"} ;
         answersJPanel = new AnswersJPanel(data, columnNames);
 
-
-
     }
 
     private class ResearchListener implements ActionListener {
