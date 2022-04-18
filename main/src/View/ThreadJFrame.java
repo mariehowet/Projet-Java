@@ -17,7 +17,7 @@ public class ThreadJFrame extends JFrame {
     public ThreadJFrame(){
         // fenetre
         super("Suivi d'un vol");
-        setBounds(200,200,1000,750);
+        setBounds(300,0,1000,1000);
 
         frameContainer = this.getContentPane();
         frameContainer.setLayout(new BorderLayout());
