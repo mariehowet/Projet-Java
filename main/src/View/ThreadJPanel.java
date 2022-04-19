@@ -1,11 +1,8 @@
 package View;
 
-import com.sun.org.apache.xml.internal.security.utils.IgnoreAllErrorHandler;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.awt.image.WritableRaster;
+
 
 public class ThreadJPanel extends JPanel {
     private JLabel imageLabel, iconLabel;
