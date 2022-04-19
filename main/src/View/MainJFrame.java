@@ -1,7 +1,5 @@
 package View;
 
-import sun.awt.windows.ThemeReader;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

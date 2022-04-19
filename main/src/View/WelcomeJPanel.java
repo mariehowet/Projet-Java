@@ -15,7 +15,7 @@ public class WelcomeJPanel extends JPanel {
 
         this.add(label);
         JPanel test = new JPanel();
-        JLabel image = new JLabel(new ImageIcon("D:\\PRO\\Projet-Java\\main\\src\\Images\\plane2.jpg"));
+        JLabel image = new JLabel(new ImageIcon("D:\\IESN informatique de gestion\\IG 2\\Q2\\PPOO avancé\\Projet\\Projet-GitHub\\main\\src\\Images\\plane2.jpg"));
         image.setSize(710,444);
         test.add(image);
         add(test);

@@ -9,7 +9,7 @@ public class SingletonConnexion {
 
     public static Connection getInstance() throws SQLException {
         if (uniqueConnexion == null) {
-            uniqueConnexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "password") ;
+            uniqueConnexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/marvineairline", "root", "root") ;
         }
         return uniqueConnexion;
     }
