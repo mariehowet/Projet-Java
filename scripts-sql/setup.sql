@@ -5,13 +5,12 @@ USE marvinairline;
 CREATE TABLE `airplane` (
                             `id` int NOT NULL,
                             `airplane_type` varchar(45) NOT NULL,
-                            `nb_seats` int NOT NULL,
                             PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 CREATE TABLE `seat_type` (
                              `name` varchar(20) NOT NULL,
-                             `additional_percent` decimal(4,1) NOT NULL,
+                             `additional_percent` decimal(3,2) NOT NULL,
                              PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
