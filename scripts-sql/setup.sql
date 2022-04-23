@@ -36,7 +36,7 @@ CREATE TABLE `locality` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 CREATE TABLE `airport` (
-                           `code` INT NOT NULL,
+                           `code` VARCHAR(6) NOT NULL,
                            `name` VARCHAR(45) NOT NULL,
                            `city` VARCHAR(45) NOT NULL,
                            `post_code` VARCHAR(5) NOT NULL,
@@ -53,8 +53,8 @@ CREATE TABLE `flight` (
                           `expected_arrival_date` DATE NOT NULL,
                           `expected_arrival_hour` TIME NOT NULL,
                           `price` DECIMAL(7,2) NOT NULL,
-                          `departure_airport_code` INT NOT NULL,
-                          `arrival_airport_code` INT NOT NULL,
+                          `departure_airport_code` VARCHAR(6) NOT NULL,
+                          `arrival_airport_code` VARCHAR(6) NOT NULL,
                           `airplane_id` INT NOT NULL,
                           PRIMARY KEY (`id`),
                           -- KEY `departure_airport_idx` (`departure_airport_code`),
@@ -67,7 +67,7 @@ CREATE TABLE `flight` (
 
 CREATE TABLE `stopover` (
                             `flight_id` INT NOT NULL,
-                            `airport_code` INT NOT NULL,
+                            `airport_code` VARCHAR(6) NOT NULL,
                             `duration` INT NOT NULL,
                             PRIMARY KEY (`flight_id`,`airport_code`),
                            -- KEY `airport_stopover_idx` (`airport_code`),
@@ -124,8 +124,235 @@ CREATE TABLE `booking` (
                            CONSTRAINT `seat_booking_fk` FOREIGN KEY (`seat_id`) REFERENCES `seat_booked` (`seat`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
--- mettre insert
+-- ----------------- airplane---------------
+INSERT INTO airplane
+VALUES (1, 'AIRBUS A380');
+
+INSERT INTO airplane
+VALUES (2, 'BOEING 707');
+
+-- ----------------- seattype---------------
+
+INSERT INTO seat_type
+VALUES ('Classe économique', 30);
+
+INSERT INTO seat_type
+VALUES ('Classe business', 100);
+
+INSERT INTO seat_type
+VALUES ('Première classe', 200);
+-- ----------------- seat---------------
+
+INSERT INTO seat
+VALUES (111, 1, 'A', 1,'Première classe');
+
+INSERT INTO seat
+VALUES (112, 1, 'B', 1,'Première classe');
+
+INSERT INTO seat
+VALUES (113, 1, 'C',1,'Première classe');
+
+INSERT INTO seat
+VALUES (114, 1, 'D',1,'Première classe');
+
+INSERT INTO seat
+VALUES (115, 1, 'E',1,'Première classe');
+
+INSERT INTO seat
+VALUES (116, 1, 'F',1,'Première classe');
+
+INSERT INTO seat
+VALUES (121, 2, 'A', 1,'Classe business');
+
+INSERT INTO seat
+VALUES (122, 2, 'B', 1,'Classe business');
+
+INSERT INTO seat
+VALUES (123, 2, 'C', 1,'Classe business');
+
+INSERT INTO seat
+VALUES (124, 2, 'D', 1,'Classe business');
+
+INSERT INTO seat
+VALUES (125, 2, 'E', 1,'Classe business');
+
+INSERT INTO seat
+VALUES (126, 2, 'F', 1,'Classe business');
+
+INSERT INTO seat
+VALUES (131, 3, 'A', 1,'Classe économique');
+
+INSERT INTO seat
+VALUES (132, 3, 'B', 1,'Classe économique');
+
+INSERT INTO seat
+VALUES (133, 3, 'C', 1,'Classe économique');
+
+INSERT INTO seat
+VALUES (134, 3, 'D', 1,'Classe économique');
+
+INSERT INTO seat
+VALUES (135, 3, 'E', 1,'Classe économique');
+
+INSERT INTO seat
+VALUES (136, 3, 'F', 1,'Classe économique');
+
+INSERT INTO seat
+VALUES (211, 1, 'A', 2,'Première classe');
+
+INSERT INTO seat
+VALUES (212, 1, 'B', 2,'Première classe');
+
+INSERT INTO seat
+VALUES (213, 1, 'C',2,'Première classe');
+
+INSERT INTO seat
+VALUES (214, 1, 'D',2,'Première classe');
+
+INSERT INTO seat
+VALUES (215, 1, 'E',2,'Première classe');
+
+INSERT INTO seat
+VALUES (216, 1, 'F',2,'Première classe');
+
+INSERT INTO seat
+VALUES (221, 2, 'A', 2,'Classe business');
+
+INSERT INTO seat
+VALUES (222, 2, 'B', 2,'Classe business');
+
+INSERT INTO seat
+VALUES (223, 2, 'C', 2,'Classe business');
+
+INSERT INTO seat
+VALUES (224, 2, 'D', 2,'Classe business');
+
+INSERT INTO seat
+VALUES (225, 2, 'E', 2,'Classe business');
+
+INSERT INTO seat
+VALUES (226, 2, 'F', 2,'Classe business');
+
+INSERT INTO seat
+VALUES (231, 3, 'A', 2,'Classe économique');
+
+INSERT INTO seat
+VALUES (232, 3, 'B', 2,'Classe économique');
+
+INSERT INTO seat
+VALUES (233, 3, 'C', 2,'Classe économique');
+
+INSERT INTO seat
+VALUES (234, 3, 'D', 2,'Classe économique');
+
+INSERT INTO seat
+VALUES (235, 3, 'E', 2,'Classe économique');
+
+INSERT INTO seat
+VALUES (236, 3, 'F', 2,'Classe économique');
+
+-- ----------------- locality ---------------
+INSERT INTO locality
+VALUES ('Bruxelles', '1000', 'Belgique');
+
+INSERT INTO locality
+VALUES ('Charleroi', '6000', 'Belgique');
+
+INSERT INTO locality
+VALUES ('Paris', '75000', 'France');
+
+INSERT INTO locality
+VALUES ('Marseille', '13000', 'France');
+
+INSERT INTO locality
+VALUES ('Paris', '75000', 'France');
+
+INSERT INTO locality
+VALUES ('Londres', '250 329', 'Royaume-Uni');
+
+INSERT INTO locality
+VALUES ('Amsterdam', '1109', 'Pays-Bas');
+
+INSERT INTO locality
+VALUES ('Madrid', '28042', 'Espagne');
+
+INSERT INTO locality
+VALUES ('New York', '10001', 'Etats-Unis');
+
+INSERT INTO locality
+VALUES ('Los Angeles', '90210', 'Etats-Unis');
+
+INSERT INTO locality
+VALUES ('Namur', '5000', 'Belgique');
+
+-- ----------------- airport ---------------
+INSERT INTO airport
+VALUES('BXL','Bruxelles Airport', 'Bruxelles', '1000', 'Belgique');
+
+INSERT INTO airport
+VALUES('CRL','Charleroi Airport', 'Charleroi', '6000', 'Belgique');
+
+INSERT INTO airport
+VALUES('PRS_CG','Paris Charles de Gaulle Airport','Paris', '75000', 'France');
+
+INSERT INTO airport
+VALUES('PRS_OR','Paris Orly Airport', 'Paris', '75000', 'France');
+
+INSERT INTO airport
+VALUES('MRS','Marseille Airport', 'Marseille', '13000', 'France');
+
+INSERT INTO airport
+VALUES('LDN-HT','Londres Heatrow Airport', 'Londres', '250 329', 'Royaume-Uni');
+
+INSERT INTO airport
+VALUES('LDN-GW','Londres Gatwick Airport', 'Londres', '250 329', 'Royaume-Uni');
+
+INSERT INTO airport
+VALUES('ADM','Amsterdam Airport Schiphol', 'Amsterdam', '1109', 'Pays-Bas');
+
+INSERT INTO airport
+VALUES('MDD','Madrid Barajas Airport', 'Madrid', '28042', 'Espagne');
+
+INSERT INTO airport
+VALUES('NY-JFK','JFK International Airport', 'New York', '10001', 'Etats-Unis');
+
+INSERT INTO airport
+VALUES('NY-NWK',' Newark International Airport', 'New York', '10001', 'Etats-Unis');
+
+INSERT INTO airport
+VALUES('LAX','Los Angeles International Airport', 'Los Angeles', '90210', 'Etats-Unis');
+
+-- ------------------------Passenger--------------------------------
+INSERT INTO passenger
+VALUES('MELPAR', 'Parache', 'Melvin',null, CONVERT(birth_date, '01-01-2000', 103), 'm', 'mp@gmail.com','0478955465', 'Rue du truc, 10', 'Namur', '5000', 'Belgique');
+
+INSERT INTO passenger
+VALUES('MARHOW ', 'Howet', 'Marie',null, CONVERT(birth_date, '01-01-2000', 103), 'f', 'mh@gmail.com','0478955465', 'Rue du truc, 10', 'Namur', '5000', 'Belgique');
 
 
+INSERT INTO passenger
+VALUES('CHALIB', 'Libert', 'Charlotte',null, CONVERT(birth_date, '01-01-2000', 103), 'f', 'cl@gmail.com','0478955465', 'Rue du truc, 10', 'Namur', '5000', 'Belgique');
 
+
+INSERT INTO passenger
+VALUES('SARLOU', 'Louis', 'Sarah',null, CONVERT(birth_date, '01-01-2000', 103), 'f', 'sl@gmail.com','0478955465', 'Rue du truc, 10', 'Namur', '5000', 'Belgique');
+
+
+INSERT INTO passenger
+VALUES('STESER', 'Sermeus', 'Steven',null, CONVERT(birth_date, '01-01-2000', 103), 'm', 'ss@gmail.com','0478955465', 'Rue du truc, 10', 'Namur', '5000', 'Belgique');
+
+INSERT INTO passenger
+VALUES('ELINYS', 'Nyssens', 'Elisabeth',null, CONVERT(birth_date, '01-01-2000', 103), 'f', 'en@gmail.com','0478955465', 'Rue du truc, 10', 'Namur', '5000', 'Belgique');
+
+
+INSERT INTO passenger
+VALUES('GUITUR', 'Turpin', 'Guillaume',null, CONVERT(birth_date, '01-01-2000', 103), 'm', 'gt@gmail.com','0478955465', 'Rue du truc, 10', 'Namur', '5000', 'Belgique');
+
+
+INSERT INTO passenger
+VALUES('JULHAN', 'Hanquet', 'Julien',null, CONVERT(birth_date, '01-01-2000', 103), 'm', 'jh@gmail.com','0478955465', 'Rue du truc, 10', 'Namur', '5000', 'Belgique');
+
+--  --------------------flight --------------------------------
+INSERT INTO flight
+VALUES(123, CONVERT(departure_date, '01-01-2000', 103), CONVERT(departure_hour,'19:30:00',102), CONVERT(expected_arrival_date, '01-01-2000', 103), CONVERT(expected_arrival_hour,'19:30:00',102),750.0,'PRS_CG','NY-JFK',1);
 

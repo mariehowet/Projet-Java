@@ -15,6 +15,7 @@ public class BookingDBAccess implements BookingDataAccess{
 
     @Override
     public void addBooking(Booking booking) {
+        //String sql
     }
 
     @Override
