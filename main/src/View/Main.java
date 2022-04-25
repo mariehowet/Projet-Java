@@ -1,20 +1,28 @@
 package View;
 
+import DataAccess.BookingDBAccess;
+import DataAccess.BookingDataAccess;
 import DataAccess.SingletonConnexion;
 
 import Exception.ConnectionException;
+import Model.Booking;
 
 import javax.swing.*;
+import java.sql.PreparedStatement;
+import java.util.GregorianCalendar;
 
 public class Main {
     public static void main(String[] args) {
         MainJFrame mainJFrame = new MainJFrame();
-        /* ******************* connection********************************** */
+        GregorianCalendar date = new GregorianCalendar();
+
         try {
-            SingletonConnexion.getInstance();
-        }catch (ConnectionException connectException) {
-            JOptionPane.showMessageDialog(null, connectException.getMessage()); 
+            BookingDBAccess bda = new BookingDBAccess();
+            bda.addBooking(new Booking(1, date, true," hallal", 750.5,1,1,1));
+        } catch(ConnectionException exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage());
         }
+
     }
     //si Modif
     //docker container rm projet

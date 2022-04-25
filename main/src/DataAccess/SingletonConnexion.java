@@ -14,7 +14,7 @@ public class SingletonConnexion {
             uniqueConnexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/marvinairline", "root", "root");
             }
             catch (SQLException exception) {
-                throw new ConnectionException(exception);
+                throw new ConnectionException();
             }
         }
         return uniqueConnexion;
