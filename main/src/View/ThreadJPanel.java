@@ -6,13 +6,11 @@ import java.awt.*;
 
 public class ThreadJPanel extends JPanel {
     private JLabel imageLabel, iconLabel;
-    private JPanel test;
     private ImageIcon imageIcon,icon;
     private JLayeredPane layeredPane;
 
     public ThreadJPanel() {
-        //setLayout(new FlowLayout());
-        setBounds(200,200,1000,750);
+
 
         icon = new ImageIcon("D:\\IESN informatique de gestion\\IG 2\\Q2\\PPOO avancé\\Projet\\Projet-GitHub\\main\\src\\Images\\aeroplane.png");
         imageIcon = new ImageIcon("D:\\IESN informatique de gestion\\IG 2\\Q2\\PPOO avancé\\Projet\\Projet-GitHub\\main\\src\\Images\\parisnyc.png");
@@ -29,22 +27,19 @@ public class ThreadJPanel extends JPanel {
 
         imageLabel.setBounds(0,0,1000,1000);
         iconLabel.setBounds(750,427,50,50);
-        //iconLabel.setBounds(225,505,50,50);
-
-        /*
-        System.out.println(iconLabel.getBounds().x);
-        System.out.println(iconLabel.getBounds().y);
-        */
 
         layeredPane.add(imageLabel, JLayeredPane.DEFAULT_LAYER);
         layeredPane.add(iconLabel, JLayeredPane.PALETTE_LAYER);
         layeredPane.setOpaque(true);
         add(layeredPane);
-        //setVisible(true);;
+        setVisible(true);
+
+
         FlyThread flyThread = new FlyThread(this);
         flyThread.start();
 
     }
+
 
     public void move() {
         if (iconLabel.getBounds().x >= 225 && iconLabel.getBounds().y <= 505) {
@@ -54,24 +49,52 @@ public class ThreadJPanel extends JPanel {
                 iconLabel.setBounds(iconLabel.getBounds().x - 1, iconLabel.getBounds().y , iconLabel.getBounds().width, iconLabel.getBounds().height);
         }
     }
+    void drawline(int x1, int y1, int x2, int y2)
+    {
+        int dx, dy, p, x, y, xend, m, b;
+        dx=x2-x1;
+        dy=y2-y1;
 
-    /*
+        m = dy /dx;
+        b = y1 - m*x1;
 
+        x = x1;
+        y = y1;
+        if (dx<0)
+        {
+            x=x2;
+            y=y2;
+            xend=x1;
+        }
+        else
+        {
+            x=x1;
+            y=y1;
+            xend=x2;
+        }
 
-    public void paint (Graphics g) {
-        int dx, dy, p , x, y;
-        int x1 = 750, y1 = 427, x2 = 225, y2 = 505;
-
-
-        dx = Math.abs(x2 - x1);
-        dy = Math.abs(y2 - y1);
-
-        if(x1 > x2)
-            x = x2;
-            y = y2;
-
-        g.drawRect(iconLabel.getBounds().x, iconLabel.getBounds().y, iconLabel.getBounds().width,iconLabel.getBounds().height);
+        if (x <= xend) {
+            iconLabel.setBounds(x, y, iconLabel.getBounds().width, iconLabel.getBounds().height);
+            y++;
+            y=(x*x) + b;
+        }
     }
 
- */
+    public void fly(int x1, int y1, int x2, int y2) {
+        int dx, dy, x, y, m, b;
+        dx=x2-x1;
+        dy=y2-y1;
+
+        m = dy /dx;
+        b = y1 - m*x1;
+
+        x = x1;
+        y = y1;
+        if(y == m*x + b) {
+            iconLabel.setBounds(x, y, iconLabel.getBounds().width, iconLabel.getBounds().height);
+            y++;
+        } else {
+            x++;
+        }
+    }
 }

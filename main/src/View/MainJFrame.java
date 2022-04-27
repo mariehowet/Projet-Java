@@ -63,7 +63,7 @@ public class MainJFrame extends JFrame {
 
         // Monitoring
         monitoringFlight = new JMenuItem(" Suivez votre vol en direct !");
-        monitoringFlight.addActionListener(new ThreadListener());
+        monitoringFlight.addActionListener(new ResearchListener(5));
         monitoringFlightMenu.add(monitoringFlight);
 
         // Affichage
@@ -100,17 +100,14 @@ public class MainJFrame extends JFrame {
                     break;
                 case 4:
                     frameContainer.add(new FindFlight(frameContainer), BorderLayout.CENTER);
+                case 5:
+                    frameContainer.add(new FollowedFlightJPanel(frameContainer), BorderLayout.CENTER);
                     break;
             }
             setVisible(true);
         }
     }
-    private class ThreadListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-                new ThreadJFrame();
-        }
-    }
+
 }
 
 

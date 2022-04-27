@@ -29,6 +29,7 @@ public class Research1JPanel extends ResearchJPanel {
             String [] values = new String[]{"NY34 - JFK New York", "NY34 - JFK New York"}; // !!! BD !!!
             destinationAirportBox = new JComboBox(values);
 
+
         // Panel de recherche
             researchPanel.add(startDateLabel);
             researchPanel.add(startDateSpinner);
