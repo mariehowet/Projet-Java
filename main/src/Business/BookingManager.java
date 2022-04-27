@@ -25,7 +25,7 @@ public class BookingManager {
     }
 
     public void addBooking(Booking booking) {
-        dao.addBooking(booking);
+        //dao.addBooking(booking);
     }
 
     public void setDao(BookingDataAccess dao) {
