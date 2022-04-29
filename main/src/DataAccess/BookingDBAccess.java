@@ -29,7 +29,7 @@ public class BookingDBAccess implements BookingDataAccess{
             // Créer l'instruction SQL avec ? pour empêcher les injections SQL
             GregorianCalendar calendar = booking.getDate();
             java.sql.Date sqlDate = new java.sql.Date(calendar.getTimeInMillis());
-            String sqlInstruction = "insert into booking (id, date, has_paid, meal_type, real_price, passenger_id, seat_id, flight_id) values (?,?,?,?,?,?,?,?)";
+            String sqlInstruction = "insert into booking (id, date, has_paid, meal_type, real_price, flight_id, seat_id, passenger_id) values (?,?,?,?,?,?,?,?)";
             // Créer le PreparedStatement à partir de cette instruction SQL
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             // Remplacer les ? via les filtres (settors)
