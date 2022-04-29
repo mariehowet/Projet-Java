@@ -15,13 +15,15 @@ public class Main {
     public static void main(String[] args) {
         MainJFrame mainJFrame = new MainJFrame();
         GregorianCalendar date = new GregorianCalendar();
-
+    /*
         try {
             BookingDBAccess bda = new BookingDBAccess();
             bda.addBooking(new Booking(1, date, true," hallal", 750.5,1,1,1));
         } catch(ConnectionException exception) {
             JOptionPane.showMessageDialog(null, exception.getMessage());
         }
+
+     */
 
     }
     //si Modif
