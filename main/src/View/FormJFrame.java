@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class FormJFrame extends JFrame {
     private Container frameContainer;
-    private FormJPanel formJPanel;
+    private BookingCreationPanel bookingCreationPanel;
     private ValidationFormJPanel validationFormPanel;
     public FormJFrame() {
         super("Formulaire de réservation");
@@ -16,8 +16,8 @@ public class FormJFrame extends JFrame {
         frameContainer.setLayout(new BorderLayout());
 
         // Ajout d'un pannel formulaire à la fenetre de formulaire
-        formJPanel = new FormJPanel();
-        frameContainer.add(formJPanel, BorderLayout.CENTER);
+        bookingCreationPanel = new BookingCreationPanel();
+        frameContainer.add(bookingCreationPanel, BorderLayout.CENTER);
         validationFormPanel = new ValidationFormJPanel();
         frameContainer.add(validationFormPanel, BorderLayout.SOUTH);
 

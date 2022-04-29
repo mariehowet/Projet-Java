@@ -12,8 +12,8 @@ public class MainJFrame extends JFrame {
     private Container frameContainer;
     private WelcomeJPanel welcomeJPanel;
     private JMenuBar menuBar;
-    private JMenu researchMenu, findFlightMenu, monitoringFlightMenu;
-    private JMenuItem research1, research2, research3, menuIemFlightMenu, monitoringFlight;
+    private JMenu researchMenu, findFlightMenu, monitoringFlightMenu, form;
+    private JMenuItem research1, research2, research3, menuIemFlightMenu, monitoringFlight, booking;
 
     public MainJFrame(){
         // fenetre
@@ -36,35 +36,43 @@ public class MainJFrame extends JFrame {
         researchMenu = new JMenu("Recherches");
         findFlightMenu = new JMenu("Trouver un vol");
         monitoringFlightMenu = new JMenu("Suivi d'un vol");
+        form = new JMenu("Formulaire");
+
 
         menuBar.add(researchMenu);
         menuBar.add(findFlightMenu);
         menuBar.add(monitoringFlightMenu);
+        menuBar.add(form);
 
         // Item : recherche 1
         research1 = new JMenuItem("Recherche 1");
-        research1.addActionListener(new ResearchListener(1));
+        research1.addActionListener(new JMenuItemListener(1));
         researchMenu.add(research1);
 
         // Item : recherche 2
         research2 = new JMenuItem("Recherche 2");
-        research2.addActionListener(new ResearchListener( 2));
+        research2.addActionListener(new JMenuItemListener( 2));
         researchMenu.add(research2);
 
         // Item : recherche 3
         research3 = new JMenuItem("Recherche 3");
-        research3.addActionListener(new ResearchListener(3));
+        research3.addActionListener(new JMenuItemListener(3));
         researchMenu.add(research3);
 
         // Find Flight
         menuIemFlightMenu = new JMenuItem("Aller à la recherche");
-        menuIemFlightMenu.addActionListener(new ResearchListener(4));
+        menuIemFlightMenu.addActionListener(new JMenuItemListener(4));
         findFlightMenu.add(menuIemFlightMenu);
 
         // Monitoring
         monitoringFlight = new JMenuItem(" Suivez votre vol en direct !");
-        monitoringFlight.addActionListener(new ResearchListener(5));
+        monitoringFlight.addActionListener(new JMenuItemListener(5));
         monitoringFlightMenu.add(monitoringFlight);
+
+        // Form
+        booking = new JMenuItem("Réservation d'un vol");
+        booking.addActionListener(new JMenuItemListener(6));
+        form.add(booking);
 
         // Affichage
         this.addWindowListener(new WindowAdapter() {
@@ -74,14 +82,12 @@ public class MainJFrame extends JFrame {
             }
         });
         setVisible(true);
-
-        new FormJFrame();
     }
 
-    private class ResearchListener implements ActionListener {
+    private class JMenuItemListener implements ActionListener {
         int numPanel;
 
-        public ResearchListener(int numPanel) {
+        public JMenuItemListener(int numPanel) {
             this.numPanel = numPanel;
         }
 
@@ -100,8 +106,12 @@ public class MainJFrame extends JFrame {
                     break;
                 case 4:
                     frameContainer.add(new FindFlight(frameContainer), BorderLayout.CENTER);
+                    break;
                 case 5:
                     frameContainer.add(new FollowedFlightJPanel(frameContainer), BorderLayout.CENTER);
+                    break;
+                case 6:
+                    frameContainer.add(new BookingCreationPanel(), BorderLayout.CENTER);
                     break;
             }
             setVisible(true);
