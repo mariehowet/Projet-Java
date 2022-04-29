@@ -1,18 +1,28 @@
 package View;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-public class FormJPanel extends JPanel {
-    private JLabel idPassengerLabel, seatTypeLabel, hasLuggageLabel, weightLuggageLabel,
+public class BookingCreationPanel extends JPanel {
+    private JLabel title, idPassengerLabel, seatTypeLabel, hasLuggageLabel, weightLuggageLabel,
             isBusinessFlightLabel, companyNameLabel, mealTypeLabel, paymentLabel, totalPriceLabel;
     private JTextField idPassenger, companyName, totalPrice;
     private JRadioButton buttonYesLuggage, buttonNoLuggage,
             buttonYesBusinessFlight, buttonNoBusinessFlight, buttonPayNow, buttonPayAfter;
     private JComboBox seatType, weightLuggage, mealType;
     private ButtonGroup hasLuggage, isBusinessFlight, payment;
-    public FormJPanel() {
-        setLayout(new GridLayout(7,1));
+
+    private BookingForm bookingForm;
+    public BookingCreationPanel() {
+        setLayout(new BorderLayout());
+        setBorder(new EmptyBorder(0,50,50,50));
+        title = new JLabel("<html><h1 style='margin: 30px 0 15px 0'>Créer une réservation</h1></html>");
+        title.setHorizontalAlignment(SwingConstants.CENTER);
+
+        bookingForm = new BookingForm();
+
+        /*
         Panel first = new Panel();
         first.setLayout(new GridLayout(2,2));
 
@@ -124,6 +134,9 @@ public class FormJPanel extends JPanel {
 
         add(seventh);
 
+         */
+        this.add(title, BorderLayout.NORTH);
+        this.add(bookingForm, BorderLayout.CENTER);
 
     }
 }
