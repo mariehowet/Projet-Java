@@ -6,6 +6,7 @@ import Model.Booking;
 import Exception.ConnectionException;
 
 import javax.swing.*;
+import Exception.AddBookingException;
 
 
 public class BookingManager {
@@ -24,8 +25,8 @@ public class BookingManager {
         return dao.getAllBookings();
     }
 
-    public void addBooking(Booking booking) {
-        //dao.addBooking(booking);
+    public void addBooking(Booking booking) throws AddBookingException {
+        dao.addBooking(booking);
     }
 
     public void setDao(BookingDataAccess dao) {

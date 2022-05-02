@@ -1,11 +1,16 @@
 package View;
 
+import Controller.ApplicationController;
+import Model.Booking;
+import Exception.AddBookingException;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.GregorianCalendar;
 
 
 public class MainJFrame extends JFrame {
@@ -73,6 +78,18 @@ public class MainJFrame extends JFrame {
         booking = new JMenuItem("Réservation d'un vol");
         booking.addActionListener(new JMenuItemListener(6));
         form.add(booking);
+
+        // Ajout dans la BD : test
+        ApplicationController controller = new ApplicationController();
+        GregorianCalendar date = new GregorianCalendar(2022, 7, 25);
+        Booking booking = new Booking(date, true, null, null, "poulet", 750.0, 1, 1, 1);
+
+        try {
+            controller.addBooking(booking);
+        } catch (AddBookingException exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage() + " MainJframe");
+        }
+
 
         // Affichage
         this.addWindowListener(new WindowAdapter() {

@@ -1,31 +1,36 @@
 package View;
 
 import DataAccess.BookingDBAccess;
-import DataAccess.BookingDataAccess;
-import DataAccess.SingletonConnexion;
 
-import Exception.ConnectionException;
+
+import Exception.*;
+import DataAccess.*;
 import Model.Booking;
 
 import javax.swing.*;
-import java.sql.PreparedStatement;
 import java.util.GregorianCalendar;
 
 public class Main {
     public static void main(String[] args) {
         MainJFrame mainJFrame = new MainJFrame();
-        GregorianCalendar date = new GregorianCalendar();
+        /*
+        GregorianCalendar date = new GregorianCalendar(2022, 7, 25);
 
         try {
             BookingDBAccess bda = new BookingDBAccess();
-           // bda.addBooking(new Booking( date, true," hallal", 750.5,1,1,1));
-        } catch(ConnectionException exception) {
+            Booking booking = new Booking(date, true, null, null, "poulet", 750.0, 1, 1, 1);
+            bda.addBooking(booking);
+        } catch (AddBookingException exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage());
+        } catch (ConnectionException exception) {
             JOptionPane.showMessageDialog(null, exception.getMessage());
         }
+        */
 
 
 
     }
+}
     //si Modif
     //docker container rm projet
     //docker image rm projet
@@ -34,4 +39,4 @@ public class Main {
     //sinon
     //docker start projet
     //docker stop projet
-}
+

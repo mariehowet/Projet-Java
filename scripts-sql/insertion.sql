@@ -229,6 +229,5 @@ VALUES('Hanquet', 'Julien',null, '2000-01-01', 'jh@gmail.com','0478955465', 'Rue
 INSERT INTO flight (departure_date, departure_hour, expected_arrival_date, expected_arrival_hour, price, airplane_id, departure_airport_id, arrival_airport_id)
 VALUES('2022-06-20', '16:00:00','2022-06-20','18:00:00', 750.0, 1, 3, 10);
 
-INSERT INTO booking (id, date, has_paid, luggage_weight, company_name, meal_type, real_price, flight_id, seat_id, passenger_id)
 
-DELETE FROM `seat_type`;
+
