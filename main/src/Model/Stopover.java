@@ -1,11 +1,12 @@
 package Model;
 
 public class Stopover {
-    private Flight flight;
-    private Airport airport;
+    private int flight;
+    private int airport;
     private int duration;
 
-    public Stopover(Flight flight, Airport airport, int duration) {
+
+    public Stopover(int flight, int airport, int duration) {
         this.flight = flight;
         this.airport = airport;
         this.duration = duration;

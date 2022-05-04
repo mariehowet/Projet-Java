@@ -1,4 +1,4 @@
-CREATE SCHEMA marvinairline;
+-- CREATE SCHEMA marvinairline;
 
 USE marvinairline;
 
@@ -19,11 +19,11 @@ CREATE TABLE `seat` (
                         `number` int NOT NULL,
                         `column_letter` char(1) NOT NULL,
                         `seat_type` varchar(20) NOT NULL,
-                        `airplaine_id` int NOT NULL,
+                        `airplane_id` int NOT NULL,
                         PRIMARY KEY (`id`),
                         KEY `seat_type_idx` (`seat_type`),
-                        KEY `airplane_seat_fk_idx` (`airplaine_id`),
-                        CONSTRAINT `airplane_seat_fk` FOREIGN KEY (`airplaine_id`) REFERENCES `airplane` (`id`),
+                        KEY `airplane_seat_fk_idx` (`airplane_id`),
+                        CONSTRAINT `airplane_seat_fk` FOREIGN KEY (`airplane_id`) REFERENCES `airplane` (`id`),
                         CONSTRAINT `seat_type` FOREIGN KEY (`seat_type`) REFERENCES `seat_type` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
@@ -49,9 +49,9 @@ CREATE TABLE `airport` (
 CREATE TABLE `flight` (
                           `id` int NOT NULL AUTO_INCREMENT,
                           `departure_date` date NOT NULL,
-                          `departure_hour` time NOT NULL,
+                          `departure_hour` varchar(15) NOT NULL,
                           `expected_arrival_date` date NOT NULL,
-                          `expected_arrival_hour` time NOT NULL,
+                          `expected_arrival_hour` varchar(15) NOT NULL,
                           `price` decimal(7,2) NOT NULL,
                           `airplane_id` int NOT NULL,
                           `departure_airport_id` int NOT NULL,
@@ -94,7 +94,7 @@ CREATE TABLE `passenger` (
 
 CREATE TABLE `booking` (
                            `id` int NOT NULL AUTO_INCREMENT,
-                           `date` date NOT NULL,
+                           `date_booking` date NOT NULL,
                            `has_paid` bit(1) NOT NULL,
                            `luggage_weight` int DEFAULT NULL,
                            `company_name` varchar(45) DEFAULT NULL,
@@ -113,4 +113,14 @@ CREATE TABLE `booking` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 
-
+/*
+DROP TABLE airport;
+DROP TABLE flight;
+DROP TABLE stopover;
+DROP TABLE booking;
+DROP TABLE airplane;
+DROP TABLE locality;
+DROP TABLE passenger;
+DROP TABLE seat;
+DROP TABLE seat_type;
+/*

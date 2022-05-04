@@ -8,24 +8,26 @@ public class Passenger {
     private int id;
     private String lastName;
     private String firstName;
-    private Optional<String> initialMiddleName;
+    private String initialMiddleName;
     private GregorianCalendar birthDate;
-    private String gender;
     private String email;
-    private int phoneNumber;
+    private String phoneNumber;
     private String streetAndNumber;
-    private HashSet<Booking> bookings;
+    private String city;
+    private String postCode;
+    private String country;
 
-    public Passenger(int id, String lastName, String firstName, Optional<String> initialMiddleName, GregorianCalendar birthDate, String gender, String email, int phoneNumber, String streetAndNumber, HashSet<Booking> bookings) {
-        this.id = id;
+
+    public Passenger(String lastName, String firstName, String initialMiddleName, GregorianCalendar birthDate, String email, String phoneNumber, String streetAndNumber, String city, String postCode, String country) {
         this.lastName = lastName;
         this.firstName = firstName;
         this.initialMiddleName = initialMiddleName;
         this.birthDate = birthDate;
-        this.gender = gender;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.streetAndNumber = streetAndNumber;
-        this.bookings = new HashSet<Booking>();
+        this.city = city;
+        this.postCode = postCode;
+        this.country = country;
     }
 }

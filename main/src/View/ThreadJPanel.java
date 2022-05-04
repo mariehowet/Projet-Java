@@ -12,8 +12,8 @@ public class ThreadJPanel extends JPanel {
     public ThreadJPanel() {
 
 
-        icon = new ImageIcon("D:\\IESN informatique de gestion\\IG 2\\Q2\\PPOO avancé\\Projet\\Projet-GitHub\\main\\src\\Images\\aeroplane.png");
-        imageIcon = new ImageIcon("D:\\IESN informatique de gestion\\IG 2\\Q2\\PPOO avancé\\Projet\\Projet-GitHub\\main\\src\\Images\\parisnyc.png");
+        icon = new ImageIcon("main/src/images/aeroplane.png");
+        imageIcon = new ImageIcon("main/src/images/parisnyc.png");
 
         Image iconResizing = icon.getImage().getScaledInstance(40,40, Image.SCALE_DEFAULT);
 

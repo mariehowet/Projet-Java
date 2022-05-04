@@ -3,17 +3,19 @@ package View;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 public class BookingForm extends JPanel {
-    private JLabel idPassengerLabel, seatTypeLabel, hasLuggageLabel, weightLuggageLabel,
-            isBusinessFlightLabel, companyNameLabel, mealTypeLabel, paymentLabel, totalPriceLabel;
+    private JLabel idPassengerLabel, seatTypeLabel, weightLuggageLabel,
+            companyNameLabel, mealTypeLabel, totalPriceLabel;
     private JTextField idPassenger, companyName, totalPrice;
     private JRadioButton buttonYesLuggage, buttonNoLuggage,
             buttonYesBusinessFlight, buttonNoBusinessFlight, buttonPayNow, buttonPayAfter;
     private JComboBox seatType, weightLuggage, mealType;
     private ButtonGroup hasLuggage, isBusinessFlight, payment;
     public BookingForm() {
-        this.setBorder(new EmptyBorder(0, 150, 0, 150));
+        this.setBorder(new EmptyBorder(25, 150, 25, 150));
         this.setLayout(new GridLayout(9,2));
 
         idPassengerLabel = new JLabel("Votre identifiant : ");
@@ -31,13 +33,15 @@ public class BookingForm extends JPanel {
         buttonYesLuggage = new JRadioButton("Je dispose de bagages");
         this.add(buttonYesLuggage);
         buttonNoLuggage = new JRadioButton("Je ne dispose pas de bagages");
+        LuggageListener luggageListener = new LuggageListener();
+        buttonNoLuggage.addItemListener(luggageListener);
         this.add(buttonNoLuggage);
         hasLuggage.add(buttonYesLuggage);
         hasLuggage.add(buttonNoLuggage);
 
         weightLuggageLabel = new JLabel("Poids : ");
         this.add(weightLuggageLabel);
-        String[] weights = {"0 < 10 kg (+0€)","10 < 20 kg (+10€)","20 < 30 kg (+20€)","Max 35 kg (+25€)"};
+        String[] weights = {"","0 < 10 kg (+0€)","10 < 20 kg (+10€)","20 < 30 kg (+20€)","Max 35 kg (+25€)"};
         weightLuggage = new JComboBox(weights);
         weightLuggage.setSelectedItem(weights[0]);
         weightLuggage.setMaximumRowCount(2);
@@ -47,6 +51,8 @@ public class BookingForm extends JPanel {
         buttonYesBusinessFlight = new JRadioButton("Je voyage pour affaire");
         this.add(buttonYesBusinessFlight);
         buttonNoBusinessFlight = new JRadioButton("Je ne voyage pas pour affaire");
+        CompanyListener companyListener = new CompanyListener();
+        buttonNoBusinessFlight.addItemListener(companyListener);
         this.add(buttonNoBusinessFlight);
         isBusinessFlight.add(buttonYesBusinessFlight);
         isBusinessFlight.add(buttonNoBusinessFlight);
@@ -80,4 +86,31 @@ public class BookingForm extends JPanel {
         this.add(totalPrice);
 
     }
+
+    private class LuggageListener implements ItemListener {
+
+        @Override
+        public void itemStateChanged(ItemEvent e) {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                weightLuggage.setEnabled(false);
+                weightLuggage.setSelectedItem("");
+            } else {
+                weightLuggage.setEnabled(true);
+            }
+        }
+    }
+
+    private class CompanyListener implements ItemListener {
+
+        @Override
+        public void itemStateChanged(ItemEvent e) {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                companyName.setEnabled(false);
+                companyName.setText("");
+            } else {
+                companyName.setEnabled(true);
+            }
+        }
+    }
+
 }

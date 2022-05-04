@@ -15,8 +15,8 @@ public class Booking {
     private int seatID;
     private int passengerID;
 
-    public Booking(GregorianCalendar date, Boolean hasPaid, Integer luggageWeight, String companyName, String mealType, Double realPrice, int flightID, int seatID, int passengerID) {
-        this.date = date;
+    public Booking(Boolean hasPaid, Integer luggageWeight, String companyName, String mealType, Double realPrice, int flightID, int seatID, int passengerID) {
+        this.date = getDate();
         this.hasPaid = hasPaid;
         this.luggageWeight = luggageWeight;
         this.companyName = companyName;
