@@ -1,6 +1,7 @@
 package DataAccess;
 
 import Model.Booking;
+import Exception.AddBookingException;
 import Exception.ConnectionException;
 
 
@@ -24,23 +25,24 @@ public class BookingDBAccess implements BookingDataAccess{
     }
 
     @Override
-    public void addBooking(Booking booking) throws ConnectionException {
+    public void addBooking(Booking booking) throws AddBookingException {
+        // Créer l'instruction SQL avec ? pour empêcher les injections SQL
+        GregorianCalendar calendar = booking.getDate();
+        java.sql.Date sqlDate = new java.sql.Date(calendar.getTimeInMillis());
+        String sqlInstruction = "insert into booking (date, has_paid, meal_type, real_price, flight_id, seat_id, passenger_id) values (?,?,?,?,?,?,?)";
+        // Créer le PreparedStatement à partir de cette instruction SQL
+
         try {
-            // Créer l'instruction SQL avec ? pour empêcher les injections SQL
-            GregorianCalendar calendar = booking.getDate();
-            java.sql.Date sqlDate = new java.sql.Date(calendar.getTimeInMillis());
-            String sqlInstruction = "insert into booking (id, date, has_paid, meal_type, real_price, passenger_id, seat_id, flight_id) values (?,?,?,?,?,?,?,?)";
-            // Créer le PreparedStatement à partir de cette instruction SQL
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             // Remplacer les ? via les filtres (settors)
-            preparedStatement.setInt(1, booking.getId());
-            preparedStatement.setDate(2, sqlDate);
-            preparedStatement.setBoolean(3,booking.getHasPaid());
-            preparedStatement.setString(4, booking.getMealType());
-            preparedStatement.setDouble(5, booking.getRealPrice());
-            preparedStatement.setInt(6, booking.getPassengerID());
-            preparedStatement.setInt(7, booking.getSeatID());
-            preparedStatement.setInt(8, booking.getFlightID());
+
+            preparedStatement.setDate(1, sqlDate);
+            preparedStatement.setBoolean(2,booking.getHasPaid());
+            preparedStatement.setString(3, booking.getMealType());
+            preparedStatement.setDouble(4, booking.getRealPrice());
+            preparedStatement.setInt(5, booking.getPassengerID());
+            preparedStatement.setInt(6, booking.getSeatID());
+            preparedStatement.setInt(7, booking.getFlightID());
             // Exécuter + Récupérer le nombre de lignes modifiées
             preparedStatement.executeUpdate();
 
@@ -60,7 +62,7 @@ public class BookingDBAccess implements BookingDataAccess{
                 preparedStatement.executeUpdate();
             }
         } catch (SQLException exception) {
-            throw new ConnectionException();
+            throw new AddBookingException();
         }
     }
 
