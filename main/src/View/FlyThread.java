@@ -16,7 +16,8 @@ public class FlyThread extends Thread{
        while (true) {
             try {
                 Thread.sleep(10);
-                threadJPanel.fly(750,427,225,505);
+                //threadJPanel.fly(750,427,225,505);
+                threadJPanel.move();
                 threadJPanel.repaint();
             } catch (Exception e) {
                 e.printStackTrace();

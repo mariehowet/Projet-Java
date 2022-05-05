@@ -6,26 +6,25 @@ import java.util.Optional;
 
 public class Flight {
     private int id;
-    private int expectedDuration;
     private GregorianCalendar departureDate;
-    private int departureHour;
-    private Optional<Integer> realArrivalDeparture;
+    private String departureHour;
+    private GregorianCalendar expectedArrivalDate;
+    private String expectedArrivalHour;
     private double price;
-    private Airport departureAirport;
-    private Airport arrivalAirport;
-    private HashSet<Stopover> stopovers;
-    private HashSet<Seat> seats;
+    private int airplaneId;
+    private int departureAirportId;
+    private int arrivalAirportId;
 
-    public Flight(int id, int expectedDuration, GregorianCalendar departureDate, int departureHour, Optional<Integer> realArrivalDeparture, double price, Airport departureAirport, Airport arrivalAirport, HashSet<Stopover> stopovers, HashSet<Seat> seats) {
-        this.id = id;
-        this.expectedDuration = expectedDuration;
+
+    public Flight(GregorianCalendar departureDate, String departureHour, GregorianCalendar expectedArrivalDate, String expectedArrivalHour, double price, int airplaneId, int departureAirportId, int arrivalAirportId) {
         this.departureDate = departureDate;
         this.departureHour = departureHour;
-        this.realArrivalDeparture = realArrivalDeparture;
+        this.expectedArrivalDate = expectedArrivalDate;
+        this.expectedArrivalHour = expectedArrivalHour;
         this.price = price;
-        this.departureAirport = departureAirport;
-        this.arrivalAirport = arrivalAirport;
-        this.stopovers = new HashSet<Stopover>();
-        this.seats = new HashSet<Seat>();
+        this.airplaneId = airplaneId;
+        this.departureAirportId = departureAirportId;
+        this.arrivalAirportId = arrivalAirportId;
     }
+
 }

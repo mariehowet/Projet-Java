@@ -6,14 +6,14 @@ public class Seat {
     private int id;
     private int number;
     private char columnLetter;
-    private Flight flight;
-    private Optional<Booking> booking; // ?????
+    private String seatType;
+    private int airplaneId;
 
-    public Seat(int id, int number, char columnLetter, Flight flight, Optional<Booking> booking) {
-        this.id = id;
+
+    public Seat(int number, char columnLetter, String seatType, int airplaneId) {
         this.number = number;
         this.columnLetter = columnLetter;
-        this.flight = flight;
-        this.booking = booking; // ?????
+        this.seatType = seatType;
+        this.airplaneId = airplaneId;
     }
 }
