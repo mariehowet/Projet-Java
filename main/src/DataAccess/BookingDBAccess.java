@@ -1,35 +1,30 @@
 package DataAccess;
 
 import Model.Booking;
-import Exception.AddBookingException;
-import Exception.ConnectionException;
 
-
-import javax.swing.*;
+import Exception.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class BookingDBAccess implements BookingDataAccess{
     private Connection connection;
 
     public BookingDBAccess() throws ConnectionException {
-        /* ******************* connection********************************** */
-        try {
-            SingletonConnexion.getInstance();
-        }catch (ConnectionException connectException) {
-            JOptionPane.showMessageDialog(null, connectException.getMessage());
-        }
+        connection = SingletonConnexion.getInstance();
         // connection.close(); throws SQLException
     }
 
     @Override
     public void addBooking(Booking booking) throws AddBookingException {
+
+        String sqlInstruction = "insert into booking (date_booking, has_paid, meal_type, real_price, flight_id, seat_id, passenger_id) values (?,?,?,?,?,?,?)";
         // Créer l'instruction SQL avec ? pour empêcher les injections SQL
         GregorianCalendar calendar = booking.getDate();
-        java.sql.Date sqlDate = new java.sql.Date(calendar.getTimeInMillis());
-        String sqlInstruction = "insert into booking (date, has_paid, meal_type, real_price, flight_id, seat_id, passenger_id) values (?,?,?,?,?,?,?)";
+        java.sql.Date sqlDate = new Date(calendar.getTimeInMillis());
         // Créer le PreparedStatement à partir de cette instruction SQL
 
         try {
@@ -37,7 +32,7 @@ public class BookingDBAccess implements BookingDataAccess{
             // Remplacer les ? via les filtres (settors)
 
             preparedStatement.setDate(1, sqlDate);
-            preparedStatement.setBoolean(2,booking.getHasPaid());
+            preparedStatement.setInt(2,(booking.getHasPaid() ? 1: 0));
             preparedStatement.setString(3, booking.getMealType());
             preparedStatement.setDouble(4, booking.getRealPrice());
             preparedStatement.setInt(5, booking.getPassengerID());
@@ -67,8 +62,10 @@ public class BookingDBAccess implements BookingDataAccess{
     }
 
     @Override
-    public Booking[] getAllBookings() {
-        return null;
+    public ArrayList<Booking> getAllBookings() throws AllBookingsException {
+        String sqlInstruction = "select * from booking";
+        ArrayList<Booking> allBookings = new ArrayList<>();
+        return allBookings;
     }
 
     @Override

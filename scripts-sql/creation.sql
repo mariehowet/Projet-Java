@@ -94,7 +94,7 @@ CREATE TABLE `passenger` (
 
 CREATE TABLE `booking` (
                            `id` int NOT NULL AUTO_INCREMENT,
-                           `date` date NOT NULL,
+                           `date_booking` date NOT NULL,
                            `has_paid` bit(1) NOT NULL,
                            `luggage_weight` int DEFAULT NULL,
                            `company_name` varchar(45) DEFAULT NULL,
@@ -112,10 +112,10 @@ CREATE TABLE `booking` (
                            CONSTRAINT `seat_booking_fk` FOREIGN KEY (`seat_id`) REFERENCES `seat` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
-/*
+/**/
 DROP TABLE airport;
 DROP TABLE flight;
 DROP TABLE stopover;
 DROP TABLE booking;
- */
+
 
