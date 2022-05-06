@@ -3,11 +3,10 @@ package DataAccess;
 import Model.Booking;
 
 import Exception.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.Date;
-import java.sql.SQLException;
+
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class BookingDBAccess implements BookingDataAccess{
@@ -24,7 +23,9 @@ public class BookingDBAccess implements BookingDataAccess{
         String sqlInstruction = "insert into booking (date_booking, has_paid, meal_type, real_price, flight_id, seat_id, passenger_id) values (?,?,?,?,?,?,?)";
         // Créer l'instruction SQL avec ? pour empêcher les injections SQL
         GregorianCalendar calendar = booking.getDate();
-        java.sql.Date sqlDate = new Date(calendar.getTimeInMillis());
+       java.sql.Date sqlDate = new Date(calendar.getTimeInMillis());
+
+
         // Créer le PreparedStatement à partir de cette instruction SQL
 
         try {
@@ -65,6 +66,39 @@ public class BookingDBAccess implements BookingDataAccess{
     public ArrayList<Booking> getAllBookings() throws AllBookingsException {
         String sqlInstruction = "select * from booking";
         ArrayList<Booking> allBookings = new ArrayList<>();
+        // traitement
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+            ResultSet data = preparedStatement.executeQuery();
+            Booking booking;
+            Integer luggageWeight;
+            String companyName;
+
+            while(data.next()) {
+                //data.getInt("id"),
+                //data.getDate("date_booking"),
+                booking = new Booking (
+                        data.getBoolean("has_paid"),
+                        data.getString("meal_type"),
+                        data.getDouble("real_price"),
+                        data.getInt("flight_id"),
+                        data.getInt("seat_id"),
+                        data.getInt("passenger_id")
+                );
+                luggageWeight = data.getInt("luggage_weight");
+                if(!data.wasNull())
+                    booking.setLuggageWeight(luggageWeight);
+
+                companyName = data.getString("company_name");
+                if(!data.wasNull())
+                    booking.setCompanyName(companyName);
+
+                allBookings.add(booking);
+            }
+
+        } catch (SQLException exception) {
+            new AllBookingsException();
+        }
         return allBookings;
     }
 

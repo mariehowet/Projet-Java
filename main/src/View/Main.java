@@ -8,26 +8,12 @@ import DataAccess.*;
 import Model.Booking;
 
 import javax.swing.*;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class Main {
     public static void main(String[] args) {
         MainJFrame mainJFrame = new MainJFrame();
-        /*
-        GregorianCalendar date = new GregorianCalendar(2022, 7, 25);
-
-        try {
-            BookingDBAccess bda = new BookingDBAccess();
-            Booking booking = new Booking(date, true, null, null, "poulet", 750.0, 1, 1, 1);
-            bda.addBooking(booking);
-        } catch (AddBookingException exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage());
-        } catch (ConnectionException exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage());
-        }
-        */
-
-
 
     }
 }

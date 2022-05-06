@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 
@@ -19,6 +20,7 @@ public class MainJFrame extends JFrame {
     private JMenuBar menuBar;
     private JMenu researchMenu, findFlightMenu, monitoringFlightMenu, form;
     private JMenuItem research1, research2, research3, menuIemFlightMenu, monitoringFlight, booking;
+    private JPanel BookingForm;
 
     public MainJFrame(){
         // fenetre
@@ -79,15 +81,14 @@ public class MainJFrame extends JFrame {
         booking.addActionListener(new JMenuItemListener(6));
         form.add(booking);
 
-        // Ajout dans la BD : test
+        // Ajout des données dans la BD
+        BookingForm = new BookingForm();
+
+        // Listing des réservations
         ApplicationController controller = new ApplicationController();
-        GregorianCalendar date = new GregorianCalendar(2022, 7, 25);
-        Booking booking = new Booking(date, true, null, null, "poulet", 750.0, 1, 1, 1);
 
         try {
-            controller.addBooking(booking);
-        } catch (AddBookingException exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage() + " MainJframe");
+            ArrayList<Booking> bookings = controller.getAllBookings();
         }
 
 

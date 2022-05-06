@@ -1,5 +1,6 @@
 package Model;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Optional;
 
@@ -16,7 +17,7 @@ public class Booking {
     private int passengerID;
 
     public Booking(Boolean hasPaid, Integer luggageWeight, String companyName, String mealType, Double realPrice, int flightID, int seatID, int passengerID) {
-        this.date = getDate();
+        setDate(new GregorianCalendar());
         this.hasPaid = hasPaid;
         this.luggageWeight = luggageWeight;
         this.companyName = companyName;
@@ -27,7 +28,12 @@ public class Booking {
         this.passengerID = passengerID;
     }
 
-    public int getId() {
+    public Booking(Boolean hasPaid, String mealType, Double realPrice, int flightID, int seatID, int passengerID) {
+        this(hasPaid, null, null, mealType, realPrice, flightID, seatID, passengerID);
+    }
+
+
+        public int getId() {
         return id;
     }
 

@@ -1,10 +1,15 @@
 package View;
 
+import Controller.ApplicationController;
+import Model.Booking;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.GregorianCalendar;
+import Exception.AddBookingException;
+
 
 public class BookingForm extends JPanel {
     private JLabel idPassengerLabel, seatTypeLabel, weightLuggageLabel,
@@ -14,6 +19,10 @@ public class BookingForm extends JPanel {
             buttonYesBusinessFlight, buttonNoBusinessFlight, buttonPayNow, buttonPayAfter;
     private JComboBox seatType, weightLuggage, mealType;
     private ButtonGroup hasLuggage, isBusinessFlight, payment;
+
+
+    private ApplicationController controller;
+    private Booking booking;
     public BookingForm() {
         this.setBorder(new EmptyBorder(25, 150, 25, 150));
         this.setLayout(new GridLayout(9,2));
@@ -85,7 +94,22 @@ public class BookingForm extends JPanel {
         totalPrice.setEnabled(false);
         this.add(totalPrice);
 
+        // Ajout dans la BD : test
+        setController(new ApplicationController());
+        booking = new Booking(true, null, null, "poulet", 750.0, 1, 1, 1);
+
+        try {
+            controller.addBooking(booking);
+        } catch (AddBookingException exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage() + " MainJframe");
+        }
+
     }
+
+    public void setController(ApplicationController controller) {
+        this.controller = controller;
+    }
+
 
     private class LuggageListener implements ItemListener {
 
