@@ -3,10 +3,12 @@ package Business;
 import DataAccess.BookingDBAccess;
 import DataAccess.BookingDataAccess;
 import Model.Booking;
-import Exception.ConnectionException;
+import Exception.*;
 
 import javax.swing.*;
 import Exception.AddBookingException;
+
+import java.util.ArrayList;
 
 
 public class BookingManager {
@@ -21,7 +23,7 @@ public class BookingManager {
 
     }
 
-    public Booking[] getAllBookings() {
+    public ArrayList<Booking> getAllBookings() throws AllBookingsException, AddBookingException {
         return dao.getAllBookings();
     }
 
