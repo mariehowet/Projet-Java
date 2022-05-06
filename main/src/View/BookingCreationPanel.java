@@ -1,13 +1,14 @@
 package View;
 
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.GregorianCalendar;
 
 public class BookingCreationPanel extends JPanel {
     private JLabel title;
     private JButton validationButton;
-
     private BookingForm bookingForm;
     public BookingCreationPanel() {
         setLayout(new BorderLayout());
@@ -25,6 +26,7 @@ public class BookingCreationPanel extends JPanel {
         this.add(title, BorderLayout.NORTH);
         this.add(bookingForm, BorderLayout.CENTER);
         this.add(buttonPanel, BorderLayout.SOUTH);
-
     }
 }
+
+

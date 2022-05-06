@@ -23,8 +23,10 @@ public class BookingManager {
 
     }
 
-    public ArrayList<Booking> getAllBookings() throws AllBookingsException, AddBookingException {
-        return dao.getAllBookings();
+    public ArrayList<Booking> getAllBookings() throws AllBookingsException {
+        ArrayList<Booking>  bookingList = dao.getAllBookings();
+        // traitement
+        return bookingList;
     }
 
     public void addBooking(Booking booking) throws AddBookingException {

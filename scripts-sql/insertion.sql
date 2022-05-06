@@ -19,111 +19,111 @@ INSERT INTO seat_type
 VALUES ('First', 200);
 -- ----------------- seat---------------
 
-INSERT INTO seat (number, column_letter, seat_type, airplaine_id)
+INSERT INTO seat (number, column_letter, seat_type, airplane_id)
 VALUES  (1, 'A', 'First', 1);
 
-INSERT INTO seat (number, column_letter, seat_type, airplaine_id)
+INSERT INTO seat (number, column_letter, seat_type, airplane_id)
 VALUES ( 1, 'B', 'First', 1);
 
-INSERT INTO seat (number, column_letter, seat_type, airplaine_id)
+INSERT INTO seat (number, column_letter, seat_type, airplane_id)
 VALUES ( 1, 'C','First', 1);
 
-INSERT INTO seat (number, column_letter, seat_type, airplaine_id)
+INSERT INTO seat (number, column_letter, seat_type, airplane_id)
 VALUES ( 1, 'D','First', 1);
-INSERT INTO seat (number, column_letter, seat_type, airplaine_id)
+INSERT INTO seat (number, column_letter, seat_type, airplane_id)
 VALUES ( 1, 'E','First', 1);
 
-INSERT INTO seat (number, column_letter, seat_type, airplaine_id)
+INSERT INTO seat (number, column_letter, seat_type, airplane_id)
 VALUES (1, 'F','First', 1);
 
-INSERT INTO seat (number, column_letter, seat_type, airplaine_id)
+INSERT INTO seat (number, column_letter, seat_type, airplane_id)
 VALUES ( 2, 'A', 'Business', 1);
 
-INSERT INTO seat (number, column_letter, seat_type, airplaine_id)
+INSERT INTO seat (number, column_letter, seat_type, airplane_id)
 VALUES ( 2, 'B', 'Business', 1);
 
-INSERT INTO seat (number, column_letter, seat_type, airplaine_id)
+INSERT INTO seat (number, column_letter, seat_type, airplane_id)
 VALUES ( 2, 'C', 'Business', 1);
 
-INSERT INTO seat (number, column_letter, seat_type, airplaine_id)
+INSERT INTO seat (number, column_letter, seat_type, airplane_id)
 VALUES ( 2, 'D', 'Business', 1);
 
-INSERT INTO seat (number, column_letter, seat_type, airplaine_id)
+INSERT INTO seat (number, column_letter, seat_type, airplane_id)
 VALUES ( 2, 'E', 'Business', 1);
 
-INSERT INTO seat (number, column_letter, seat_type, airplaine_id)
+INSERT INTO seat (number, column_letter, seat_type, airplane_id)
 VALUES ( 2, 'F', 'Business', 1);
 
-INSERT INTO seat (number, column_letter, seat_type, airplaine_id)
+INSERT INTO seat (number, column_letter, seat_type, airplane_id)
 VALUES ( 3, 'A', 'Business', 1);
 
-INSERT INTO seat (number, column_letter, seat_type, airplaine_id)
+INSERT INTO seat (number, column_letter, seat_type, airplane_id)
 VALUES ( 3, 'B', 'Economic', 1);
 
-INSERT INTO seat (number, column_letter, seat_type, airplaine_id)
+INSERT INTO seat (number, column_letter, seat_type, airplane_id)
 VALUES ( 3, 'C', 'Economic', 1);
 
-INSERT INTO seat (number, column_letter, seat_type, airplaine_id)
+INSERT INTO seat (number, column_letter, seat_type, airplane_id)
 VALUES ( 3, 'D', 'Economic', 1);
 
-INSERT INTO seat (number, column_letter, seat_type, airplaine_id)
+INSERT INTO seat (number, column_letter, seat_type, airplane_id)
 VALUES ( 3, 'E', 'Economic', 1);
 
-INSERT INTO seat (number, column_letter, seat_type, airplaine_id)
+INSERT INTO seat (number, column_letter, seat_type, airplane_id)
 VALUES ( 3, 'F', 'Economic', 1);
 
-INSERT INTO seat (number, column_letter, seat_type, airplaine_id)
+INSERT INTO seat (number, column_letter, seat_type, airplane_id)
 VALUES  (1, 'A', 'First', 2);
 
-INSERT INTO seat (number, column_letter, seat_type, airplaine_id)
+INSERT INTO seat (number, column_letter, seat_type, airplane_id)
 VALUES ( 1, 'B', 'First', 2);
 
-INSERT INTO seat (number, column_letter, seat_type, airplaine_id)
+INSERT INTO seat (number, column_letter, seat_type, airplane_id)
 VALUES ( 1, 'C','First', 2);
 
-INSERT INTO seat (number, column_letter, seat_type, airplaine_id)
+INSERT INTO seat (number, column_letter, seat_type, airplane_id)
 VALUES ( 1, 'D','First', 2);
 
-INSERT INTO seat (number, column_letter, seat_type, airplaine_id)
+INSERT INTO seat (number, column_letter, seat_type, airplane_id)
 VALUES ( 1, 'E','First', 2);
 
-INSERT INTO seat (number, column_letter, seat_type, airplaine_id)
+INSERT INTO seat (number, column_letter, seat_type, airplane_id)
 VALUES (1, 'F','First', 2);
 
-INSERT INTO seat (number, column_letter, seat_type, airplaine_id)
+INSERT INTO seat (number, column_letter, seat_type, airplane_id)
 VALUES ( 2, 'A', 'Business', 2);
 
-INSERT INTO seat (number, column_letter, seat_type, airplaine_id)
+INSERT INTO seat (number, column_letter, seat_type, airplane_id)
 VALUES ( 2, 'B', 'Business', 2);
 
-INSERT INTO seat (number, column_letter, seat_type, airplaine_id)
+INSERT INTO seat (number, column_letter, seat_type, airplane_id)
 VALUES ( 2, 'C', 'Business', 2);
 
-INSERT INTO seat (number, column_letter, seat_type, airplaine_id)
+INSERT INTO seat (number, column_letter, seat_type, airplane_id)
 VALUES ( 2, 'D', 'Business', 2);
 
-INSERT INTO seat (number, column_letter, seat_type, airplaine_id)
+INSERT INTO seat (number, column_letter, seat_type, airplane_id)
 VALUES ( 2, 'E', 'Business', 2);
 
-INSERT INTO seat (number, column_letter, seat_type, airplaine_id)
+INSERT INTO seat (number, column_letter, seat_type, airplane_id)
 VALUES ( 2, 'F', 'Business', 2);
 
-INSERT INTO seat (number, column_letter, seat_type, airplaine_id)
+INSERT INTO seat (number, column_letter, seat_type, airplane_id)
 VALUES ( 3, 'A', 'Economic', 2);
 
-INSERT INTO seat (number, column_letter, seat_type, airplaine_id)
+INSERT INTO seat (number, column_letter, seat_type, airplane_id)
 VALUES ( 3, 'B', 'Economic', 2);
 
-INSERT INTO seat (number, column_letter, seat_type, airplaine_id)
+INSERT INTO seat (number, column_letter, seat_type, airplane_id)
 VALUES ( 3, 'C', 'Economic', 2);
 
-INSERT INTO seat (number, column_letter, seat_type, airplaine_id)
+INSERT INTO seat (number, column_letter, seat_type, airplane_id)
 VALUES ( 3, 'D', 'Economic', 2);
 
-INSERT INTO seat (number, column_letter, seat_type, airplaine_id)
+INSERT INTO seat (number, column_letter, seat_type, airplane_id)
 VALUES ( 3, 'E','Economic', 2);
 
-INSERT INTO seat (number, column_letter, seat_type, airplaine_id)
+INSERT INTO seat (number, column_letter, seat_type, airplane_id)
 VALUES ( 3, 'F','Economic', 2);
 
 -- ----------------- locality ---------------
