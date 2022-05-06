@@ -1,2 +1,6 @@
 # Projet-Java
-Management of seat reservations on airline flights
+User Interface : Management of seat reservations on airline flights
+
+Collaborators :
+   * Howet Marie
+   * Parache Melvin
