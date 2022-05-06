@@ -71,13 +71,16 @@ public class BookingDBAccess implements BookingDataAccess{
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             ResultSet data = preparedStatement.executeQuery();
             Booking booking;
+            GregorianCalendar calendar;
             Integer luggageWeight;
             String companyName;
 
             while(data.next()) {
-                //data.getInt("id"),
-                //data.getDate("date_booking"),
-                booking = new Booking (
+                calendar = new GregorianCalendar();
+                calendar.setTime(data.getDate("date_booking"));
+               booking = new Booking (
+                        data.getInt("id"),
+                        calendar,
                         data.getBoolean("has_paid"),
                         data.getString("meal_type"),
                         data.getDouble("real_price"),

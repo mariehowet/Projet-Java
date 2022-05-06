@@ -96,12 +96,12 @@ public class BookingForm extends JPanel {
 
         // Ajout dans la BD : test
         setController(new ApplicationController());
-        booking = new Booking(true, null, null, "poulet", 750.0, 1, 1, 1);
+        booking = new Booking(false, 15, "Odoo", "boeuf", 1000.0, 1, 1, 1);
 
         try {
             controller.addBooking(booking);
         } catch (AddBookingException exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage() + " MainJframe");
+            JOptionPane.showMessageDialog(null, exception.getMessage());
         }
 
     }

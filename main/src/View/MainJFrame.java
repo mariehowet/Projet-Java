@@ -2,7 +2,8 @@ package View;
 
 import Controller.ApplicationController;
 import Model.Booking;
-import Exception.AddBookingException;
+import Exception.*;
+import jdk.nashorn.internal.scripts.JO;
 
 import javax.swing.*;
 import java.awt.*;
@@ -85,12 +86,18 @@ public class MainJFrame extends JFrame {
         BookingForm = new BookingForm();
 
         // Listing des réservations
-        ApplicationController controller = new ApplicationController();
+        /*ApplicationController controller = new ApplicationController();
 
         try {
-            ArrayList<Booking> bookings = controller.getAllBookings();
-        }
+           ArrayList<Booking> bookings = controller.getAllBookings();
+            for (Booking b: bookings) {
+                System.out.println(b);
+            }
+        } catch (AllBookingsException exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage());
 
+        }
+*/
 
         // Affichage
         this.addWindowListener(new WindowAdapter() {

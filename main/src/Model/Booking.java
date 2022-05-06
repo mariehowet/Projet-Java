@@ -19,8 +19,8 @@ public class Booking {
     public Booking(Boolean hasPaid, Integer luggageWeight, String companyName, String mealType, Double realPrice, int flightID, int seatID, int passengerID) {
         setDate(new GregorianCalendar());
         this.hasPaid = hasPaid;
-        this.luggageWeight = luggageWeight;
-        this.companyName = companyName;
+        setLuggageWeight(luggageWeight);
+        setCompanyName(companyName);
         this.mealType = mealType;
         this.realPrice = realPrice;
         this.flightID = flightID;
@@ -28,8 +28,15 @@ public class Booking {
         this.passengerID = passengerID;
     }
 
-    public Booking(Boolean hasPaid, String mealType, Double realPrice, int flightID, int seatID, int passengerID) {
-        this(hasPaid, null, null, mealType, realPrice, flightID, seatID, passengerID);
+    public Booking(int id, GregorianCalendar date, Boolean hasPaid, String mealType, Double realPrice, int flightID, int seatID, int passengerID) {
+        this.id = id;
+        this.date = date;
+        this.hasPaid = hasPaid;
+        this.mealType = mealType;
+        this.realPrice = realPrice;
+        this.flightID = flightID;
+        this.seatID = seatID;
+        this.passengerID = passengerID;
     }
 
 
@@ -111,6 +118,22 @@ public class Booking {
 
     public void setPassengerID(int passengerID) {
         this.passengerID = passengerID;
+    }
+
+    @Override
+    public String toString() {
+        return "Booking{" +
+                "id=" + id +
+                ", date=" + date.getTime() +
+                ", hasPaid=" + hasPaid +
+                ", luggageWeight=" + luggageWeight +
+                ", companyName='" + companyName + '\'' +
+                ", mealType='" + mealType + '\'' +
+                ", realPrice=" + realPrice +
+                ", flightID=" + flightID +
+                ", seatID=" + seatID +
+                ", passengerID=" + passengerID +
+                '}';
     }
 }
 
