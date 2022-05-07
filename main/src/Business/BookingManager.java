@@ -16,7 +16,7 @@ public class BookingManager {
 
     public BookingManager(){
        try {
-           setDao( new BookingDBAccess());
+           dao = new BookingDBAccess();
        } catch (ConnectionException connectionException) {
            JOptionPane.showMessageDialog(null, connectionException.getMessage()); // mettre une méthode d'affichage pour l'utilisateur
        }

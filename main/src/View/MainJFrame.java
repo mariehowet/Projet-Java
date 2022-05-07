@@ -18,8 +18,8 @@ public class MainJFrame extends JFrame {
     private Container frameContainer;
     private WelcomeJPanel welcomeJPanel;
     private JMenuBar menuBar;
-    private JMenu researchMenu, findFlightMenu, monitoringFlightMenu, form;
-    private JMenuItem research1, research2, research3, menuIemFlightMenu, monitoringFlight, booking;
+    private JMenu marvinAirline,researchMenu, findFlightMenu, monitoringFlightMenu, form, bookings;
+    private JMenuItem exitMenuItem, backToWelcomePanel, research1, research2, research3, menuIemFlightMenu, monitoringFlight, bookingsMenuItem;
     private JPanel BookingForm;
 
     public MainJFrame(){
@@ -40,16 +40,26 @@ public class MainJFrame extends JFrame {
         setJMenuBar(menuBar);
 
         // Options menu
+        marvinAirline = new JMenu("Marvin Airline");
         researchMenu = new JMenu("Recherches");
         findFlightMenu = new JMenu("Trouver un vol");
         monitoringFlightMenu = new JMenu("Suivi d'un vol");
         form = new JMenu("Formulaire");
+        bookings = new JMenu("Réservations");
 
-
+        menuBar.add(marvinAirline);
         menuBar.add(researchMenu);
         menuBar.add(findFlightMenu);
         menuBar.add(monitoringFlightMenu);
-        menuBar.add(form);
+        menuBar.add(bookings);
+
+        // Items : Marvin Airline
+        exitMenuItem = new JMenuItem("Quitter");
+        exitMenuItem.addActionListener(new ExitListener());
+        backToWelcomePanel = new JMenuItem("Retour au menu principal");
+        backToWelcomePanel.addActionListener(new BackToWelcomePanelListener());
+        marvinAirline.add(exitMenuItem);
+        marvinAirline.add(backToWelcomePanel);
 
         // Item : recherche 1
         research1 = new JMenuItem("Recherche 1");
@@ -76,10 +86,13 @@ public class MainJFrame extends JFrame {
         monitoringFlight.addActionListener(new JMenuItemListener(5));
         monitoringFlightMenu.add(monitoringFlight);
 
-        // Form
-        booking = new JMenuItem("Réservation d'un vol");
-        booking.addActionListener(new JMenuItemListener(6));
-        form.add(booking);
+
+        // Bookings
+        bookingsMenuItem = new JMenuItem("Aller vers les réservations");
+        bookingsMenuItem.addActionListener(new JMenuItemListener(6));
+        bookings.add(bookingsMenuItem);
+
+
 
         // Ajout des données dans la BD
         BookingForm = new BookingForm();
@@ -87,9 +100,7 @@ public class MainJFrame extends JFrame {
         // Listing des réservations
         ApplicationController controller = new ApplicationController();
 
-        try {
-            ArrayList<Booking> bookings = controller.getAllBookings();
-        }
+
 
 
         // Affichage
@@ -129,10 +140,29 @@ public class MainJFrame extends JFrame {
                     frameContainer.add(new FollowedFlightJPanel(frameContainer), BorderLayout.CENTER);
                     break;
                 case 6:
-                    frameContainer.add(new BookingCreationPanel(), BorderLayout.CENTER);
+                    frameContainer.add(new AllBookingsPanel(), BorderLayout.CENTER);
                     break;
             }
             setVisible(true);
+        }
+    }
+
+    private class BackToWelcomePanelListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            frameContainer.removeAll();
+            WelcomeJPanel welcomeJPanel = new WelcomeJPanel();
+            frameContainer.add(welcomeJPanel);
+            setVisible(true);
+        }
+    }
+
+    private class ExitListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.exit(0);
         }
     }
 
