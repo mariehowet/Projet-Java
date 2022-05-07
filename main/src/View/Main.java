@@ -12,7 +12,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ConnectionException {
         MainJFrame mainJFrame = new MainJFrame();
 
     }

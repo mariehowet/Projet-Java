@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import Exception.ConnectionException;
 
-public class SingletonConnexion {
+public class SingletonConnection {
     private static Connection uniqueConnexion;
 
     public static Connection getInstance() throws ConnectionException { // il faut créer une classe qui extends Exception
@@ -19,4 +19,6 @@ public class SingletonConnexion {
         }
         return uniqueConnexion;
     }
+
+
 }

@@ -11,4 +11,5 @@ public interface BookingDataAccess {
     public ArrayList<Booking> getAllBookings() throws AllBookingsException;
     public void updateBooking(Booking booking);
     public void deleteBooking(Booking booking);
+    public void closeConnection() throws CloseDataException;
 }
