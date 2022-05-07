@@ -23,7 +23,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="mysql-connector-java-8.0.28" level="project" />
+    <orderEntry type="library" exported="" name="mysql-connector-java-8.0.28" level="project" />
     <orderEntry type="module-library">
       <library name="JUnit5.8.1">
         <CLASSES>

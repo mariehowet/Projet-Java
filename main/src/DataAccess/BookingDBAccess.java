@@ -28,7 +28,7 @@ public class BookingDBAccess implements BookingDataAccess{
         // Créer le PreparedStatement à partir de cette instruction SQL
 
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction, PreparedStatement.RETURN_GENERATED_KEYS);
             // Remplacer les ? via les filtres (settors)
 
             preparedStatement.setDate(1, sqlDate);
@@ -40,6 +40,10 @@ public class BookingDBAccess implements BookingDataAccess{
             preparedStatement.setInt(7, booking.getFlightID());
             // Exécuter + Récupérer le nombre de lignes modifiées
             preparedStatement.executeUpdate();
+
+            ResultSet data = preparedStatement.getGeneratedKeys();
+            data.next();
+            booking.setId(data.getInt(1));
 
             if(booking.getLuggageWeight() != null) {
                 sqlInstruction = "update booking set luggage_weight = ? where id = ? ";
@@ -113,8 +117,16 @@ public class BookingDBAccess implements BookingDataAccess{
     }
 
     @Override
-    public void updateBooking(Booking booking) {
+    public void updateBooking(Booking booking) throws UpdateException{
+        String sqlInstruction = "update from booking where id = ? ";
 
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+            preparedStatement.setInt(1, booking.getId());
+        }
+        catch (SQLException exception) {
+            throw new UpdateException();
+        }
     }
 
     @Override

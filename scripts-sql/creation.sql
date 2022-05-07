@@ -112,7 +112,7 @@ CREATE TABLE `booking` (
                            CONSTRAINT `seat_booking_fk` FOREIGN KEY (`seat_id`) REFERENCES `seat` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
-
+DROP TABLE booking;
 /*
 DROP TABLE booking;
 DROP TABLE passenger;

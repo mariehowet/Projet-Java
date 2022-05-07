@@ -36,6 +36,8 @@ public class AllBookingsModel extends AbstractTableModel {
         return columnNames.size();
     }
 
+    public String getColumnName (int column) { return columnNames.get(column);}
+
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Booking booking = contents.get(rowIndex);

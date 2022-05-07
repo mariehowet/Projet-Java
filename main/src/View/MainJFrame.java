@@ -94,7 +94,7 @@ public class MainJFrame extends JFrame {
 
 
         // Ajout des données dans la BD
-        BookingForm = new BookingForm();
+       BookingForm = new BookingForm();
 
 
         this.addWindowListener(new ClosingListener());
