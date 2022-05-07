@@ -1,8 +1,7 @@
 package View;
 
 import Controller.ApplicationController;
-import Model.Booking;
-import Exception.AddBookingException;
+import Exception.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,9 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
 
+import Exception.ConnectionException;
 
 public class MainJFrame extends JFrame {
     private Container frameContainer;
@@ -22,7 +20,8 @@ public class MainJFrame extends JFrame {
     private JMenuItem exitMenuItem, backToWelcomePanel, research1, research2, research3, menuIemFlightMenu, monitoringFlight, bookingsMenuItem;
     private JPanel BookingForm;
 
-    public MainJFrame(){
+
+    public MainJFrame() {
         // fenetre
         super("Welcome");
         setBounds(0,0,1000,750);
@@ -97,19 +96,11 @@ public class MainJFrame extends JFrame {
         // Ajout des données dans la BD
         BookingForm = new BookingForm();
 
-        // Listing des réservations
-        ApplicationController controller = new ApplicationController();
 
-
+        this.addWindowListener(new ClosingListener());
 
 
         // Affichage
-        this.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        });
         setVisible(true);
     }
 
@@ -162,6 +153,24 @@ public class MainJFrame extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            System.exit(0);
+        }
+    }
+
+    private static class ClosingListener extends WindowAdapter {
+        @Override
+        public void windowClosing(WindowEvent e) {
+
+            try {
+                ApplicationController controller = new ApplicationController();
+                controller.closeConnection();
+            }
+            catch (ConnectionException exception) {
+                System.out.println("Problm de connection");
+            }
+            catch (CloseDataException closeDataException) {
+                JOptionPane.showMessageDialog(null, closeDataException.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
             System.exit(0);
         }
     }

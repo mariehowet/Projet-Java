@@ -14,13 +14,8 @@ import java.util.ArrayList;
 public class BookingManager {
     private BookingDataAccess dao;
 
-    public BookingManager(){
-       try {
-           dao = new BookingDBAccess();
-       } catch (ConnectionException connectionException) {
-           JOptionPane.showMessageDialog(null, connectionException.getMessage()); // mettre une méthode d'affichage pour l'utilisateur
-       }
-
+    public BookingManager() throws ConnectionException{
+        dao = new BookingDBAccess();
     }
 
     public ArrayList<Booking> getAllBookings() throws AllBookingsException {
@@ -35,5 +30,9 @@ public class BookingManager {
 
     public void setDao(BookingDataAccess dao) {
         this.dao = dao;
+    }
+
+    public void closeConnection() throws CloseDataException {
+        dao.closeConnection();
     }
 }

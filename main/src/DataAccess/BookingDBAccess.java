@@ -6,14 +6,13 @@ import Exception.*;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class BookingDBAccess implements BookingDataAccess{
     private Connection connection;
 
     public BookingDBAccess() throws ConnectionException {
-        connection = SingletonConnexion.getInstance();
+        connection = SingletonConnection.getInstance();
         // connection.close(); throws SQLException
     }
 
@@ -100,9 +99,17 @@ public class BookingDBAccess implements BookingDataAccess{
             }
 
         } catch (SQLException exception) {
-            new AllBookingsException();
+            throw new AllBookingsException();
         }
         return allBookings;
+    }
+
+    public void closeConnection() throws CloseDataException {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            throw new CloseDataException(e.getMessage());
+        }
     }
 
     @Override

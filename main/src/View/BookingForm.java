@@ -8,7 +8,8 @@ import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.GregorianCalendar;
-import Exception.AddBookingException;
+import Exception.*;
+
 
 
 public class BookingForm extends JPanel {
@@ -95,13 +96,17 @@ public class BookingForm extends JPanel {
         this.add(totalPrice);
 
         // Ajout dans la BD : test
-        setController(new ApplicationController());
+
         booking = new Booking(false, 15, "Odoo", "boeuf", 1000.0, 1, 1, 1);
 
         try {
+            setController(new ApplicationController());
             controller.addBooking(booking);
         } catch (AddBookingException exception) {
             JOptionPane.showMessageDialog(null, exception.getMessage());
+        }
+        catch (ConnectionException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());;
         }
 
     }

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class ApplicationController {
     private BookingManager manager;
 
-    public ApplicationController() {
+    public ApplicationController() throws ConnectionException{
         manager = new BookingManager();
     }
 
@@ -19,5 +19,9 @@ public class ApplicationController {
 
     public ArrayList<Booking> getAllBookings () throws AllBookingsException {
         return manager.getAllBookings();
+    }
+
+    public void closeConnection() throws  CloseDataException {
+        manager.closeConnection();
     }
 }

@@ -1,4 +1,4 @@
--- CREATE SCHEMA marvinairline;
+CREATE SCHEMA marvinairline;
 
 USE marvinairline;
 
