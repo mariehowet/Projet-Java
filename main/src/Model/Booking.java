@@ -38,7 +38,7 @@ public class Booking {
         this.seatID = seatID;
         this.passengerID = passengerID;
     }
-//99999999999999999999999999999999
+//
 
     public int getId() {
         return id;

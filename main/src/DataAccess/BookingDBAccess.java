@@ -7,6 +7,7 @@ import Exception.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.Optional;
 
 public class BookingDBAccess implements BookingDataAccess{
     private Connection connection;
@@ -35,9 +36,9 @@ public class BookingDBAccess implements BookingDataAccess{
             preparedStatement.setInt(2,(booking.getHasPaid() ? 1: 0));
             preparedStatement.setString(3, booking.getMealType());
             preparedStatement.setDouble(4, booking.getRealPrice());
-            preparedStatement.setInt(5, booking.getPassengerID());
+            preparedStatement.setInt(5, booking.getFlightID());
             preparedStatement.setInt(6, booking.getSeatID());
-            preparedStatement.setInt(7, booking.getFlightID());
+            preparedStatement.setInt(7, booking.getPassengerID());
             // Exécuter + Récupérer le nombre de lignes modifiées
             preparedStatement.executeUpdate();
 
@@ -60,6 +61,8 @@ public class BookingDBAccess implements BookingDataAccess{
                 preparedStatement.setInt(2, booking.getId());
                 preparedStatement.executeUpdate();
             }
+
+            connection.setAutoCommit(true);
         } catch (SQLException exception) {
             throw new AddBookingException();
         }
@@ -117,20 +120,44 @@ public class BookingDBAccess implements BookingDataAccess{
     }
 
     @Override
-    public void updateBooking(Booking booking) throws UpdateException{
-        String sqlInstruction = "update from booking where id = ? ";
-
+    public void updateBooking(int id, GregorianCalendar date, Boolean hasPaid, Integer luggageWeight, String companyName, String mealType, Double realPrice, int seatID) throws UpdateException{
+        String sqlInstruction = "update booking set date_booking = ?, has_paid = ?, luggage_weight = ?, company_name = ?, meal_type = ?,real_price = ?,  seat_id = ? where id = ? ";
+        GregorianCalendar calendar = date;
+        java.sql.Date sqlDate = new Date(calendar.getTimeInMillis());
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
-            preparedStatement.setInt(1, booking.getId());
+            preparedStatement.setDate(1, sqlDate);
+            preparedStatement.setInt(2,(hasPaid ? 1: 0));
+            preparedStatement.setInt(3,luggageWeight);
+            preparedStatement.setString(4, companyName);
+            preparedStatement.setString(5, mealType);
+            preparedStatement.setDouble(6, realPrice);
+            preparedStatement.setInt(7,seatID);
+            preparedStatement.setInt(8, id);
+            preparedStatement.executeUpdate();
+
+            connection.setAutoCommit(true);
         }
         catch (SQLException exception) {
+            System.out.println(exception.getMessage());
             throw new UpdateException();
         }
     }
 
     @Override
-    public void deleteBooking(Booking booking) {
+    public void deleteBooking(Booking booking) throws DeleteException {
+        String sqlInstruction = "delete from booking where id = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+            preparedStatement.setInt(1, booking.getId());
+            preparedStatement.executeUpdate();
+
+            connection.setAutoCommit(true);
+        } catch (SQLException e) {
+            throw new DeleteException();
+        }
+
 
     }
 }

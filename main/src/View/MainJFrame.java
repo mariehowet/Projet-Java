@@ -94,7 +94,7 @@ public class MainJFrame extends JFrame {
 
 
         // Ajout des données dans la BD
-       BookingForm = new BookingForm();
+        BookingForm = new BookingForm();
 
 
         this.addWindowListener(new ClosingListener());
@@ -131,7 +131,7 @@ public class MainJFrame extends JFrame {
                     frameContainer.add(new FollowedFlightJPanel(frameContainer), BorderLayout.CENTER);
                     break;
                 case 6:
-                    frameContainer.add(new AllBookingsPanel(), BorderLayout.CENTER);
+                    frameContainer.add(new AllBookingsPanel(frameContainer), BorderLayout.CENTER);
                     break;
             }
             setVisible(true);

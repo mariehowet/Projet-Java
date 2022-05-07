@@ -5,6 +5,8 @@ import Business.BookingManager;
 import Model.Booking;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.Optional;
 
 public class ApplicationController {
     private BookingManager manager;
@@ -24,4 +26,12 @@ public class ApplicationController {
     public void closeConnection() throws  CloseDataException {
         manager.closeConnection();
     }
+    public void updateBooking(int id, GregorianCalendar date, Boolean hasPaid, Integer luggageWeight, String companyName, String mealType, Double realPrice, int seatID) throws UpdateException{
+        manager.updateBooking( id,  date,  hasPaid,  luggageWeight,  companyName,  mealType,  realPrice,  seatID);
+    }
+
+    public void deleteBooking(Booking booking) throws DeleteException {
+        manager.deleteBooking(booking);
+    }
+
 }

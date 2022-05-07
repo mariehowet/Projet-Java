@@ -96,7 +96,7 @@ public class BookingForm extends JPanel {
         this.add(totalPrice);
 
         // Ajout dans la BD : test
-
+        // A faire via le formulaire
         booking = new Booking(false, 15, "Odoo", "boeuf", 1000.0, 1, 1, 1);
 
         try {
