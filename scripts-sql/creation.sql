@@ -114,13 +114,14 @@ CREATE TABLE `booking` (
 
 
 /*
-DROP TABLE airport;
-DROP TABLE flight;
-DROP TABLE stopover;
 DROP TABLE booking;
-DROP TABLE airplane;
-DROP TABLE locality;
 DROP TABLE passenger;
+DROP TABLE stopover;
+DROP TABLE flight;
 DROP TABLE seat;
 DROP TABLE seat_type;
-/*
+DROP TABLE airplane;
+DROP TABLE airport;
+DROP TABLE airport;
+
+ */
