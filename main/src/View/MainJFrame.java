@@ -153,6 +153,16 @@ public class MainJFrame extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            try {
+                ApplicationController controller = new ApplicationController();
+                controller.closeConnection();
+            }
+            catch (ConnectionException connectionException) {
+                JOptionPane.showMessageDialog(null, connectionException.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
+            catch (CloseDataException closeDataException) {
+                JOptionPane.showMessageDialog(null, closeDataException.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
             System.exit(0);
         }
     }
@@ -165,8 +175,8 @@ public class MainJFrame extends JFrame {
                 ApplicationController controller = new ApplicationController();
                 controller.closeConnection();
             }
-            catch (ConnectionException exception) {
-                System.out.println("Problm de connection");
+            catch (ConnectionException connectionException) {
+                JOptionPane.showMessageDialog(null, connectionException.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
             catch (CloseDataException closeDataException) {
                 JOptionPane.showMessageDialog(null, closeDataException.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);

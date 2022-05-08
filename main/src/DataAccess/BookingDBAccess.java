@@ -3,6 +3,7 @@ package DataAccess;
 import Model.Booking;
 
 import Exception.*;
+import Model.PassengerBooking;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -159,5 +160,16 @@ public class BookingDBAccess implements BookingDataAccess{
         }
 
 
+    }
+
+    @Override
+    public ArrayList<PassengerBooking> getBookingsHistory(int idPassenger) {
+        String sqlInstruction = "select * from booking where passenger_id = ?";
+        ArrayList<PassengerBooking> bookingsHistory = new ArrayList<>();
+        // traitement
+
+
+
+        return bookingsHistory;
     }
 }
