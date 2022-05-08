@@ -7,6 +7,8 @@ import Exception.*;
 
 import javax.swing.*;
 import Exception.AddBookingException;
+import Model.Passenger;
+import Model.SeatType;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -46,6 +48,14 @@ public class BookingManager {
 
     public void closeConnection() throws CloseDataException {
         dao.closeConnection();
+    }
+
+    public ArrayList<Passenger> getAllPassengers() throws PassengerException {
+        return dao.getAllPassengers();
+    }
+
+    public ArrayList<SeatType> getAllSeatTypes() throws SeatTypeException {
+        return dao.getAllSeatTypes();
     }
 
 

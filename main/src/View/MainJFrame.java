@@ -17,7 +17,7 @@ public class MainJFrame extends JFrame {
     private WelcomeJPanel welcomeJPanel;
     private JMenuBar menuBar;
     private JMenu marvinAirline,researchMenu, findFlightMenu, monitoringFlightMenu, form, bookings;
-    private JMenuItem exitMenuItem, backToWelcomePanel, research1, research2, research3, menuIemFlightMenu, monitoringFlight, bookingsMenuItem;
+    private JMenuItem exitMenuItem, backToWelcomePanel, research1, research2, research3, menuIemFlightMenu, monitoringFlight, bookingsMenuItem, addBookingMenuItem;
     private JPanel BookingForm;
 
 
@@ -55,46 +55,48 @@ public class MainJFrame extends JFrame {
         // Items : Marvin Airline
         exitMenuItem = new JMenuItem("Quitter");
         exitMenuItem.addActionListener(new ExitListener());
-        backToWelcomePanel = new JMenuItem("Retour au menu principal");
+        backToWelcomePanel = new JMenuItem("Page d'acceuil");
         backToWelcomePanel.addActionListener(new BackToWelcomePanelListener());
-        marvinAirline.add(exitMenuItem);
         marvinAirline.add(backToWelcomePanel);
+        marvinAirline.add(exitMenuItem);
+
 
         // Item : recherche 1
-        research1 = new JMenuItem("Recherche 1");
-        research1.addActionListener(new JMenuItemListener(1));
+        research1 = new JMenuItem("Vols partant d'un aéroport");
+        research1.addActionListener(new Research1Listener());
         researchMenu.add(research1);
 
         // Item : recherche 2
-        research2 = new JMenuItem("Recherche 2");
-        research2.addActionListener(new JMenuItemListener( 2));
+        research2 = new JMenuItem("Vols avec et sans escales");
+        research2.addActionListener(new Research2Listener());
         researchMenu.add(research2);
 
         // Item : recherche 3
-        research3 = new JMenuItem("Recherche 3");
-        research3.addActionListener(new JMenuItemListener(3));
+        research3 = new JMenuItem("Historique des réservations d'un passager");
+        research3.addActionListener(new Research3Listener());
         researchMenu.add(research3);
 
         // Find Flight
         menuIemFlightMenu = new JMenuItem("Aller à la recherche");
-        menuIemFlightMenu.addActionListener(new JMenuItemListener(4));
+        menuIemFlightMenu.addActionListener(new FindFlightListener());
         findFlightMenu.add(menuIemFlightMenu);
 
         // Monitoring
         monitoringFlight = new JMenuItem(" Suivez votre vol en direct !");
-        monitoringFlight.addActionListener(new JMenuItemListener(5));
+        monitoringFlight.addActionListener(new ThreadListener());
         monitoringFlightMenu.add(monitoringFlight);
 
 
         // Bookings
-        bookingsMenuItem = new JMenuItem("Aller vers les réservations");
-        bookingsMenuItem.addActionListener(new JMenuItemListener(6));
+        bookingsMenuItem = new JMenuItem("Liste des réservations");
+        addBookingMenuItem = new JMenuItem("Ajouter une réservation");
+        addBookingMenuItem.addActionListener(new AddBookingListener());
+        bookingsMenuItem.addActionListener(new ListeningListener());
         bookings.add(bookingsMenuItem);
-
+        bookings.add(addBookingMenuItem);
 
 
         // Ajout des données dans la BD
-        BookingForm = new BookingForm();
 
 
         this.addWindowListener(new ClosingListener());
@@ -104,36 +106,65 @@ public class MainJFrame extends JFrame {
         setVisible(true);
     }
 
-    private class JMenuItemListener implements ActionListener {
-        int numPanel;
-
-        public JMenuItemListener(int numPanel) {
-            this.numPanel = numPanel;
-        }
-
+    public class Research1Listener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             frameContainer.removeAll();
-            switch (numPanel) {
-                case 1:
-                    frameContainer.add(new Research1JPanel(frameContainer), BorderLayout.CENTER);
-                    break;
-                case 2:
-                    frameContainer.add(new Research2JPanel(frameContainer), BorderLayout.CENTER);
-                    break;
-                case 3:
-                    frameContainer.add(new Research3JPanel(frameContainer), BorderLayout.CENTER);
-                    break;
-                case 4:
-                    frameContainer.add(new FindFlight(frameContainer), BorderLayout.CENTER);
-                    break;
-                case 5:
-                    frameContainer.add(new FollowedFlightJPanel(frameContainer), BorderLayout.CENTER);
-                    break;
-                case 6:
-                    frameContainer.add(new AllBookingsPanel(frameContainer), BorderLayout.CENTER);
-                    break;
-            }
+            frameContainer.add(new Research1JPanel(frameContainer), BorderLayout.CENTER);
+            setVisible(true);
+
+        }
+    }
+
+    public class Research2Listener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            frameContainer.removeAll();
+            frameContainer.add(new Research2JPanel(frameContainer), BorderLayout.CENTER);
+            setVisible(true);
+        }
+    }
+    public class Research3Listener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            frameContainer.removeAll();
+            frameContainer.add(new Research3JPanel(frameContainer), BorderLayout.CENTER);
+            setVisible(true);
+        }
+    }
+
+    public class FindFlightListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            frameContainer.removeAll();
+            frameContainer.add(new FindFlight(frameContainer), BorderLayout.CENTER);
+            setVisible(true);
+        }
+    }
+
+    public class ThreadListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            frameContainer.removeAll();
+            frameContainer.add(new FollowedFlightJPanel(frameContainer), BorderLayout.CENTER);
+            setVisible(true);
+        }
+    }
+
+    public class ListeningListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            frameContainer.removeAll();
+            frameContainer.add(new AllBookingsPanel(frameContainer), BorderLayout.CENTER);
+            setVisible(true);
+        }
+    }
+
+    public class AddBookingListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            frameContainer.removeAll();
+            frameContainer.add(new BookingCreationPanel(), BorderLayout.CENTER);
             setVisible(true);
         }
     }

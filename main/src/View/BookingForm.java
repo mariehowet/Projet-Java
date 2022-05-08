@@ -5,38 +5,77 @@ import Model.Booking;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
-import Exception.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import Exception.*;
+import Model.Passenger;
+import Model.SeatType;
 
 
 public class BookingForm extends JPanel {
+    private static final int NB_PASSENGERS = 8;
+    private static final int NB_SEAT_TYPES = 3;
+
     private JLabel idPassengerLabel, seatTypeLabel, weightLuggageLabel,
             companyNameLabel, mealTypeLabel, totalPriceLabel;
-    private JTextField idPassenger, companyName, totalPrice;
+    private JTextField  companyName, totalPrice;
     private JRadioButton buttonYesLuggage, buttonNoLuggage,
             buttonYesBusinessFlight, buttonNoBusinessFlight, buttonPayNow, buttonPayAfter;
-    private JComboBox seatType, weightLuggage, mealType;
+    private JComboBox seatType, weightLuggage, mealType, idPassenger;
     private ButtonGroup hasLuggage, isBusinessFlight, payment;
-
-
     private ApplicationController controller;
     private Booking booking;
-    public BookingForm() {
+
+    public BookingForm() throws ConnectionException {
         this.setBorder(new EmptyBorder(25, 150, 25, 150));
         this.setLayout(new GridLayout(9,2));
+        this.setController(new ApplicationController());
 
-        idPassengerLabel = new JLabel("Votre identifiant : ");
+        //--------------------Passenger------------------------------
+        idPassengerLabel = new JLabel("Votre nom : ");
         this.add(idPassengerLabel);
-        idPassenger = new JTextField();
+        String [] passengersValues = new String[NB_PASSENGERS];
+        int nbPassangers = 0;
+        try {
+            ArrayList<Passenger> passengerList = controller.getAllPassengers();
+
+            for(Passenger pas : passengerList) {
+                passengersValues[nbPassangers] = pas.getId() + "-" + pas.getFirstName() + " " + pas.getLastName() + (pas.getInitialMiddleName() != null ? pas.getInitialMiddleName() : "" );
+                nbPassangers++;
+            }
+
+        } catch (PassengerException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        idPassenger = new JComboBox(passengersValues);
         this.add(idPassenger);
 
+        //--------------------SeatType------------------------------
         seatTypeLabel = new JLabel("Type de siège : ");
         this.add(seatTypeLabel);
-        String[] seatTypes = {"Classe économique (+30€)","Classe business (+ 100€)","Première classe (+200€)"};
+        String[] seatTypes = new String[NB_SEAT_TYPES];
+        int nbSeatTypes = 0;
+        try {
+            ArrayList<SeatType> seatTypeList = controller.getAllSeatTypes();
+
+            for(SeatType st : seatTypeList) {
+                seatTypes[nbSeatTypes] = st.getName() + " " + "(+ " + st.getAdditionalPrice() + ")";
+                nbSeatTypes++;
+            }
+
+        } catch (SeatTypeException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
         seatType = new JComboBox(seatTypes);
+        seatType.setSelectedItem(seatTypes[1]);
         this.add(seatType);
 
         hasLuggage = new ButtonGroup();
@@ -53,8 +92,8 @@ public class BookingForm extends JPanel {
         this.add(weightLuggageLabel);
         String[] weights = {"","0 < 10 kg (+0€)","10 < 20 kg (+10€)","20 < 30 kg (+20€)","Max 35 kg (+25€)"};
         weightLuggage = new JComboBox(weights);
-        weightLuggage.setSelectedItem(weights[0]);
-        weightLuggage.setMaximumRowCount(2);
+        //weightLuggage.setSelectedItem(weights[0]);
+        //weightLuggage.setMaximumRowCount(2);
         this.add(weightLuggage);
 
         isBusinessFlight = new ButtonGroup();
@@ -77,7 +116,7 @@ public class BookingForm extends JPanel {
         this.add(mealTypeLabel);
         String[] mealTypes = {"Poulet","Boeuf","Végétarien","Porc"};
         mealType = new JComboBox(mealTypes);
-        mealType.setMaximumRowCount(2);
+       //mealType.setMaximumRowCount(2);
         this.add(mealType);
 
         payment = new ButtonGroup();
@@ -96,7 +135,7 @@ public class BookingForm extends JPanel {
         this.add(totalPrice);
 
         // Ajout dans la BD : test
-        // A faire via le formulaire
+        /* A faire via le formulaire
         booking = new Booking(false, 15, "Odoo", "boeuf", 1000.0, 1, 1, 1);
 
         try {
@@ -107,7 +146,7 @@ public class BookingForm extends JPanel {
         }
         catch (ConnectionException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());;
-        }
+        }*/
 
     }
 
@@ -139,6 +178,16 @@ public class BookingForm extends JPanel {
             } else {
                 companyName.setEnabled(true);
             }
+        }
+    }
+
+    private class ValidationListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Booking booking;
+            Pattern patternPassenger = Pattern.compile("\\d", Pattern.CASE_INSENSITIVE);
+            Matcher matcher1 = patternPassenger.matcher(idPassenger.getSelectedItem().toString());
+            //booking  = new Booking()
         }
     }
 

@@ -3,7 +3,9 @@ package DataAccess;
 import Model.Booking;
 
 import Exception.*;
+import Model.Passenger;
 import Model.PassengerBooking;
+import Model.SeatType;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -171,5 +173,68 @@ public class BookingDBAccess implements BookingDataAccess{
 
 
         return bookingsHistory;
+    }
+
+    @Override
+    public ArrayList<Passenger> getAllPassengers() throws PassengerException {
+        String sqlInstruction = "select * from passenger";
+        ArrayList<Passenger>  allPassengers = new ArrayList<>();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+            ResultSet data = preparedStatement.executeQuery();
+
+            Passenger passenger;
+            GregorianCalendar calendar;
+
+            while(data.next()) {
+                calendar = new GregorianCalendar();
+                calendar.setTime(data.getDate("birth_date"));
+                passenger = new Passenger(
+                        data.getInt("id"),
+                        data.getString("last_name"),
+                        data.getString("first_name"),
+                        data.getString("initial_middle_name"),
+                        calendar,
+                        data.getString("email"),
+                        data.getString("phone_number"),
+                        data.getString("street_and_number"),
+                        data.getString("city"),
+                        data.getString("post_code"),
+                        data.getString("country")
+                );
+
+                allPassengers.add(passenger);
+            }
+            return allPassengers;
+
+        } catch (SQLException exception) {
+            throw new PassengerException();
+        }
+    }
+
+    @Override
+    public ArrayList<SeatType> getAllSeatTypes() throws SeatTypeException {
+        String sqlInstruction = "select * from seat_type";
+        ArrayList<SeatType>  allSeatTypes = new ArrayList<>();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+            ResultSet data = preparedStatement.executeQuery();
+            SeatType seatType;
+
+            while(data.next()) {
+                seatType = new SeatType(
+                        data.getString("name"),
+                        data.getInt("additional_price")
+                );
+
+                allSeatTypes.add(seatType);
+            }
+            return allSeatTypes;
+
+        } catch (SQLException exception) {
+            throw new SeatTypeException();
+        }
     }
 }

@@ -2,7 +2,7 @@ package DataAccess;
 
 import Model.Booking;
 import Exception.*;
-import Model.PassengerBooking;
+import Model.*;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -16,4 +16,6 @@ public interface BookingDataAccess {
     public void deleteBooking(Booking booking) throws DeleteException;
     public void closeConnection() throws CloseDataException;
     public ArrayList<PassengerBooking> getBookingsHistory(int idPassenger);
+    public ArrayList<Passenger> getAllPassengers() throws PassengerException;
+    public ArrayList<SeatType> getAllSeatTypes () throws SeatTypeException;
 }

@@ -3,6 +3,8 @@ package Controller;
 import Exception.*;
 import Business.BookingManager;
 import Model.Booking;
+import Model.Passenger;
+import Model.SeatType;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -32,6 +34,14 @@ public class ApplicationController {
 
     public void deleteBooking(Booking booking) throws DeleteException {
         manager.deleteBooking(booking);
+    }
+
+    public ArrayList<Passenger> getAllPassengers() throws PassengerException {
+        return manager.getAllPassengers();
+    }
+
+    public ArrayList<SeatType> getAllSeatTypes() throws SeatTypeException {
+        return manager.getAllSeatTypes();
     }
 
 }
