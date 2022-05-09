@@ -128,7 +128,11 @@ public class MainJFrame extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             frameContainer.removeAll();
-            frameContainer.add(new Research3JPanel(frameContainer), BorderLayout.CENTER);
+            try{
+                frameContainer.add(new HistorySearch(frameContainer), BorderLayout.CENTER);
+            } catch (ConnectionException historyConnectionException) {
+                JOptionPane.showMessageDialog(null, historyConnectionException.getMessage());
+            }
             setVisible(true);
         }
     }

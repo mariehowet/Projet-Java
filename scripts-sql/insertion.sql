@@ -1,5 +1,12 @@
 USE marvinairline;
 
+-- -------------------- booking ------------
+INSERT INTO booking (date_booking, has_paid, luggage_weight, company_name, meal_type, real_price, flight_id, seat_id, passenger_id)
+VALUES ('2022-05-09',true,10,'Protellux','Poulet',1000.0,1,5,1);
+
+INSERT INTO booking (date_booking, has_paid, luggage_weight, company_name, meal_type, real_price, flight_id, seat_id, passenger_id)
+VALUES ('2022-05-10',false,20,null,'Porc',2000.0,2,13,1);
+
 -- ----------------- airplane---------------
 INSERT INTO airplane (airplane_type)
 VALUES ('AIRBUS A380');
@@ -228,5 +235,8 @@ VALUES('Hanquet', 'Julien',null, '2000-01-01', 'jh@gmail.com','0478955465', 'Rue
 --  --------------------flight --------------------------------
 INSERT INTO flight (departure_date, departure_hour, expected_arrival_date, expected_arrival_hour, price, airplane_id, departure_airport_id, arrival_airport_id)
 VALUES('2022-06-20', '16:00:00','2022-06-20','18:00:00', 750.0, 1, 3, 10);
+
+INSERT INTO flight (departure_date, departure_hour, expected_arrival_date, expected_arrival_hour, price, airplane_id, departure_airport_id, arrival_airport_id)
+VALUES('2022-05-10', '14:00:00','2022-06-20','18:00:00', 600, 2, 1, 2);
 
 

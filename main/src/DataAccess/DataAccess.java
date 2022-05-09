@@ -15,10 +15,9 @@ public interface DataAccess {
     public void updateBooking(int id, GregorianCalendar date, Boolean hasPaid, Integer luggageWeight, String companyName, String mealType, Double realPrice, int seatID) throws UpdateException;
     public void deleteBooking(Booking booking) throws DeleteException;
     public void closeConnection() throws CloseDataException;
-    public ArrayList<PassengerBooking> getBookingsHistory(int idPassenger);
+    public ArrayList<PassengerBooking> getBookingsHistory(int idPassenger) throws BookingsHistoryException;
     public ArrayList<Passenger> getAllPassengers() throws PassengerException;
     public ArrayList<SeatType> getAllSeatTypes () throws SeatTypeException;
     public ArrayList<Flight> getAllFlights() throws AllFlightsException;
     public ArrayList<Seat> getAvailableSeats(String seatType) throws AvailableSeatsException;
-
 }
