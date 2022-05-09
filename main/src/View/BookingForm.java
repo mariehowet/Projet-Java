@@ -1,7 +1,6 @@
 package View;
 
 import Controller.ApplicationController;
-import Model.Booking;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -10,13 +9,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import Exception.*;
-import Model.Passenger;
-import Model.SeatType;
+import Model.*;
+
 
 
 public class BookingForm extends JPanel {
@@ -24,49 +23,79 @@ public class BookingForm extends JPanel {
     private static final int NB_SEAT_TYPES = 3;
 
     private JLabel idPassengerLabel, seatTypeLabel, weightLuggageLabel,
-            companyNameLabel, mealTypeLabel, totalPriceLabel;
+            companyNameLabel, mealTypeLabel, totalPriceLabel, flightLabel, seatLabel;
     private JTextField  companyName, totalPrice;
     private JRadioButton buttonYesLuggage, buttonNoLuggage,
             buttonYesBusinessFlight, buttonNoBusinessFlight, buttonPayNow, buttonPayAfter;
-    private JComboBox seatType, weightLuggage, mealType, idPassenger;
+    private JComboBox seatType, weightLuggage, mealType, idPassenger, flightBox, seatBox;
     private ButtonGroup hasLuggage, isBusinessFlight, payment;
     private ApplicationController controller;
     private Booking booking;
 
     public BookingForm() throws ConnectionException {
         this.setBorder(new EmptyBorder(25, 150, 25, 150));
-        this.setLayout(new GridLayout(9,2));
+        this.setLayout(new GridLayout(11,2));
         this.setController(new ApplicationController());
+        //------------------Flight----------------------------------
+        flightLabel = new JLabel("Votre vol :");
+        this.add(flightLabel);
+        String [] flightValues;
+        try {
+            ArrayList<Flight> flightList = controller.getAllFlights();
+            ArrayList<String> flights = new ArrayList<>();
 
+            for(Flight fl : flightList) {
+                flights.add(fl.getId()+ "");
+            }
+            int nb = flights.size();
+            flightValues = new String[nb];
+
+            for (int j = 0; j < nb; j++) {
+                flightValues[j] = flights.get(j);
+            }
+
+            flightBox = new JComboBox(flightValues);
+            this.add(flightBox);
+
+        } catch (AllFlightsException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
         //--------------------Passenger------------------------------
         idPassengerLabel = new JLabel("Votre nom : ");
         this.add(idPassengerLabel);
-        String [] passengersValues = new String[NB_PASSENGERS];
-        int nbPassangers = 0;
+        String [] passengersValues;
         try {
             ArrayList<Passenger> passengerList = controller.getAllPassengers();
+            ArrayList<String> passengers = new ArrayList<>();
 
             for(Passenger pas : passengerList) {
-                passengersValues[nbPassangers] = pas.getId() + "-" + pas.getFirstName() + " " + pas.getLastName() + (pas.getInitialMiddleName() != null ? pas.getInitialMiddleName() : "" );
-                nbPassangers++;
+                passengers.add(pas.getId() + "-" + pas.getFirstName() + " " + pas.getLastName() + (pas.getInitialMiddleName() != null ? pas.getInitialMiddleName() : "" ));
             }
+            int nbPassengers = passengers.size();
+            passengersValues = new String[nbPassengers];
+
+            for (int j = 0; j < nbPassengers; j++) {
+                passengersValues[j] = passengers.get(j);
+            }
+
+            idPassenger = new JComboBox(passengersValues);
+            this.add(idPassenger);
 
         } catch (PassengerException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
-        idPassenger = new JComboBox(passengersValues);
-        this.add(idPassenger);
 
         //--------------------SeatType------------------------------
-        seatTypeLabel = new JLabel("Type de siège : ");
-        this.add(seatTypeLabel);
+        seatLabel = new JLabel("Type de siège : ");
+        this.add(seatLabel);
         String[] seatTypes = new String[NB_SEAT_TYPES];
         int nbSeatTypes = 0;
         try {
             ArrayList<SeatType> seatTypeList = controller.getAllSeatTypes();
 
             for(SeatType st : seatTypeList) {
-                seatTypes[nbSeatTypes] = st.getName() + " " + "(+ " + st.getAdditionalPrice() + ")";
+                //seatTypes[nbSeatTypes] = st.getName() + " " + "(+ " + st.getAdditionalPrice() + ")";
+                seatTypes[nbSeatTypes] = st.getName();
                 nbSeatTypes++;
             }
 
@@ -75,9 +104,37 @@ public class BookingForm extends JPanel {
         }
 
         seatType = new JComboBox(seatTypes);
-        seatType.setSelectedItem(seatTypes[1]);
+        //seatType.setSelectedItem(seatTypes[1]);
         this.add(seatType);
 
+        //-------------------------Seat--------------------------------------
+        seatLabel = new JLabel("Votre siège :");
+        this.add(seatLabel);
+        String [] seatValues;
+        try {
+            System.out.println(seatType.getSelectedItem().toString());
+            ArrayList<Seat> seatList = controller.getAvailableSeats(seatType.getSelectedItem().toString());
+
+            ArrayList<String> seats = new ArrayList<>();
+
+            for(Seat st : seatList) {
+                seats.add(st.getId()+ "-" + st.getNumber() + st.getColumnLetter());
+            }
+            int nb = seats.size();
+            seatValues = new String[nb];
+
+            for (int j = 0; j < nb; j++) {
+                seatValues[j] = seats.get(j);
+            }
+
+            seatBox = new JComboBox(seatValues);
+            this.add(seatBox);
+
+        } catch (AvailableSeatsException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
+        //--------------------Luggage------------------------------------------
         hasLuggage = new ButtonGroup();
         buttonYesLuggage = new JRadioButton("Je dispose de bagages");
         this.add(buttonYesLuggage);

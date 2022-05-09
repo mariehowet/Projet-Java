@@ -1,21 +1,17 @@
 package DataAccess;
 
-import Model.Booking;
+import Model.*;
 
 import Exception.*;
-import Model.Passenger;
-import Model.PassengerBooking;
-import Model.SeatType;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
-import java.util.Optional;
 
-public class BookingDBAccess implements BookingDataAccess{
+public class DBAccess implements DataAccess {
     private Connection connection;
 
-    public BookingDBAccess() throws ConnectionException {
+    public DBAccess() throws ConnectionException {
         connection = SingletonConnection.getInstance();
         // connection.close(); throws SQLException
     }
@@ -235,6 +231,71 @@ public class BookingDBAccess implements BookingDataAccess{
 
         } catch (SQLException exception) {
             throw new SeatTypeException();
+        }
+    }
+
+    public ArrayList<Flight> getAllFlights() throws AllFlightsException {
+        String sqlInstruction = "select * from flight";
+        ArrayList<Flight>  allFlights = new ArrayList<>();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+            ResultSet data = preparedStatement.executeQuery();
+            Flight flight;
+            GregorianCalendar departureDate;
+            GregorianCalendar arrivalDate;
+
+            while(data.next()) {
+                departureDate = new GregorianCalendar();
+                arrivalDate = new GregorianCalendar();
+
+                departureDate.setTime( data.getDate("departure_date"));
+                arrivalDate.setTime( data.getDate("expected_arrival_date"));
+                flight = new Flight(
+                        data.getInt("id"),
+                       departureDate,
+                        data.getString("departure_hour"),
+                        arrivalDate,
+                        data.getString("expected_arrival_hour"),
+                        data.getDouble("price"),
+                        data.getInt("airplane_id"),
+                        data.getInt("departure_airport_id"),
+                        data.getInt("arrival_airport_id")
+                );
+
+                allFlights.add(flight);
+            }
+            return allFlights;
+
+        } catch (SQLException exception) {
+            throw new AllFlightsException();
+        }
+    }
+
+    public ArrayList<Seat> getAvailableSeats(String seatType) throws AvailableSeatsException {
+        String sqlInstruction = "select * from seat where seat_type = ?"; // changer requete sql pour trouver tous les vols dispo
+        ArrayList<Seat>  availableSeats = new ArrayList<>();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+            preparedStatement.setString(1, seatType);
+            ResultSet data = preparedStatement.executeQuery();
+            Seat seat;
+
+            while(data.next()) {
+                seat = new Seat(
+                        data.getInt("id"),
+                        data.getInt("number"),
+                        data.getString("column_letter"),
+                        data.getString("seat_type"),
+                        data.getInt("airplane_id")
+                );
+                availableSeats.add(seat);
+            }
+            return availableSeats;
+
+        } catch (SQLException exception) {
+            throw new AvailableSeatsException();
         }
     }
 }

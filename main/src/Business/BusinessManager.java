@@ -1,27 +1,21 @@
 package Business;
 
-import DataAccess.BookingDBAccess;
-import DataAccess.BookingDataAccess;
-import Model.Booking;
+import DataAccess.DBAccess;
+import DataAccess.DataAccess;
+import Model.*;
 import Exception.*;
 
-import javax.swing.*;
 import Exception.AddBookingException;
-import Model.Passenger;
-import Model.SeatType;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
-import java.util.Optional;
 
 
-public class BookingManager {
-    private BookingDataAccess dao;
+public class BusinessManager {
+    private DataAccess dao;
 
-    public BookingManager() throws ConnectionException{
-        dao = new BookingDBAccess();
+    public BusinessManager() throws ConnectionException{
+        dao = new DBAccess();
     }
 
     public ArrayList<Booking> getAllBookings() throws AllBookingsException {
@@ -42,7 +36,7 @@ public class BookingManager {
         dao.addBooking(booking);
     }
 
-    public void setDao(BookingDataAccess dao) {
+    public void setDao(DataAccess dao) {
         this.dao = dao;
     }
 
@@ -56,6 +50,13 @@ public class BookingManager {
 
     public ArrayList<SeatType> getAllSeatTypes() throws SeatTypeException {
         return dao.getAllSeatTypes();
+    }
+
+    public ArrayList<Flight> getAllFlights() throws AllFlightsException {
+        return dao.getAllFlights();
+    }
+    public ArrayList<Seat> getAvailableSeats(String seatType) throws AvailableSeatsException {
+        return dao.getAvailableSeats(seatType);
     }
 
 

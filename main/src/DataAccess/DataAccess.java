@@ -6,9 +6,9 @@ import Model.*;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
-import java.util.Optional;
 
-public interface BookingDataAccess {
+
+public interface DataAccess {
 
     public void addBooking(Booking booking) throws AddBookingException;
     public ArrayList<Booking> getAllBookings() throws AllBookingsException;
@@ -18,4 +18,7 @@ public interface BookingDataAccess {
     public ArrayList<PassengerBooking> getBookingsHistory(int idPassenger);
     public ArrayList<Passenger> getAllPassengers() throws PassengerException;
     public ArrayList<SeatType> getAllSeatTypes () throws SeatTypeException;
+    public ArrayList<Flight> getAllFlights() throws AllFlightsException;
+    public ArrayList<Seat> getAvailableSeats(String seatType) throws AvailableSeatsException;
+
 }

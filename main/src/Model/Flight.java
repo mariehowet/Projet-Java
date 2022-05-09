@@ -27,4 +27,19 @@ public class Flight {
         this.arrivalAirportId = arrivalAirportId;
     }
 
+    public Flight(int id, GregorianCalendar departureDate, String departureHour, GregorianCalendar expectedArrivalDate, String expectedArrivalHour, double price, int airplaneId, int departureAirportId, int arrivalAirportId) {
+        this.id = id;
+        this.departureDate = departureDate;
+        this.departureHour = departureHour;
+        this.expectedArrivalDate = expectedArrivalDate;
+        this.expectedArrivalHour = expectedArrivalHour;
+        this.price = price;
+        this.airplaneId = airplaneId;
+        this.departureAirportId = departureAirportId;
+        this.arrivalAirportId = arrivalAirportId;
+    }
+
+    public int getId() {
+        return id;
+    }
 }

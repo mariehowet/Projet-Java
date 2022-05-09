@@ -1,15 +1,7 @@
 package View;
 
-import DataAccess.BookingDBAccess;
-
 
 import Exception.*;
-import DataAccess.*;
-import Model.Booking;
-
-import javax.swing.*;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 public class Main {
     public static void main(String[] args) throws ConnectionException {

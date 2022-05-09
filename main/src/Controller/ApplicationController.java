@@ -1,20 +1,17 @@
 package Controller;
 
 import Exception.*;
-import Business.BookingManager;
-import Model.Booking;
-import Model.Passenger;
-import Model.SeatType;
+import Business.BusinessManager;
+import Model.*;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
-import java.util.Optional;
 
 public class ApplicationController {
-    private BookingManager manager;
+    private BusinessManager manager;
 
     public ApplicationController() throws ConnectionException{
-        manager = new BookingManager();
+        manager = new BusinessManager();
     }
 
     public void addBooking(Booking booking) throws AddBookingException {
@@ -42,6 +39,13 @@ public class ApplicationController {
 
     public ArrayList<SeatType> getAllSeatTypes() throws SeatTypeException {
         return manager.getAllSeatTypes();
+    }
+
+    public ArrayList<Flight> getAllFlights() throws AllFlightsException {
+        return manager.getAllFlights();
+    }
+    public ArrayList<Seat> getAvailableSeats(String seatType) throws AvailableSeatsException {
+        return manager.getAvailableSeats(seatType);
     }
 
 }
