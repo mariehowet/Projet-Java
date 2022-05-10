@@ -12,6 +12,7 @@ public class  BookingCreationPanel extends JPanel {
     private JLabel title;
     private JButton validationButton;
     private BookingForm bookingForm;
+
     public BookingCreationPanel() {
         setLayout(new BorderLayout());
         setBorder(new EmptyBorder(0,50,50,50));

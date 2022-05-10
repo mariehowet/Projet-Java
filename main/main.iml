@@ -23,7 +23,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" exported="" name="mysql-connector-java-8.0.28" level="project" />
     <orderEntry type="module-library">
       <library name="JUnit5.8.1">
         <CLASSES>
@@ -40,5 +39,8 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" exported="" name="mysql-connector-java-8.0.28" level="project" />
+    <orderEntry type="library" exported="" name="jcalendar-1.4" level="project" />
+    <orderEntry type="library" exported="" name="jgoodies-looks-2.4.1" level="project" />
   </component>
 </module>

@@ -48,4 +48,8 @@ public class ApplicationController {
         return manager.getAvailableSeats(seatType);
     }
 
+    public ArrayList<PassengerBooking> getBookingsHistory(int idPassenger) throws BookingsHistoryException {
+        return manager.getBookingsHistory(idPassenger);
+    }
+
 }

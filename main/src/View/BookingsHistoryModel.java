@@ -56,7 +56,7 @@ public class BookingsHistoryModel extends AbstractTableModel {
             case 4:
                 return passengerBooking.getArrivalAirportName();
             case 5:
-                return passengerBooking.getDepartureDate();
+                return passengerBooking.getDepartureDate().getTime();
             case 6:
                 return passengerBooking.getSeatType();
             case 7:

@@ -59,5 +59,9 @@ public class BusinessManager {
         return dao.getAvailableSeats(seatType);
     }
 
+    public ArrayList<PassengerBooking> getBookingsHistory(int idPassenger) throws BookingsHistoryException {
+        return dao.getBookingsHistory(idPassenger);
+    }
+
 
 }
