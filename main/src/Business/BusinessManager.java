@@ -63,5 +63,12 @@ public class BusinessManager {
         return dao.getBookingsHistory(idPassenger);
     }
 
+    public ArrayList<FlightStopover> getFlightsStopover(Locality departure, Locality arrival, boolean withStopover) throws FlightsStopover {
+        return dao.getFlightsStopover(departure, arrival, withStopover);
+    }
+
+    public ArrayList<Locality> getAllLocalities() throws AllLocalitiesException {
+        return dao.getAllLocalities();
+    }
 
 }

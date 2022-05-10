@@ -120,7 +120,11 @@ public class MainJFrame extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             frameContainer.removeAll();
-            frameContainer.add(new Research2JPanel(frameContainer), BorderLayout.CENTER);
+            try {
+                frameContainer.add(new FlightWithOrWhithoutStopover(frameContainer), BorderLayout.CENTER);
+            } catch (ConnectionException stopoverConnectionException) {
+                JOptionPane.showMessageDialog(null, stopoverConnectionException.getMessage());
+            }
             setVisible(true);
         }
     }

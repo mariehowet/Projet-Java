@@ -52,4 +52,12 @@ public class ApplicationController {
         return manager.getBookingsHistory(idPassenger);
     }
 
+    public ArrayList<FlightStopover> getFlightsStopover(Locality departure, Locality arrival, boolean withStopover) throws FlightsStopover {
+        return manager.getFlightsStopover(departure, arrival, withStopover);
+    }
+
+    public ArrayList<Locality> getAllLocalities() throws AllLocalitiesException {
+        return manager.getAllLocalities();
+    }
+
 }

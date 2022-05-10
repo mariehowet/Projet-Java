@@ -20,4 +20,6 @@ public interface DataAccess {
     public ArrayList<SeatType> getAllSeatTypes () throws SeatTypeException;
     public ArrayList<Flight> getAllFlights() throws AllFlightsException;
     public ArrayList<Seat> getAvailableSeats(String seatType) throws AvailableSeatsException;
+    public ArrayList<FlightStopover> getFlightsStopover(Locality departure, Locality arrival, boolean withStopover) throws FlightsStopover;
+    public ArrayList<Locality> getAllLocalities() throws AllLocalitiesException;
 }

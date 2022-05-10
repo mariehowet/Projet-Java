@@ -18,11 +18,7 @@ public class HistorySearch extends JPanel {
     private JPanel researchPanel, researchDisplay, displayPanel;
     private JButton researchButton;
     private JLabel passengerLabel;
-    // TEST
-    private JTextField test;
-    // -----
     private JComboBox passenger;
-
     private Container frameContainer;
     private ApplicationController controller;
 
