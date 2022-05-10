@@ -343,8 +343,9 @@ public class DBAccess implements DataAccess {
                 "from flight f " +
                 "inner join airport da on (f.departure_airport_id = da.id) " +
                 "inner join airport aa on (f.arrival_airport_id = aa.id) " +
-                "where " + (withStopover?"exists ":"not exists ") +
-                        "(select flight_id from stopover s where f.id = s.flight_id)";
+                "where " + (withStopover?
+                        "exists (select flight_id from stopover s where f.id = s.flight_id)" :
+                        "not exists (select flight_id from stopover s where f.id = s.flight_id)");
 
         ArrayList<FlightStopover> flightsStopovers = new ArrayList<>();
         // traitement
