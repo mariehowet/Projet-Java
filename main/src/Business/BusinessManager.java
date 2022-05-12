@@ -1,7 +1,7 @@
 package Business;
 
-import DataAccess.DBAccess;
-import DataAccess.DataAccess;
+import DataAccess.*;
+
 import Model.*;
 import Exception.*;
 
@@ -12,63 +12,72 @@ import java.util.GregorianCalendar;
 
 
 public class BusinessManager {
-    private DataAccess dao;
+    private BookingDataAccess daoBooking;
+
+    private BookingsHistoryDataAccess daoBookingsHistory;
+    private GeneralDataAccess daoGeneral;
+    private FlightsStopoverDataAccess daoFlightsStopover;
+    private FlightsOfDepartureAirportDataAccess daoFlightsOfDepartureAirport;
 
     public BusinessManager() throws ConnectionException{
-        dao = new DBAccess();
+        daoBooking = new BookingDBAccess();
+        daoBookingsHistory = new BookingsHistoryDBAccess();
+        daoGeneral = new GeneralDBAccess();
+        daoFlightsStopover = new FlightsStopoverDBAccess();
+        daoFlightsOfDepartureAirport = new FlightsOfDepartureAirportDBAccess();
     }
 
     public ArrayList<Booking> getAllBookings() throws AllBookingsException {
-        ArrayList<Booking>  bookingList = dao.getAllBookings();
+        ArrayList<Booking>  bookingList = daoBooking.getAllBookings();
         // traitement
         return bookingList;
     }
 
     public void updateBooking(int id, GregorianCalendar date, Boolean hasPaid, String luggageWeight, String companyName, String mealType, Double realPrice, int seatID) throws UpdateException{
-        dao.updateBooking(id, date, hasPaid, luggageWeight, companyName, mealType, realPrice, seatID);
+        daoBooking.updateBooking(id, date, hasPaid, luggageWeight, companyName, mealType, realPrice, seatID);
     }
 
     public void deleteBooking(Booking booking) throws DeleteException {
-        dao.deleteBooking(booking);
+        daoBooking.deleteBooking(booking);
     }
 
     public void addBooking(Booking booking) throws AddBookingException {
-        dao.addBooking(booking);
+        daoBooking.addBooking(booking);
     }
 
-    public void setDao(DataAccess dao) {
-        this.dao = dao;
+    public void setdaoBooking(BookingDataAccess daoBooking) {
+        this.daoBooking = daoBooking;
     }
 
     public void closeConnection() throws CloseDataException {
-        dao.closeConnection();
+        daoGeneral.closeConnection();
     }
 
     public ArrayList<Passenger> getAllPassengers() throws PassengerException {
-        return dao.getAllPassengers();
+        return daoBookingsHistory.getAllPassengers();
     }
 
     public ArrayList<SeatType> getAllSeatTypes() throws SeatTypeException {
-        return dao.getAllSeatTypes();
+        return daoBooking.getAllSeatTypes();
     }
 
     public ArrayList<Flight> getAllFlights() throws AllFlightsException {
-        return dao.getAllFlights();
+        return daoBooking.getAllFlights();
     }
     public ArrayList<Seat> getAvailableSeats(String seatType, Integer flightID) throws AvailableSeatsException {
-        return dao.getAvailableSeats(seatType, flightID);
+        return daoBooking.getAvailableSeats(seatType, flightID);
     }
 
     public ArrayList<PassengerBooking> getBookingsHistory(int idPassenger) throws BookingsHistoryException {
-        return dao.getBookingsHistory(idPassenger);
+        return daoBookingsHistory.getBookingsHistory(idPassenger);
     }
 
     public ArrayList<FlightStopover> getFlightsStopover(Locality departure, Locality arrival, boolean withStopover) throws FlightsStopover {
-        return dao.getFlightsStopover(departure, arrival, withStopover);
+        return daoFlightsStopover.getFlightsStopover(departure, arrival, withStopover);
     }
 
     public ArrayList<Locality> getAllLocalities() throws AllLocalitiesException {
-        return dao.getAllLocalities();
+        return daoFlightsStopover.getAllLocalities();
     }
 
 }

@@ -5,16 +5,16 @@ import java.awt.*;
 
 
 public class Research1JPanel extends ResearchJPanel {
-    private JLabel startDateLabel, endDateLabel, destinationAirportLabel;
+    private JLabel startDateLabel, endDateLabel, departureAirportLabel;
     private JSpinner startDateSpinner, endDateSpinner;
-    private JComboBox destinationAirportBox;
+    private JComboBox departureAirports;
 
     public Research1JPanel(Container frameContainer) {
         super(frameContainer);
         // Labels
             startDateLabel = new JLabel("Date de début ");
             endDateLabel = new JLabel("Date de fin ");
-            destinationAirportLabel = new JLabel("Aéroport de destination ");
+            departureAirportLabel = new JLabel("Aéroport de départ ");
 
         // Spinners
             startDateSpinner = new JSpinner(new SpinnerDateModel());
@@ -27,7 +27,7 @@ public class Research1JPanel extends ResearchJPanel {
 
         // ComboBox
             String [] values = new String[]{"NY34 - JFK New York", "NY34 - JFK New York"}; // !!! BD !!!
-            destinationAirportBox = new JComboBox(values);
+            departureAirports = new JComboBox(values);
 
 
         // Panel de recherche
@@ -35,8 +35,8 @@ public class Research1JPanel extends ResearchJPanel {
             researchPanel.add(startDateSpinner);
             researchPanel.add(endDateLabel);
             researchPanel.add(endDateSpinner);
-            researchPanel.add(destinationAirportLabel);
-            researchPanel.add(destinationAirportBox);
+            researchPanel.add(departureAirportLabel);
+            researchPanel.add(departureAirports);
             researchPanel.add(researchButton);
             this.add(researchPanel, BorderLayout.NORTH);
 

@@ -8,10 +8,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-public class DBAccess implements DataAccess {
+public class BookingDBAccess implements BookingDataAccess {
     private Connection connection;
 
-    public DBAccess() throws ConnectionException {
+    public BookingDBAccess() throws ConnectionException {
         connection = SingletonConnection.getInstance();
         // connection.close(); throws SQLException
     }
@@ -110,13 +110,6 @@ public class DBAccess implements DataAccess {
         return allBookings;
     }
 
-    public void closeConnection() throws CloseDataException {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            throw new CloseDataException(e.getMessage());
-        }
-    }
 
     @Override
     public void updateBooking(int id, GregorianCalendar date, Boolean hasPaid, String luggageWeight, String companyName, String mealType, Double realPrice, int seatID) throws UpdateException{
@@ -160,53 +153,7 @@ public class DBAccess implements DataAccess {
 
     }
 
-    @Override
-    public ArrayList<PassengerBooking> getBookingsHistory(int idPassenger) throws BookingsHistoryException {
-        String sqlInstruction =
-                "SELECT b.id, b.date_booking, b.real_price, b.flight_id, f.departure_date , da.name as 'departure_airport', aa.name as 'arrival_airport', s.seat_type " +
-                "FROM booking b " +
-                "inner join flight f on (b.flight_id = f.id) " +
-                "inner join airport da on (f.departure_airport_id = da.id) " +
-                "inner join airport aa on (f.arrival_airport_id = aa.id) " +
-                "inner join seat s on (b.seat_id = s.id)" +
-                "where passenger_id = ?";
 
-        ArrayList<PassengerBooking> bookingsHistory = new ArrayList<>();
-        // traitement
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
-            preparedStatement.setInt(1, idPassenger);
-
-            ResultSet data = preparedStatement.executeQuery();
-            PassengerBooking passengerBooking;
-            GregorianCalendar dateBooking;
-            GregorianCalendar departureDate;
-
-            while(data.next()) {
-                dateBooking = new GregorianCalendar();
-                dateBooking.setTime(data.getDate("date_booking"));
-                departureDate = new GregorianCalendar();
-                departureDate.setTime(data.getDate("departure_date"));
-
-                passengerBooking= new PassengerBooking (
-                        data.getInt("id"),
-                        dateBooking,
-                        data.getInt("flight_id"),
-                        data.getString("departure_airport"),
-                        data.getString("arrival_airport"),
-                        departureDate,
-                        data.getString("seat_type"),
-                        data.getDouble("real_price")
-
-                );
-                bookingsHistory.add(passengerBooking);
-            }
-
-        } catch (SQLException exception) {
-            throw new BookingsHistoryException();
-        }
-        return bookingsHistory;
-    }
 
     public ArrayList<Seat> getAvailableSeats(String seatType, Integer flightID) throws AvailableSeatsException {
         String sqlInstruction ="select s.id FROM seat s INNER join airplane a on(s.airplane_id = a.id)" +
@@ -339,6 +286,5 @@ public class DBAccess implements DataAccess {
             throw new AllFlightsException();
         }
     }
-
 
 }

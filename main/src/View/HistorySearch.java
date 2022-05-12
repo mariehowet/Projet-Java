@@ -86,7 +86,6 @@ public class HistorySearch extends JPanel {
         public void actionPerformed(ActionEvent e) {
             panel.removeAll();
             Pattern patternPassenger = Pattern.compile("(\\d+)-", Pattern.CASE_INSENSITIVE);
-            System.out.println(passenger.getSelectedItem().toString());
             Matcher matcher = patternPassenger.matcher(passenger.getSelectedItem().toString());
             if (matcher.find()) {
                 int idPassenger = Integer.parseInt(matcher.group(1));
