@@ -30,9 +30,7 @@ public class AddBookingJPanel extends JPanel {
     private ArrayList<Integer> flightIDs, passengerIDs, seatIDs, airplaneIDS;
     private ArrayList<String> seatTypeIDs;
     private String seatTypeName;
-    private int airplaneID;
-    private  String [] seatValues = {""};
-    private  ArrayList<Seat> seatList ;
+    private Integer flightID;
     private Container frameContainer;
 
     public AddBookingJPanel(Container frameContainer) throws ConnectionException{
@@ -56,12 +54,10 @@ public class AddBookingJPanel extends JPanel {
             ArrayList<Flight> flightList = controller.getAllFlights();
             flightIDs = new ArrayList<>();
             flightPrices = new ArrayList<>();
-            airplaneIDS = new ArrayList<>();
 
             for(Flight fl : flightList) {
                 flightIDs.add(fl.getId());
                 flightPrices.add(fl.getPrice());
-                airplaneIDS.add(fl.getAirplaneId());
             }
             int nb = flightIDs.size();
             flightValues = new String[nb];
@@ -126,7 +122,6 @@ public class AddBookingJPanel extends JPanel {
             }
 
             seatTypeBox = new JComboBox(seatTypesValues);
-            //seatType.setSelectedItem(seatTypes[1]);
             formPanel.add(seatTypeBox);
 
         } catch (SeatTypeException e) {
@@ -138,8 +133,7 @@ public class AddBookingJPanel extends JPanel {
         seatLabel = new JLabel("Votre siège :");
         formPanel.add(seatLabel);
 
-
-        seatBox = new JComboBox(seatValues);
+        seatBox = new JComboBox();
         seatBox.setEnabled(false);
         formPanel.add(seatBox);
 
@@ -215,7 +209,6 @@ public class AddBookingJPanel extends JPanel {
         validationButton.addActionListener(new ValidationListener());
         validationButton.addActionListener(new CalculateListener());
         calculateButton.addActionListener( new CalculateListener());
-        //validationButton.setEnabled(false);
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout());
         buttonPanel.add(searchSeatButton);
@@ -231,14 +224,12 @@ public class AddBookingJPanel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            /*
+            seatTypeName = seatTypeIDs.get(seatTypeBox.getSelectedIndex());
+            flightID = flightIDs.get(flightBox.getSelectedIndex());
+            seatBox.removeAllItems();
             try {
-
-                seatTypeName = seatTypeIDs.get(seatTypeBox.getSelectedIndex());
-                airplaneID = airplaneIDS.get(flightBox.getSelectedIndex());
-                seatList = controller.getAvailableSeats(seatTypeName, airplaneID);
+                ArrayList<Seat> seatList = controller.getAvailableSeats(seatTypeName, flightID);
                 ArrayList<String> seats = new ArrayList<>();
-
                 seatIDs = new ArrayList<>();
 
                 for(Seat st : seatList) {
@@ -246,20 +237,16 @@ public class AddBookingJPanel extends JPanel {
                     seatIDs.add(st.getId());
                 }
                 int nb = seats.size();
-                seatValues = new String[nb];
 
                 for (int j = 0; j < nb; j++) {
-                    seatValues[j] = seats.get(j);
+                    seatBox.addItem(seats.get(j));
                 }
-                seatBox.setSelectedItem(seatValues);
+
                 seatBox.setEnabled(true);
             } catch (AvailableSeatsException ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage());
             }
-            */
-            String seatValues[] = {"1", "2", "3"};
-            seatBox.setSelectedItem(seatValues);
-            seatBox.setEnabled(true);
+
         }
     }
 

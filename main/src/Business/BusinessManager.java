@@ -64,7 +64,7 @@ public class BusinessManager {
     public ArrayList<Flight> getAllFlights() throws AllFlightsException {
         return daoBooking.getAllFlights();
     }
-    public ArrayList<Seat> getAvailableSeats(String seatType, Integer flightID) throws AvailableSeatsException {
+    public ArrayList<Seat> getAvailableSeats(String seatType, int flightID) throws AvailableSeatsException {
         return daoBooking.getAvailableSeats(seatType, flightID);
     }
 

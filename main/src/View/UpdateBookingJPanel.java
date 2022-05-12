@@ -191,15 +191,16 @@ public class UpdateBookingJPanel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            try {
-                seatTypeName = seatTypeIDs.get(seatTypeBox.getSelectedIndex());
-                airplaneID = airplaneIDS.get(flightBox.getSelectedIndex());
-                seatList = controller.getAvailableSeats(seatTypeName, airplaneID);
-                ArrayList<String> seats = new ArrayList<>();
+            seatTypeName = seatTypeIDs.get(seatTypeBox.getSelectedIndex());
+            flightID = flightIDs.get(flightBox.getSelectedIndex());
 
+            try {
+                ArrayList<Seat> seatList = controller.getAvailableSeats(seatTypeName, flightID);
+                ArrayList<String> seats = new ArrayList<>();
                 seatIDs = new ArrayList<>();
 
                 for(Seat st : seatList) {
+                    System.out.println(st);
                     seats.add(st.getNumber() + st.getColumnLetter());
                     seatIDs.add(st.getId());
                 }
@@ -209,7 +210,7 @@ public class UpdateBookingJPanel extends JPanel {
                 for (int j = 0; j < nb; j++) {
                     seatValues[j] = seats.get(j);
                 }
-                seatBox.setSelectedItem(seatValues);
+                seatBox = new JComboBox(seatValues);
                 seatBox.setEnabled(true);
             } catch (AvailableSeatsException ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage());

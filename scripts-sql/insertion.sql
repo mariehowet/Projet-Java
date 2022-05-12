@@ -243,4 +243,7 @@ VALUES('2022-06-20', '16:00:00','2022-06-20','18:00:00', 750.0, 1, 3, 10);
 INSERT INTO flight (departure_date, departure_hour, expected_arrival_date, expected_arrival_hour, price, airplane_id, departure_airport_id, arrival_airport_id)
 VALUES('2022-05-10', '14:00:00','2022-06-20','18:00:00', 600, 2, 1, 2);
 
-
+select s.id from seat s inner join airplane a on(s.airplane_id = a.id)
+inner join seat_type st on(st.name = s.seat_type)
+inner join flight f on (f.airplane_id = s.airplane_id)
+where st.name = ? and f.id = ? and s.id not in (select seat_id from booking)

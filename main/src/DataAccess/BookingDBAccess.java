@@ -154,14 +154,12 @@ public class BookingDBAccess implements BookingDataAccess {
     }
 
 
-
-    public ArrayList<Seat> getAvailableSeats(String seatType, Integer flightID) throws AvailableSeatsException {
-        String sqlInstruction ="select s.id FROM seat s INNER join airplane a on(s.airplane_id = a.id)" +
-                                "INNER join seat_type st on(st.name = s.seat_type)" +
-                                "inner join flight f on (f.airplane_id = s.airplane_id)" +
-                                " Where st.name = ? and f.id = ? and s.id not in (" +
-                                " select seat_id from booking);";
-        ArrayList<Seat> availableSeats = new ArrayList<>();
+    public ArrayList<Seat> getAvailableSeats(String seatType, int flightID) throws AvailableSeatsException {
+        String sqlInstruction ="select s.id, s.number, s.column_letter from seat s inner join airplane a on(s.airplane_id = a.id)  " +
+                "inner join seat_type st on(st.name = s.seat_type)  " +
+                "inner join flight f on (f.airplane_id = s.airplane_id)  " +
+                "where st.name = ? and f.id = ? and s.id not in (select seat_id from booking) ";
+                ArrayList<Seat> availableSeats = new ArrayList<>();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             preparedStatement.setString(1, seatType);
@@ -173,9 +171,7 @@ public class BookingDBAccess implements BookingDataAccess {
                 seat = new Seat(
                         data.getInt("id"),
                         data.getInt("number"),
-                        data.getString("column_letter"),
-                        data.getString("seat_type"),
-                        data.getInt("airplane_id")
+                        data.getString("column_letter")
                 );
                 availableSeats.add(seat);
             }

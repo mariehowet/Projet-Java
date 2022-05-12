@@ -44,7 +44,7 @@ public class ApplicationController {
     public ArrayList<Flight> getAllFlights() throws AllFlightsException {
         return manager.getAllFlights();
     }
-    public ArrayList<Seat> getAvailableSeats(String seatType, Integer flightID) throws AvailableSeatsException {
+    public ArrayList<Seat> getAvailableSeats(String seatType, int flightID) throws AvailableSeatsException {
         return manager.getAvailableSeats(seatType, flightID);
     }
 

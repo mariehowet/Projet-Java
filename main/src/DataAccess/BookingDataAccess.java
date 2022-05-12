@@ -17,5 +17,5 @@ public interface BookingDataAccess {
     public ArrayList<Passenger> getAllPassengers() throws PassengerException;
     public ArrayList<SeatType> getAllSeatTypes () throws SeatTypeException;
     public ArrayList<Flight> getAllFlights() throws AllFlightsException;
-    public ArrayList<Seat> getAvailableSeats(String seatType, Integer flightID) throws AvailableSeatsException;
+    public ArrayList<Seat> getAvailableSeats(String seatType, int flightID) throws AvailableSeatsException;
 }
