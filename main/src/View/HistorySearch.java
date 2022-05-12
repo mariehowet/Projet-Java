@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.zip.DeflaterInputStream;
 
 import Exception.*;
 
@@ -90,12 +89,12 @@ public class HistorySearch extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             panel.removeAll();
-            Pattern patternPassenger = Pattern.compile("(\\d*)-", Pattern.CASE_INSENSITIVE);
+            Pattern patternPassenger = Pattern.compile("(\\d+)-", Pattern.CASE_INSENSITIVE);
             System.out.println(passenger.getSelectedItem().toString());
             Matcher matcher = patternPassenger.matcher(passenger.getSelectedItem().toString());
             if (matcher.find()) {
                 int idPassenger = Integer.parseInt(matcher.group(1));
-                researchDisplay = new BookingsHistoryPanel(idPassenger);
+                researchDisplay = new BookingsHistoryJPanel(idPassenger);
                 frameContainer.revalidate();
                 frameContainer.repaint();
                 panel.add(researchDisplay, BorderLayout.CENTER);

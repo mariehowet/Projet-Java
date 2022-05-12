@@ -159,7 +159,7 @@ public class MainJFrame extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             frameContainer.removeAll();
-            frameContainer.add(new AllBookingsPanel(frameContainer), BorderLayout.CENTER);
+            frameContainer.add(new AllBookingsJPanel(frameContainer), BorderLayout.CENTER);
             setVisible(true);
         }
     }
@@ -168,7 +168,11 @@ public class MainJFrame extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             frameContainer.removeAll();
-            frameContainer.add(new BookingCreationPanel(), BorderLayout.CENTER);
+            try {
+                frameContainer.add(new AddBookingJPanel(frameContainer), BorderLayout.CENTER);
+            } catch(ConnectionException exception) {
+                JOptionPane.showMessageDialog(null,exception.getMessage());
+            }
             setVisible(true);
         }
     }

@@ -1,7 +1,6 @@
 package View;
 
 import Controller.ApplicationController;
-import Model.Booking;
 import Model.PassengerBooking;
 
 import javax.swing.*;
@@ -10,12 +9,12 @@ import java.util.ArrayList;
 
 import Exception.*;
 
-public class BookingsHistoryPanel extends JPanel {
+public class BookingsHistoryJPanel extends JPanel {
     private ApplicationController controller;
     private ListSelectionModel listSelect;
     private ArrayList<PassengerBooking> bookingsHistory;
 
-    public BookingsHistoryPanel(int idPassenger) {
+    public BookingsHistoryJPanel(int idPassenger) {
         try {
 
             controller = new ApplicationController();

@@ -25,7 +25,7 @@ public class ApplicationController {
     public void closeConnection() throws  CloseDataException {
         manager.closeConnection();
     }
-    public void updateBooking(int id, GregorianCalendar date, Boolean hasPaid, Integer luggageWeight, String companyName, String mealType, Double realPrice, int seatID) throws UpdateException{
+    public void updateBooking(int id, GregorianCalendar date, Boolean hasPaid, String luggageWeight, String companyName, String mealType, Double realPrice, int seatID) throws UpdateException{
         manager.updateBooking( id,  date,  hasPaid,  luggageWeight,  companyName,  mealType,  realPrice,  seatID);
     }
 
@@ -44,8 +44,8 @@ public class ApplicationController {
     public ArrayList<Flight> getAllFlights() throws AllFlightsException {
         return manager.getAllFlights();
     }
-    public ArrayList<Seat> getAvailableSeats(String seatType) throws AvailableSeatsException {
-        return manager.getAvailableSeats(seatType);
+    public ArrayList<Seat> getAvailableSeats(String seatType, Integer flightID) throws AvailableSeatsException {
+        return manager.getAvailableSeats(seatType, flightID);
     }
 
     public ArrayList<PassengerBooking> getBookingsHistory(int idPassenger) throws BookingsHistoryException {

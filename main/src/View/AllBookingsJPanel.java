@@ -10,14 +10,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class AllBookingsPanel extends JPanel {
+public class AllBookingsJPanel extends JPanel {
     private ApplicationController controller;
     private JButton delete, modification;
     private ListSelectionModel listSelect;
     private ArrayList<Booking> bookings;
     private Container frameContainer;
 
-    public AllBookingsPanel(Container frameContainer) {
+    public AllBookingsJPanel(Container frameContainer) {
         try {
             this.frameContainer = frameContainer;
             controller = new ApplicationController();
@@ -32,11 +32,9 @@ public class AllBookingsPanel extends JPanel {
             Panel buttonsPanel = new Panel();
             modification = new JButton("Modification");
             modification.addActionListener(new ModifyListener());
-            modification.addActionListener(new RefreshListener());
             buttonsPanel.add(modification);
             delete = new JButton("Suppression");
             delete.addActionListener(new DeleteListener());
-            delete.addActionListener(new RefreshListener());
             buttonsPanel.add(delete);
             this.add(buttonsPanel, BorderLayout.SOUTH);
             this.setLayout(new FlowLayout());
@@ -50,18 +48,34 @@ public class AllBookingsPanel extends JPanel {
         }
     }
 
+
     private class ModifyListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            try {
-                // MAJ dans la bd : test
-                // A faire via le formulaire
-                int indSelectedLine = listSelect.getMinSelectionIndex();
-                Booking booking = bookings.get(indSelectedLine);
-                controller.updateBooking(booking.getId(), booking.getDate(), true, 35, null, booking.getMealType(), 600.0, 2);
-            } catch(UpdateException exception) {
-                JOptionPane.showMessageDialog(null,exception.getMessage());
+
+            int indiceLigneSelect = listSelect.getMinSelectionIndex();
+
+            if(indiceLigneSelect != -1) {
+
+                int reponse = JOptionPane.showConfirmDialog(null,"Etes-vous sûr de vouloir modifier ce type d'article ?", "Modification", JOptionPane.YES_NO_OPTION);
+
+                if(reponse == 0) {
+                    Booking booking = bookings.get(indiceLigneSelect);
+
+                    try {
+                        frameContainer.removeAll();
+                        frameContainer.revalidate();
+                        frameContainer.repaint();
+                        frameContainer.add(new UpdateBookingJPanel(frameContainer, booking), BorderLayout.CENTER);
+
+                    } catch (ConnectionException exception) {
+                        JOptionPane.showMessageDialog(null, exception.getMessage());
+                    }
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Sélectionnez une ligne à modifier");
             }
         }
     }
@@ -86,7 +100,7 @@ public class AllBookingsPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             frameContainer.removeAll();
-            frameContainer.add(new AllBookingsPanel(frameContainer), BorderLayout.CENTER);
+            frameContainer.add(new AllBookingsJPanel(frameContainer), BorderLayout.CENTER);
             setVisible(true);
         }
     }

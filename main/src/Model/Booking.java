@@ -8,7 +8,7 @@ public class Booking {
     private int id;
     private GregorianCalendar date;
     private Boolean hasPaid;
-    private Integer luggageWeight;
+    private String luggageWeight;
     private String companyName;
     private String mealType;
     private Double realPrice;
@@ -16,7 +16,7 @@ public class Booking {
     private int seatID;
     private int passengerID;
 
-    public Booking(Boolean hasPaid, Integer luggageWeight, String companyName, String mealType, Double realPrice, int flightID, int seatID, int passengerID) {
+    public Booking(Boolean hasPaid, String luggageWeight, String companyName, String mealType, Double realPrice, int flightID, int seatID, int passengerID) {
         setDate(new GregorianCalendar());
         this.hasPaid = hasPaid;
         setLuggageWeight(luggageWeight);
@@ -64,11 +64,11 @@ public class Booking {
         this.hasPaid = hasPaid;
     }
 
-    public Integer getLuggageWeight() {
+    public String getLuggageWeight() {
         return luggageWeight;
     }
 
-    public void setLuggageWeight(Integer luggageWeight) {
+    public void setLuggageWeight(String luggageWeight) {
         this.luggageWeight = luggageWeight;
     }
 

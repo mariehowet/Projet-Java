@@ -24,7 +24,7 @@ public class BusinessManager {
         return bookingList;
     }
 
-    public void updateBooking(int id, GregorianCalendar date, Boolean hasPaid, Integer luggageWeight, String companyName, String mealType, Double realPrice, int seatID) throws UpdateException{
+    public void updateBooking(int id, GregorianCalendar date, Boolean hasPaid, String luggageWeight, String companyName, String mealType, Double realPrice, int seatID) throws UpdateException{
         dao.updateBooking(id, date, hasPaid, luggageWeight, companyName, mealType, realPrice, seatID);
     }
 
@@ -55,8 +55,8 @@ public class BusinessManager {
     public ArrayList<Flight> getAllFlights() throws AllFlightsException {
         return dao.getAllFlights();
     }
-    public ArrayList<Seat> getAvailableSeats(String seatType) throws AvailableSeatsException {
-        return dao.getAvailableSeats(seatType);
+    public ArrayList<Seat> getAvailableSeats(String seatType, Integer flightID) throws AvailableSeatsException {
+        return dao.getAvailableSeats(seatType, flightID);
     }
 
     public ArrayList<PassengerBooking> getBookingsHistory(int idPassenger) throws BookingsHistoryException {

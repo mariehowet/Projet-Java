@@ -42,4 +42,12 @@ public class Flight {
     public int getId() {
         return id;
     }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public int getAirplaneId() {
+        return airplaneId;
+    }
 }

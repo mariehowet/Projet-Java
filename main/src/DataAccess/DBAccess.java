@@ -32,7 +32,7 @@ public class DBAccess implements DataAccess {
             // Remplacer les ? via les filtres (settors)
 
             preparedStatement.setDate(1, sqlDate);
-            preparedStatement.setInt(2,(booking.getHasPaid() ? 1: 0));
+            preparedStatement.setBoolean(2,booking.getHasPaid());
             preparedStatement.setString(3, booking.getMealType());
             preparedStatement.setDouble(4, booking.getRealPrice());
             preparedStatement.setInt(5, booking.getFlightID());
@@ -48,7 +48,7 @@ public class DBAccess implements DataAccess {
             if(booking.getLuggageWeight() != null) {
                 sqlInstruction = "update booking set luggage_weight = ? where id = ? ";
                 preparedStatement = connection.prepareStatement(sqlInstruction);
-                preparedStatement.setInt(1,booking.getLuggageWeight());
+                preparedStatement.setString(1,booking.getLuggageWeight());
                 preparedStatement.setInt(2, booking.getId());
                 preparedStatement.executeUpdate();
             }
@@ -77,7 +77,7 @@ public class DBAccess implements DataAccess {
             ResultSet data = preparedStatement.executeQuery();
             Booking booking;
             GregorianCalendar calendar;
-            Integer luggageWeight;
+            String luggageWeight;
             String companyName;
 
             while(data.next()) {
@@ -93,7 +93,7 @@ public class DBAccess implements DataAccess {
                         data.getInt("seat_id"),
                         data.getInt("passenger_id")
                 );
-                luggageWeight = data.getInt("luggage_weight");
+                luggageWeight = data.getString("luggage_weight");
                 if(!data.wasNull())
                     booking.setLuggageWeight(luggageWeight);
 
@@ -119,15 +119,15 @@ public class DBAccess implements DataAccess {
     }
 
     @Override
-    public void updateBooking(int id, GregorianCalendar date, Boolean hasPaid, Integer luggageWeight, String companyName, String mealType, Double realPrice, int seatID) throws UpdateException{
+    public void updateBooking(int id, GregorianCalendar date, Boolean hasPaid, String luggageWeight, String companyName, String mealType, Double realPrice, int seatID) throws UpdateException{
         String sqlInstruction = "update booking set date_booking = ?, has_paid = ?, luggage_weight = ?, company_name = ?, meal_type = ?,real_price = ?,  seat_id = ? where id = ? ";
         GregorianCalendar calendar = date;
         java.sql.Date sqlDate = new Date(calendar.getTimeInMillis());
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             preparedStatement.setDate(1, sqlDate);
-            preparedStatement.setInt(2,(hasPaid ? 1: 0));
-            preparedStatement.setInt(3,luggageWeight);
+            preparedStatement.setBoolean(2,hasPaid);
+            preparedStatement.setString(3,luggageWeight);
             preparedStatement.setString(4, companyName);
             preparedStatement.setString(5, mealType);
             preparedStatement.setDouble(6, realPrice);
@@ -208,8 +208,39 @@ public class DBAccess implements DataAccess {
         return bookingsHistory;
     }
 
+    public ArrayList<Seat> getAvailableSeats(String seatType, Integer flightID) throws AvailableSeatsException {
+        String sqlInstruction ="select s.id FROM seat s INNER join airplane a on(s.airplane_id = a.id)" +
+                                "INNER join seat_type st on(st.name = s.seat_type)" +
+                                "inner join flight f on (f.airplane_id = s.airplane_id)" +
+                                " Where st.name = ? and f.id = ? and s.id not in (" +
+                                " select seat_id from booking);";
+        ArrayList<Seat> availableSeats = new ArrayList<>();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+            preparedStatement.setString(1, seatType);
+            preparedStatement.setInt(2, flightID);
+            ResultSet data = preparedStatement.executeQuery();
+            Seat seat;
+
+            while(data.next()) {
+                seat = new Seat(
+                        data.getInt("id"),
+                        data.getInt("number"),
+                        data.getString("column_letter"),
+                        data.getString("seat_type"),
+                        data.getInt("airplane_id")
+                );
+                availableSeats.add(seat);
+            }
+            return availableSeats;
+
+        } catch (SQLException exception) {
+            throw new AvailableSeatsException();
+        }
+    }
+
     @Override
-    public ArrayList<Passenger> getAllPassengers() throws PassengerException {
+    public ArrayList<Passenger> getAllPassengers() throws PassengerException { // changer en fonction des besoins
         String sqlInstruction = "select * from passenger";
         ArrayList<Passenger>  allPassengers = new ArrayList<>();
 
@@ -271,7 +302,7 @@ public class DBAccess implements DataAccess {
         }
     }
 
-    public ArrayList<Flight> getAllFlights() throws AllFlightsException {
+    public ArrayList<Flight> getAllFlights() throws AllFlightsException { // changer prendre que ce dont j'ai besoin
         String sqlInstruction = "select * from flight";
         ArrayList<Flight>  allFlights = new ArrayList<>();
 
@@ -309,30 +340,5 @@ public class DBAccess implements DataAccess {
         }
     }
 
-    public ArrayList<Seat> getAvailableSeats(String seatType) throws AvailableSeatsException {
-        String sqlInstruction = "select * from seat where seat_type = ?"; // changer requete sql pour trouver tous les vols dispo
-        ArrayList<Seat>  availableSeats = new ArrayList<>();
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
-            preparedStatement.setString(1, seatType);
-            ResultSet data = preparedStatement.executeQuery();
-            Seat seat;
-
-            while(data.next()) {
-                seat = new Seat(
-                        data.getInt("id"),
-                        data.getInt("number"),
-                        data.getString("column_letter"),
-                        data.getString("seat_type"),
-                        data.getInt("airplane_id")
-                );
-                availableSeats.add(seat);
-            }
-            return availableSeats;
-
-        } catch (SQLException exception) {
-            throw new AvailableSeatsException();
-        }
-    }
 }
