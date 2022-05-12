@@ -12,4 +12,16 @@ public class Locality {
         this.postCode = postCode;
         this.country = country;
     }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getPostCode() {
+        return postCode;
+    }
+
+    public String getCountry() {
+        return country;
+    }
 }

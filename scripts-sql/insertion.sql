@@ -1,5 +1,9 @@
 USE marvinairline;
 
+-- -------------------- stopover ------------
+INSERT INTO stopover (flight_id, airport_id, duration)
+VALUES (1,7,200);
+
 -- -------------------- booking ------------
 INSERT INTO booking (date_booking, has_paid, luggage_weight, company_name, meal_type, real_price, flight_id, seat_id, passenger_id)
 VALUES ('2022-05-09',true,10,'Protellux','Poulet',1000.0,1,5,1);
