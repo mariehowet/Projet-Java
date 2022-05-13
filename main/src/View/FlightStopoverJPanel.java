@@ -3,7 +3,6 @@ package View;
 import Controller.ApplicationController;
 import Model.FlightStopover;
 import Model.Locality;
-import Model.PassengerBooking;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,12 +10,12 @@ import java.util.ArrayList;
 
 import Exception.*;
 
-public class FlightStopoverPanel extends JPanel {
+public class FlightStopoverJPanel extends JPanel {
     private ApplicationController controller;
     private ListSelectionModel listSelect;
     private ArrayList<FlightStopover> flightsStopover;
 
-    public FlightStopoverPanel(Locality departure, Locality arrival, boolean withStopover) {
+    public FlightStopoverJPanel(Locality departure, Locality arrival, boolean withStopover) {
         try {
 
             controller = new ApplicationController();

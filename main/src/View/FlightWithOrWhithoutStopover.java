@@ -2,7 +2,6 @@ package View;
 
 import Controller.ApplicationController;
 import Model.Locality;
-import Model.Passenger;
 
 import javax.swing.*;
 import java.awt.*;
@@ -114,7 +113,7 @@ public class FlightWithOrWhithoutStopover extends JPanel {
 
 
 
-                researchDisplay = new FlightStopoverPanel(departure, arrival,withStopover.isSelected());
+                researchDisplay = new FlightStopoverJPanel(departure, arrival,withStopover.isSelected());
                 frameContainer.revalidate();
                 frameContainer.repaint();
                 panel.add(researchDisplay, BorderLayout.CENTER);

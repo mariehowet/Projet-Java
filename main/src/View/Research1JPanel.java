@@ -43,16 +43,16 @@ public class Research1JPanel extends ResearchJPanel {
         // Panel d'affichage
             //  !!! BD !!!
              String [][] data = new String[][]{
-                    { "1Numéro vol", "Aéroport départ", "Date départ", "Date Arrivée", "Nb de places restantes" },
-                    { "2Numéro vol", "Aéroport départ", "Date départ", "Date Arrivée", "Nb de places restantes" },
-                    {"3Numéro vol", "Aéroport départ", "Date départ", "Date Arrivée", "Nb de places restantes" },
-                    { "4Numéro vol", "Aéroport départ", "Date départ", "Date Arrivée", "Nb de places restantes" },
-                    { "5Numéro vol", "Aéroport départ", "Date départ", "Date Arrivée", "Nb de places restantes" },
-                    { "6Numéro vol", "Aéroport départ", "Date départ", "Date Arrivée", "Nb de places restantes" },
-                    { "7Numéro vol", "Aéroport départ", "Date départ", "Date Arrivée", "Nb de places restantes" },
-                    { "8Numéro vol", "Aéroport départ", "Date départ", "Date Arrivée", "Nb de places restantes" }
+                    { "1Numéro vol", "Aéroport arrivée", "Date départ", "Date Arrivée", "Nb de places restantes" },
+                    { "2Numéro vol", "Aéroport arrivée", "Date départ", "Date Arrivée", "Nb de places restantes" },
+                    {"3Numéro vol", "Aéroport arrivée", "Date départ", "Date Arrivée", "Nb de places restantes" },
+                    { "4Numéro vol", "Aéroport arrivée", "Date départ", "Date Arrivée", "Nb de places restantes" },
+                    { "5Numéro vol", "Aéroport arrivée", "Date départ", "Date Arrivée", "Nb de places restantes" },
+                    { "6Numéro vol", "Aéroport arrivée", "Date départ", "Date Arrivée", "Nb de places restantes" },
+                    { "7Numéro vol", "Aéroport arrivée", "Date départ", "Date Arrivée", "Nb de places restantes" },
+                    { "8Numéro vol", "Aéroport arrivée", "Date départ", "Date Arrivée", "Nb de places restantes" }
             };
-            String [] columnNames = new String[]{ "Numéro vol", "Aéroport départ", "Date départ", "Date Arrivée", "Nb de places restantes                                                                     "}  ;
+            String [] columnNames = new String[]{ "Numéro vol", "Aéroport arrivée", "Date départ", "Date Arrivée", "Nb de places restantes                                                                     "}  ;
             answersJPanel = new AnswersJPanel(data, columnNames);
     }
 }
