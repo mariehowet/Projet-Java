@@ -5,6 +5,7 @@ import Business.BusinessManager;
 import Model.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class ApplicationController {
@@ -58,6 +59,13 @@ public class ApplicationController {
 
     public ArrayList<Locality> getAllLocalities() throws AllLocalitiesException {
         return manager.getAllLocalities();
+    }
+    public ArrayList<Airport> getAllAirports() throws AllAirportsException {
+        return manager.getAllAirports();
+    }
+
+    public ArrayList<FlightOfDepartureAirport> getFlightsOfDepartureAirport(Date startDate, Date endDate, int idAirport) throws FlightsOfDepartureAirportException {
+        return manager.getFlightsOfDepartureAirport(startDate, endDate, idAirport);
     }
 
 }

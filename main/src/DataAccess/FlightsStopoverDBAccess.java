@@ -23,7 +23,7 @@ public class FlightsStopoverDBAccess implements FlightsStopoverDataAccess {
 
 
     public ArrayList<FlightStopover> getFlightsStopover(Locality departure, Locality arrival, boolean withStopover) throws FlightsStopover {
-        // pas encore de verif sur les localitées :
+
         String sqlInstruction =
                 "select f.id, da.name as 'departure_airport', aa.name as 'arrival_airport', f.departure_date, f.expected_arrival_date, f.departure_hour, f.expected_arrival_hour " +
                         "from flight f " +

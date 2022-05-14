@@ -110,7 +110,12 @@ public class MainJFrame extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             frameContainer.removeAll();
-            frameContainer.add(new Research1JPanel(frameContainer), BorderLayout.CENTER);
+            try {
+                frameContainer.add(new FindFlightsOfDepartureAirport(frameContainer), BorderLayout.CENTER);
+            }
+            catch (ConnectionException connectionFindFlightsOfDepartureAirportException) {
+                JOptionPane.showMessageDialog(null, connectionFindFlightsOfDepartureAirportException.getMessage());
+            }
             setVisible(true);
 
         }

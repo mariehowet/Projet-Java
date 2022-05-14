@@ -1,11 +1,21 @@
 package View;
 
+import com.toedter.calendar.JCalendar;
+import com.toedter.calendar.JDateChooser;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Locale;
+
+import Exception.*;
 
 
 public class Research1JPanel extends ResearchJPanel {
     private JLabel startDateLabel, endDateLabel, departureAirportLabel;
+    private JDateChooser chooser, chooser2;
+
     private JSpinner startDateSpinner, endDateSpinner;
     private JComboBox departureAirports;
 
@@ -38,7 +48,34 @@ public class Research1JPanel extends ResearchJPanel {
             researchPanel.add(departureAirportLabel);
             researchPanel.add(departureAirports);
             researchPanel.add(researchButton);
+
+
+            chooser = new JDateChooser();
+            chooser.setLocale(Locale.FRENCH);
+
+            JPanel panel = new JPanel();
+            panel.add(new JLabel("Date 1:"));
+            panel.add(chooser);
+
+            chooser2 = new JDateChooser();
+            chooser2.setLocale(Locale.FRENCH);
+
+            JPanel panel2 = new JPanel();
+            panel2.add(new JLabel("Date 2:"));
+            panel2.add(chooser2);
+
+            researchPanel.add(panel);
+            researchPanel.add(panel2);
+
+            researchButton = new JButton("Rechercher");
+            researchButton.addActionListener(new ButtonListener());
+            researchPanel.add(researchButton);
+
             this.add(researchPanel, BorderLayout.NORTH);
+
+
+
+
 
         // Panel d'affichage
             //  !!! BD !!!
@@ -55,4 +92,26 @@ public class Research1JPanel extends ResearchJPanel {
             String [] columnNames = new String[]{ "Numéro vol", "Aéroport arrivée", "Date départ", "Date Arrivée", "Nb de places restantes                                                                     "}  ;
             answersJPanel = new AnswersJPanel(data, columnNames);
     }
+
+    private class ButtonListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            try {
+                if (chooser.getDate().after(chooser2.getDate())) {
+                    throw new DatesException();
+
+                }
+                System.out.println("j'arrive bien");
+
+            }
+            catch (DatesException ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Problème", JOptionPane.WARNING_MESSAGE);
+            }
+
+        }
+    }
+
+
 }

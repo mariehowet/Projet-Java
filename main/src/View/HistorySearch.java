@@ -53,7 +53,6 @@ public class HistorySearch extends JPanel {
             }
 
             passenger = new JComboBox(passengersValues);
-            this.add(passenger);
 
         } catch (PassengerException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());

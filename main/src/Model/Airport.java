@@ -10,12 +10,31 @@ public class Airport {
     private String country;
 
 
-    public Airport(String name, String city, String postCode, String country) {
+    public Airport(int code, String name, String city, String postCode, String country) {
+        this.code = code;
         this.name = name;
         this.city = city;
         this.postCode = postCode;
         this.country = country;
     }
 
+    public int getCode() {
+        return code;
+    }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getPostCode() {
+        return postCode;
+    }
+
+    public String getCountry() {
+        return country;
+    }
 }

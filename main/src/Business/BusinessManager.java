@@ -8,6 +8,7 @@ import Exception.*;
 import Exception.AddBookingException;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 
@@ -78,6 +79,13 @@ public class BusinessManager {
 
     public ArrayList<Locality> getAllLocalities() throws AllLocalitiesException {
         return daoFlightsStopover.getAllLocalities();
+    }
+    public ArrayList<Airport> getAllAirports() throws AllAirportsException {
+        return daoFlightsOfDepartureAirport.getAllAirports();
+    }
+
+    public ArrayList<FlightOfDepartureAirport> getFlightsOfDepartureAirport(Date startDate, Date endDate, int idAirport) throws FlightsOfDepartureAirportException {
+        return daoFlightsOfDepartureAirport.getFlightsOfDepartureAirport(startDate, endDate, idAirport);
     }
 
 }
