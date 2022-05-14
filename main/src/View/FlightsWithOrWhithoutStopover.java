@@ -1,5 +1,6 @@
 package View;
 
+import Business.ConvertManager;
 import Controller.ApplicationController;
 import Model.Locality;
 
@@ -8,12 +9,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import Exception.*;
 
-public class FlightWithOrWhithoutStopover extends JPanel {
+public class FlightsWithOrWhithoutStopover extends JPanel {
     private JPanel researchPanel, researchDisplay, displayPanel;
     private JButton researchButton;
     private JLabel departureCityLabel, arrivalCityLabel;
@@ -23,7 +22,7 @@ public class FlightWithOrWhithoutStopover extends JPanel {
     private ButtonGroup stopover;
     private JRadioButton withStopover, withoutStopover;
 
-    public FlightWithOrWhithoutStopover(Container frameContainer) throws ConnectionException {
+    public FlightsWithOrWhithoutStopover(Container frameContainer) throws ConnectionException {
         this.controller = new ApplicationController();
         this.frameContainer = frameContainer;
         this.setLayout(new BorderLayout());
@@ -100,8 +99,8 @@ public class FlightWithOrWhithoutStopover extends JPanel {
             panel.removeAll();
 
             try {
-                Locality departure = stringIntoLocality(departureCity.getSelectedItem().toString());
-                Locality arrival = stringIntoLocality(arrivalCity.getSelectedItem().toString());
+                Locality departure = ConvertManager.stringIntoLocality(departureCity.getSelectedItem().toString());
+                Locality arrival = ConvertManager.stringIntoLocality(arrivalCity.getSelectedItem().toString());
                 System.out.println(departure.getCity());
                 System.out.println(departure.getCountry());
                 System.out.println(departure.getPostCode());
@@ -124,19 +123,5 @@ public class FlightWithOrWhithoutStopover extends JPanel {
             }
         }
 
-        public Locality stringIntoLocality(String localite) throws LocalityException {
-            Pattern patternCity = Pattern.compile("^([\\w\\s]+)", Pattern.CASE_INSENSITIVE);
-            Matcher matcherCity = patternCity.matcher(localite);
-            Pattern patternCountry = Pattern.compile("-(.*)-", Pattern.CASE_INSENSITIVE);
-            Matcher matcherCountry = patternCountry.matcher(localite);
-            Pattern patternPostCode = Pattern.compile("([\\w]+)$", Pattern.CASE_INSENSITIVE);
-            Matcher matcherPostCode = patternPostCode.matcher(localite);
-            if (matcherCity.find() && matcherCountry.find() && matcherPostCode.find()) {
-                return new Locality (matcherCity.group(1),matcherPostCode.group(1),matcherCountry.group(1));
-            } else {
-                throw new LocalityException();
-            }
-
-        }
     }
 }

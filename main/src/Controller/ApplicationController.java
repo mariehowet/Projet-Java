@@ -42,7 +42,7 @@ public class ApplicationController {
         return manager.getAllSeatTypes();
     }
 
-    public ArrayList<Flight> getAllFlights() throws AllFlightsException {
+    public ArrayList<FlightAncien> getAllFlights() throws AllFlightsException {
         return manager.getAllFlights();
     }
     public ArrayList<Seat> getAvailableSeats(String seatType, int flightID) throws AvailableSeatsException {
@@ -65,7 +65,7 @@ public class ApplicationController {
         return manager.getBookingsHistory(idPassenger);
     }
 
-    public ArrayList<FlightStopover> getFlightsStopover(Locality departure, Locality arrival, boolean withStopover) throws FlightsStopover {
+    public ArrayList<Flight> getFlightsStopover(Locality departure, Locality arrival, boolean withStopover) throws FlightsStopover {
         return manager.getFlightsStopover(departure, arrival, withStopover);
     }
 

@@ -62,7 +62,7 @@ public class BusinessManager {
         return daoBooking.getAllSeatTypes();
     }
 
-    public ArrayList<Flight> getAllFlights() throws AllFlightsException {
+    public ArrayList<FlightAncien> getAllFlights() throws AllFlightsException {
         return daoBooking.getAllFlights();
     }
     public ArrayList<Seat> getAvailableSeats(String seatType, int flightID) throws AvailableSeatsException {
@@ -84,7 +84,7 @@ public class BusinessManager {
         return daoBookingsHistory.getBookingsHistory(idPassenger);
     }
 
-    public ArrayList<FlightStopover> getFlightsStopover(Locality departure, Locality arrival, boolean withStopover) throws FlightsStopover {
+    public ArrayList<Flight> getFlightsStopover(Locality departure, Locality arrival, boolean withStopover) throws FlightsStopover {
         return daoFlightsStopover.getFlightsStopover(departure, arrival, withStopover);
     }
 

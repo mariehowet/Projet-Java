@@ -1,7 +1,6 @@
 package View;
 
 import Model.FlightOfDepartureAirport;
-import Model.FlightStopover;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;

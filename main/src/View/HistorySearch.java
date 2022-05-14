@@ -1,5 +1,6 @@
 package View;
 
+import Business.ConvertManager;
 import Controller.ApplicationController;
 import Model.Passenger;
 
@@ -84,14 +85,16 @@ public class HistorySearch extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             panel.removeAll();
-            Pattern patternPassenger = Pattern.compile("(\\d+)-", Pattern.CASE_INSENSITIVE);
-            Matcher matcher = patternPassenger.matcher(passenger.getSelectedItem().toString());
-            if (matcher.find()) {
-                int idPassenger = Integer.parseInt(matcher.group(1));
+            try {
+                int idPassenger = ConvertManager.stringIntoId(passenger.getSelectedItem().toString());
                 researchDisplay = new BookingsHistoryJPanel(idPassenger);
+
                 frameContainer.revalidate();
                 frameContainer.repaint();
                 panel.add(researchDisplay, BorderLayout.CENTER);
+            }
+            catch (IdException idException) {
+                JOptionPane.showMessageDialog(null, idException.getMessage(), "Problème", JOptionPane.WARNING_MESSAGE);
             }
         }
     }

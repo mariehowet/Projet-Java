@@ -1,53 +1,56 @@
 package Model;
 
 import java.util.GregorianCalendar;
-import java.util.HashSet;
-import java.util.Optional;
 
 public class Flight {
-    private int id;
+    private int flightId;
+    private String departureAirportName;
+    private String arrivalAirportName;
     private GregorianCalendar departureDate;
+    private GregorianCalendar arrivalDate;
     private String departureHour;
-    private GregorianCalendar expectedArrivalDate;
-    private String expectedArrivalHour;
+    private String arrivalHour;
     private double price;
-    private int airplaneId;
-    private int departureAirportId;
-    private int arrivalAirportId;
 
 
-    public Flight(GregorianCalendar departureDate, String departureHour, GregorianCalendar expectedArrivalDate, String expectedArrivalHour, double price, int airplaneId, int departureAirportId, int arrivalAirportId) {
+    public Flight(int flightId, String departureAirportName, String arrivalAirportName, GregorianCalendar departureDate, GregorianCalendar arrivalDate, String departureHour, String arrivalHour, Double price) {
+        this.flightId = flightId;
+        this.departureAirportName = departureAirportName;
+        this.arrivalAirportName = arrivalAirportName;
         this.departureDate = departureDate;
+        this.arrivalDate = arrivalDate;
         this.departureHour = departureHour;
-        this.expectedArrivalDate = expectedArrivalDate;
-        this.expectedArrivalHour = expectedArrivalHour;
+        this.arrivalHour = arrivalHour;
         this.price = price;
-        this.airplaneId = airplaneId;
-        this.departureAirportId = departureAirportId;
-        this.arrivalAirportId = arrivalAirportId;
     }
 
-    public Flight(int id, GregorianCalendar departureDate, String departureHour, GregorianCalendar expectedArrivalDate, String expectedArrivalHour, double price, int airplaneId, int departureAirportId, int arrivalAirportId) {
-        this.id = id;
-        this.departureDate = departureDate;
-        this.departureHour = departureHour;
-        this.expectedArrivalDate = expectedArrivalDate;
-        this.expectedArrivalHour = expectedArrivalHour;
-        this.price = price;
-        this.airplaneId = airplaneId;
-        this.departureAirportId = departureAirportId;
-        this.arrivalAirportId = arrivalAirportId;
+    public double getPrice() {return price;}
+
+    public int getFlightId() {
+        return flightId;
     }
 
-    public int getId() {
-        return id;
+    public String getDepartureAirportName() {
+        return departureAirportName;
     }
 
-    public double getPrice() {
-        return price;
+    public String getArrivalAirportName() {
+        return arrivalAirportName;
     }
 
-    public int getAirplaneId() {
-        return airplaneId;
+    public GregorianCalendar getDepartureDate() {
+        return departureDate;
+    }
+
+    public GregorianCalendar getArrivalDate() {
+        return arrivalDate;
+    }
+
+    public String getDepartureHour() {
+        return departureHour;
+    }
+
+    public String getArrivalHour() {
+        return arrivalHour;
     }
 }
