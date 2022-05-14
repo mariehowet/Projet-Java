@@ -49,6 +49,18 @@ public class ApplicationController {
         return manager.getAvailableSeats(seatType, flightID);
     }
 
+    public Double getFlightPrice(int flightID) throws FlightPriceException {
+        return manager.getFlightPrice(flightID);
+    }
+
+    public String getSeatTypeName(int seatID) throws SeatTypeNameException{
+        return manager.getSeatTypeName(seatID);
+    }
+
+    public Seat getActualSeat (int seatID) throws ActualSeatException {
+        return manager.getActualSeat(seatID);
+    }
+
     public ArrayList<PassengerBooking> getBookingsHistory(int idPassenger) throws BookingsHistoryException {
         return manager.getBookingsHistory(idPassenger);
     }

@@ -153,7 +153,6 @@ public class BookingDBAccess implements BookingDataAccess {
 
     }
 
-
     public ArrayList<Seat> getAvailableSeats(String seatType, int flightID) throws AvailableSeatsException {
         String sqlInstruction ="select s.id, s.number, s.column_letter from seat s inner join airplane a on(s.airplane_id = a.id)  " +
                 "inner join seat_type st on(st.name = s.seat_type)  " +
@@ -280,6 +279,62 @@ public class BookingDBAccess implements BookingDataAccess {
 
         } catch (SQLException exception) {
             throw new AllFlightsException();
+        }
+    }
+
+    public Double getFlightPrice(int flightID) throws FlightPriceException{
+        String sqlInstruction = "select price from flight where id = ?";
+        Double price = null;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+            preparedStatement.setInt(1, flightID);
+            ResultSet data = preparedStatement.executeQuery();
+
+            while (data.next()) {
+                price = data.getDouble("price");
+            }
+            return price;
+        } catch (SQLException e) {
+           throw new FlightPriceException();
+        }
+    }
+
+    public String getSeatTypeName(int seatID) throws SeatTypeNameException{
+        String sqlInstruction = "select seat_type from seat where id = ?";
+        String seatType = null;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+            preparedStatement.setInt(1, seatID);
+            ResultSet data = preparedStatement.executeQuery();
+
+            while (data.next()) {
+                seatType = data.getString("seat_type");
+            }
+            return seatType;
+        } catch (SQLException e) {
+            throw new SeatTypeNameException();
+        }
+    }
+
+    public Seat getActualSeat (int seatID) throws ActualSeatException{
+        String sqlInstruction = "select id, number, column_letter from seat where id = ?";
+        Seat actualSeat = null;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+            preparedStatement.setInt(1, seatID);
+            ResultSet data = preparedStatement.executeQuery();
+
+            while (data.next()) {
+                actualSeat = new Seat (data.getInt("id"),
+                        data.getInt("number"),
+                        data.getString("column_letter"));
+            }
+            return actualSeat;
+        } catch (SQLException e) {
+            throw new ActualSeatException();
         }
     }
 

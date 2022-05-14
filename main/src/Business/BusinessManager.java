@@ -69,6 +69,17 @@ public class BusinessManager {
         return daoBooking.getAvailableSeats(seatType, flightID);
     }
 
+    public Double getFlightPrice(int flightID) throws FlightPriceException {
+        return daoBooking.getFlightPrice(flightID);
+    }
+    public String getSeatTypeName(int seatID) throws SeatTypeNameException{
+        return daoBooking.getSeatTypeName(seatID);
+    }
+
+    public Seat getActualSeat (int seatID) throws ActualSeatException {
+        return daoBooking.getActualSeat(seatID);
+    }
+
     public ArrayList<PassengerBooking> getBookingsHistory(int idPassenger) throws BookingsHistoryException {
         return daoBookingsHistory.getBookingsHistory(idPassenger);
     }
@@ -87,5 +98,6 @@ public class BusinessManager {
     public ArrayList<FlightOfDepartureAirport> getFlightsOfDepartureAirport(Date startDate, Date endDate, int idAirport) throws FlightsOfDepartureAirportException {
         return daoFlightsOfDepartureAirport.getFlightsOfDepartureAirport(startDate, endDate, idAirport);
     }
+
 
 }

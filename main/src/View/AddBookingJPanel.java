@@ -27,7 +27,7 @@ public class AddBookingJPanel extends JPanel {
     private ApplicationController controller;
     private Double flightPrice = 0.0, seatTypePrice = 0.0, luggagePrice = 0.0, totalPrice;
     private ArrayList<Double> flightPrices;
-    private ArrayList<Integer> flightIDs, passengerIDs, seatIDs, airplaneIDS;
+    private ArrayList<Integer> flightIDs, passengerIDs, seatIDs;
     private ArrayList<String> seatTypeIDs;
     private String seatTypeName;
     private Integer flightID;
@@ -67,6 +67,8 @@ public class AddBookingJPanel extends JPanel {
             }
 
             flightBox = new JComboBox(flightValues);
+            flightBox.addActionListener(new SearchSeatListener());
+            flightBox.addActionListener(new CalculateListener());
             formPanel.add(flightBox);
 
         } catch (AllFlightsException e) {
@@ -122,6 +124,8 @@ public class AddBookingJPanel extends JPanel {
             }
 
             seatTypeBox = new JComboBox(seatTypesValues);
+            seatTypeBox.addActionListener(new CalculateListener());
+            seatTypeBox.addActionListener(new SearchSeatListener());
             formPanel.add(seatTypeBox);
 
         } catch (SeatTypeException e) {
@@ -155,6 +159,7 @@ public class AddBookingJPanel extends JPanel {
         formPanel.add(weightLuggageLabel);
         String[] weights = {"","0 < 10 kg (+0€)","10 < 20 kg (+10€)","20 < 30 kg (+20€)","Max 35 kg (+25€)"};
         weightLuggageBox = new JComboBox(weights);
+        weightLuggageBox.addActionListener(new CalculateListener());
         formPanel.add(weightLuggageBox);
 
 
@@ -180,7 +185,6 @@ public class AddBookingJPanel extends JPanel {
         formPanel.add(mealTypeLabel);
         String[] mealTypes = {"Poulet","Boeuf","Végétarien","Porc"};
         mealTypeBox = new JComboBox(mealTypes);
-        //mealType.setMaximumRowCount(2);
         formPanel.add(mealTypeBox);
 
         //------------------------------payement--------------------------------------------
@@ -202,17 +206,16 @@ public class AddBookingJPanel extends JPanel {
 
 
         //--------------------ButtonPanel-----------------------------------
-        searchSeatButton = new JButton("Chercher les places disponibles");
-        calculateButton = new JButton("Calculer le prix");
+
         validationButton = new JButton("Validation");
-        searchSeatButton.addActionListener(new SearchSeatListener());
+
         validationButton.addActionListener(new ValidationListener());
         validationButton.addActionListener(new CalculateListener());
-        calculateButton.addActionListener( new CalculateListener());
+
+
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout());
-        buttonPanel.add(searchSeatButton);
-        buttonPanel.add(calculateButton);
+
         buttonPanel.add(validationButton);
 
         this.add(title, BorderLayout.NORTH);
@@ -278,7 +281,6 @@ public class AddBookingJPanel extends JPanel {
 
             }else if (buttonYesBusinessFlight.isSelected() && companyName.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Vous devez entrer le nom de votre société", "Problème", JOptionPane.WARNING_MESSAGE);
-
             } else {
                 String luggageWeight = null;
                 if (buttonYesLuggage.isSelected()) {
