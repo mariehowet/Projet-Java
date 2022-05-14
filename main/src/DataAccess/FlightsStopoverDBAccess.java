@@ -1,6 +1,6 @@
 package DataAccess;
 
-import Model.Flight;
+import Model.FlightResearch;
 import Model.Locality;
 
 import java.sql.Connection;
@@ -22,7 +22,7 @@ public class FlightsStopoverDBAccess implements FlightsStopoverDataAccess {
     }
 
 
-    public ArrayList<Flight> getFlightsStopover(Locality departure, Locality arrival, boolean withStopover) throws FlightsStopover {
+    public ArrayList<FlightResearch> getFlightsStopover(Locality departure, Locality arrival, boolean withStopover) throws FlightsStopover {
 
         String sqlInstruction =
                 "select f.id, da.name as 'departure_airport', aa.name as 'arrival_airport', f.departure_date, f.expected_arrival_date, f.departure_hour, f.expected_arrival_hour, f.price " +
@@ -37,7 +37,7 @@ public class FlightsStopoverDBAccess implements FlightsStopoverDataAccess {
                         "(? and not exists (select flight_id from stopover s where f.id = s.flight_id))" +
                         ")";
 
-        ArrayList<Flight> flightsStopovers = new ArrayList<>();
+        ArrayList<FlightResearch> flightsStopovers = new ArrayList<>();
         // traitement
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
@@ -52,7 +52,7 @@ public class FlightsStopoverDBAccess implements FlightsStopoverDataAccess {
 
 
             ResultSet data = preparedStatement.executeQuery();
-            Flight flight;
+            FlightResearch flightResearch;
             GregorianCalendar departureDate;
             GregorianCalendar arrivalDate;
 
@@ -62,7 +62,7 @@ public class FlightsStopoverDBAccess implements FlightsStopoverDataAccess {
                 arrivalDate = new GregorianCalendar();
                 arrivalDate.setTime(data.getDate("expected_arrival_date"));
 
-                flight = new Flight(
+                flightResearch = new FlightResearch(
                         data.getInt("id"),
                         data.getString("departure_airport"),
                         data.getString("arrival_airport"),
@@ -72,39 +72,12 @@ public class FlightsStopoverDBAccess implements FlightsStopoverDataAccess {
                         data.getString("expected_arrival_hour"),
                         data.getDouble("price")
                 );
-                flightsStopovers.add(flight);
+                flightsStopovers.add(flightResearch);
             }
 
         } catch (SQLException exception) {
             throw new FlightsStopover();
         }
         return flightsStopovers;
-    }
-
-
-    public ArrayList<Locality> getAllLocalities() throws AllLocalitiesException {
-        String sqlInstruction = "select * from locality";
-        ArrayList<Locality>  allLocalities = new ArrayList<>();
-
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
-            ResultSet data = preparedStatement.executeQuery();
-            Locality locality;
-
-            while(data.next()) {
-
-                locality = new Locality(
-                        data.getString("city"),
-                        data.getString("post_code"),
-                        data.getString("country")
-                );
-
-                allLocalities.add(locality);
-            }
-            return allLocalities;
-
-        } catch (SQLException exception) {
-            throw new AllLocalitiesException();
-        }
     }
 }

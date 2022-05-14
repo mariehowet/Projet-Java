@@ -244,14 +244,14 @@ public class BookingDBAccess implements BookingDataAccess {
         }
     }
 
-    public ArrayList<FlightAncien> getAllFlights() throws AllFlightsException { // changer prendre que ce dont j'ai besoin
+    public ArrayList<Flight> getAllFlights() throws AllFlightsException { // changer prendre que ce dont j'ai besoin
         String sqlInstruction = "select * from flight";
-        ArrayList<FlightAncien>  allFlights = new ArrayList<>();
+        ArrayList<Flight>  allFlights = new ArrayList<>();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             ResultSet data = preparedStatement.executeQuery();
-            FlightAncien flight;
+            Flight flight;
             GregorianCalendar departureDate;
             GregorianCalendar arrivalDate;
 
@@ -261,7 +261,7 @@ public class BookingDBAccess implements BookingDataAccess {
 
                 departureDate.setTime( data.getDate("departure_date"));
                 arrivalDate.setTime( data.getDate("expected_arrival_date"));
-                flight = new FlightAncien(
+                flight = new Flight(
                         data.getInt("id"),
                        departureDate,
                         data.getString("departure_hour"),

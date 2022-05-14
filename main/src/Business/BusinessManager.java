@@ -19,6 +19,7 @@ public class BusinessManager {
     private GeneralDataAccess daoGeneral;
     private FlightsStopoverDataAccess daoFlightsStopover;
     private FlightsOfDepartureAirportDataAccess daoFlightsOfDepartureAirport;
+    private FindFlightsDataAccess daoFlights;
 
     public BusinessManager() throws ConnectionException{
         daoBooking = new BookingDBAccess();
@@ -26,6 +27,7 @@ public class BusinessManager {
         daoGeneral = new GeneralDBAccess();
         daoFlightsStopover = new FlightsStopoverDBAccess();
         daoFlightsOfDepartureAirport = new FlightsOfDepartureAirportDBAccess();
+        daoFlights = new FindFlightsDBAccess();
     }
 
     public ArrayList<Booking> getAllBookings() throws AllBookingsException {
@@ -55,14 +57,14 @@ public class BusinessManager {
     }
 
     public ArrayList<Passenger> getAllPassengers() throws PassengerException {
-        return daoBookingsHistory.getAllPassengers();
+        return daoGeneral.getAllPassengers();
     }
 
     public ArrayList<SeatType> getAllSeatTypes() throws SeatTypeException {
         return daoBooking.getAllSeatTypes();
     }
 
-    public ArrayList<FlightAncien> getAllFlights() throws AllFlightsException {
+    public ArrayList<Flight> getAllFlights() throws AllFlightsException {
         return daoBooking.getAllFlights();
     }
     public ArrayList<Seat> getAvailableSeats(String seatType, int flightID) throws AvailableSeatsException {
@@ -84,12 +86,12 @@ public class BusinessManager {
         return daoBookingsHistory.getBookingsHistory(idPassenger);
     }
 
-    public ArrayList<Flight> getFlightsStopover(Locality departure, Locality arrival, boolean withStopover) throws FlightsStopover {
+    public ArrayList<FlightResearch> getFlightsStopover(Locality departure, Locality arrival, boolean withStopover) throws FlightsStopover {
         return daoFlightsStopover.getFlightsStopover(departure, arrival, withStopover);
     }
 
     public ArrayList<Locality> getAllLocalities() throws AllLocalitiesException {
-        return daoFlightsStopover.getAllLocalities();
+        return daoGeneral.getAllLocalities();
     }
     public ArrayList<Airport> getAllAirports() throws AllAirportsException {
         return daoFlightsOfDepartureAirport.getAllAirports();
@@ -99,5 +101,9 @@ public class BusinessManager {
         return daoFlightsOfDepartureAirport.getFlightsOfDepartureAirport(startDate, endDate, idAirport);
     }
 
+
+    public ArrayList<FlightResearch> getFlights(Locality departure, Locality arrival, Date startDate, Date endDate) throws FlightsException {
+        return daoFlights.getFlights(departure, arrival, startDate, endDate);
+    }
 
 }
