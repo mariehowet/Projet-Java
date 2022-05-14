@@ -51,11 +51,11 @@ public class AddBookingJPanel extends JPanel {
         formPanel.add(flightLabel);
         String [] flightValues;
         try {
-            ArrayList<Flight> flightList = controller.getAllFlights();
+            ArrayList<FlightAncien> flightList = controller.getAllFlights();
             flightIDs = new ArrayList<>();
             flightPrices = new ArrayList<>();
 
-            for(Flight fl : flightList) {
+            for(FlightAncien fl : flightList) {
                 flightIDs.add(fl.getId());
                 flightPrices.add(fl.getPrice());
             }

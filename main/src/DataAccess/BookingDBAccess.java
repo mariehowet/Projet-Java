@@ -22,7 +22,7 @@ public class BookingDBAccess implements BookingDataAccess {
         String sqlInstruction = "insert into booking (date_booking, has_paid, meal_type, real_price, flight_id, seat_id, passenger_id) values (?,?,?,?,?,?,?)";
         // Créer l'instruction SQL avec ? pour empêcher les injections SQL
         GregorianCalendar calendar = booking.getDate();
-       java.sql.Date sqlDate = new Date(calendar.getTimeInMillis());
+        java.sql.Date sqlDate = new Date(calendar.getTimeInMillis());
 
 
         // Créer le PreparedStatement à partir de cette instruction SQL
@@ -245,14 +245,14 @@ public class BookingDBAccess implements BookingDataAccess {
         }
     }
 
-    public ArrayList<Flight> getAllFlights() throws AllFlightsException { // changer prendre que ce dont j'ai besoin
+    public ArrayList<FlightAncien> getAllFlights() throws AllFlightsException { // changer prendre que ce dont j'ai besoin
         String sqlInstruction = "select * from flight";
-        ArrayList<Flight>  allFlights = new ArrayList<>();
+        ArrayList<FlightAncien>  allFlights = new ArrayList<>();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             ResultSet data = preparedStatement.executeQuery();
-            Flight flight;
+            FlightAncien flight;
             GregorianCalendar departureDate;
             GregorianCalendar arrivalDate;
 
@@ -262,7 +262,7 @@ public class BookingDBAccess implements BookingDataAccess {
 
                 departureDate.setTime( data.getDate("departure_date"));
                 arrivalDate.setTime( data.getDate("expected_arrival_date"));
-                flight = new Flight(
+                flight = new FlightAncien(
                         data.getInt("id"),
                        departureDate,
                         data.getString("departure_hour"),

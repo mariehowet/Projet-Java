@@ -16,6 +16,6 @@ public interface BookingDataAccess {
     public void deleteBooking(Booking booking) throws DeleteException;
     public ArrayList<Passenger> getAllPassengers() throws PassengerException;
     public ArrayList<SeatType> getAllSeatTypes () throws SeatTypeException;
-    public ArrayList<Flight> getAllFlights() throws AllFlightsException;
+    public ArrayList<FlightAncien> getAllFlights() throws AllFlightsException;
     public ArrayList<Seat> getAvailableSeats(String seatType, int flightID) throws AvailableSeatsException;
 }

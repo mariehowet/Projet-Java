@@ -12,8 +12,6 @@ import java.util.GregorianCalendar;
 
 import Exception.*;
 import Model.FlightOfDepartureAirport;
-import Model.FlightStopover;
-import Model.Passenger;
 
 public class FlightsOfDepartureAirportDBAccess implements FlightsOfDepartureAirportDataAccess {
     private Connection connection;
@@ -27,11 +25,17 @@ public class FlightsOfDepartureAirportDBAccess implements FlightsOfDepartureAirp
         String sqlInstruction = "";
 
         ArrayList<FlightOfDepartureAirport> flightsOfDepartureAirport = new ArrayList<>();
+
+        java.sql.Date sqlStartDate = new java.sql.Date(startDate.getTime());
+        java.sql.Date sqlEndDate = new java.sql.Date(endDate.getTime());
+        System.out.println(sqlStartDate);
+        System.out.println(sqlEndDate);
+
         // traitement
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
-            preparedStatement.setLong(1, startDate.getTime());
-            preparedStatement.setLong(2, endDate.getTime());
+            preparedStatement.setDate(1, sqlStartDate);
+            preparedStatement.setDate(2, sqlEndDate);
             preparedStatement.setInt(8, idAirport);
 
 

@@ -3,17 +3,69 @@ CREATE SCHEMA marvinairline;
 USE marvinairline;
 
 
-select f.id, da.name as "departure_airport", aa.name as "arrival_airport", f.departure_date, f.expected_arrival_date, f.departure_hour, f.expected_arrival_hour
+select id, name, departure_date, expected_arrival_date
+       from (select f.id, da.name, f.departure_date, f.expected_arrival_date
+            from flight f
+            inner join airport da on (f.departure_airport_id = da.id)
+            inner join airplane a on (f.airplane_id = a.id)
+
+            where f.arrival_airport_id = 10
+            and f.departure_date between '2022-04-10' and '2022-06-21') flights
+        inner join
+;
+
+
+
+select f.id, da.name, f.departure_date, f.expected_arrival_date
 from flight f
          inner join airport da on (f.departure_airport_id = da.id)
-         inner join airport aa on (f.arrival_airport_id = aa.id)
-where
-da.city = 'Paris' and da.post_code = '75000' and da.country = 'France'
-and aa.city = 'New York' and aa.post_code = '10001' and aa.country = 'Etats-Unis'
-and exists
-    (select flight_id
-     from stopover s
-     where f.id = s.flight_id);
+         inner join airplane a on (f.airplane_id = a.id)
+
+where f.arrival_airport_id = 10
+  and f.departure_date between '2022-04-10' and '2022-06-21';
+
+
+
+select count(*)
+from seat s
+where s.airplane_id = 1;
+
+select count(*)
+from seat s
+inner join booking b on s.id = b.seat_id
+where b.flight_id = 1;
+
+
+select count(*)
+from seat s
+where s.airplane_id = 1
+in (select *
+        from seat s
+        inner join booking b on s.id = b.seat_id
+        where b.flight_id = 1);
+
+
+select f.id, da.name, f.departure_date, f.expected_arrival_date
+from booking b
+        inner join flight f on b.flight_id = f.id
+         inner join airport da on (f.departure_airport_id = da.id)
+         inner join airplane a on (f.airplane_id = a.id)
+    inner join seat s on b.seat_id = s.id
+where count() in (select * from seat where airplane_id = a.id);
+
+
+
+
+
+
+select s.id, s.number, s.column_letter from seat s inner join airplane a on(s.airplane_id = a.id)
+                inner join seat_type st on(st.name = s.seat_type)
+                inner join flight f on (f.airplane_id = s.airplane_id)
+                where st.name = ? and f.id = ? and s.id not in (select seat_id from booking) ;
+
+
+
+
 
 
 

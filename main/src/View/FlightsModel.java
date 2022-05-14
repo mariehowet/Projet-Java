@@ -1,17 +1,17 @@
 package View;
 
-import Model.FlightStopover;
+import Model.Flight;
 
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class FlightStopoverModel extends AbstractTableModel {
+public class FlightsModel extends AbstractTableModel {
     private ArrayList<String> columnNames;
-    private ArrayList<FlightStopover> contents;
+    private ArrayList<Flight> contents;
 
-    public FlightStopoverModel (ArrayList<FlightStopover> contents) {
+    public FlightsModel(ArrayList<Flight> contents) {
         columnNames = new ArrayList<>();
         columnNames.add("Numéro vol");
         columnNames.add("Aéroport départ");
@@ -38,23 +38,23 @@ public class FlightStopoverModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        FlightStopover flightStopover = contents.get(rowIndex);
+        Flight flight = contents.get(rowIndex);
 
         switch (columnIndex) {
             case 0:
-                return flightStopover.getFlightId();
+                return flight.getFlightId();
             case 1:
-                return flightStopover.getDepartureAirportName();
+                return flight.getDepartureAirportName();
             case 2:
-                return flightStopover.getArrivalAirportName();
+                return flight.getArrivalAirportName();
             case 3:
-                return flightStopover.getDepartureDate().getTime();
+                return flight.getDepartureDate().getTime();
             case 4:
-                return flightStopover.getArrivalDate().getTime();
+                return flight.getArrivalDate().getTime();
             case 5:
-                return flightStopover.getDepartureHour();
+                return flight.getDepartureHour();
             case 6:
-                return flightStopover.getArrivalHour();
+                return flight.getArrivalHour();
             default:
                 return null;
         }

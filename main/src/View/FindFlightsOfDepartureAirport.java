@@ -1,5 +1,6 @@
 package View;
 
+import Business.ConvertManager;
 import Controller.ApplicationController;
 import Model.Airport;
 import Model.Passenger;
@@ -109,14 +110,15 @@ public class FindFlightsOfDepartureAirport extends JPanel {
                     throw new DatesException();
                 }
 
-                Pattern patternAirport = Pattern.compile("(\\d+)-", Pattern.CASE_INSENSITIVE);
-                Matcher matcher = patternAirport.matcher(airport.getSelectedItem().toString());
-                if (matcher.find()) {
-                    int idAirport = Integer.parseInt(matcher.group(1));
+                try {
+                    int idAirport = ConvertManager.stringIntoId(airport.getSelectedItem().toString());
                     researchDisplay = new FlightsOfDepartureAirportJPanel(chooserStartDate.getDate(),chooserEndDate.getDate(),idAirport);
                     frameContainer.revalidate();
                     frameContainer.repaint();
                     panel.add(researchDisplay, BorderLayout.CENTER);
+                }
+                catch (IdException idException) {
+                    JOptionPane.showMessageDialog(null, idException.getMessage(), "Problème", JOptionPane.WARNING_MESSAGE);
                 }
 
             }

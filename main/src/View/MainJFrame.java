@@ -126,7 +126,7 @@ public class MainJFrame extends JFrame {
         public void actionPerformed(ActionEvent e) {
             frameContainer.removeAll();
             try {
-                frameContainer.add(new FlightWithOrWhithoutStopover(frameContainer), BorderLayout.CENTER);
+                frameContainer.add(new FlightsWithOrWhithoutStopover(frameContainer), BorderLayout.CENTER);
             } catch (ConnectionException stopoverConnectionException) {
                 JOptionPane.showMessageDialog(null, stopoverConnectionException.getMessage());
             }
@@ -150,7 +150,13 @@ public class MainJFrame extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             frameContainer.removeAll();
-            frameContainer.add(new FindFlight(frameContainer), BorderLayout.CENTER);
+            try {
+                frameContainer.add(new FindFlight(frameContainer), BorderLayout.CENTER);
+            }
+            catch (ConnectionException findFlightException) {
+                JOptionPane.showMessageDialog(null, findFlightException.getMessage(), "Problème", JOptionPane.WARNING_MESSAGE);
+
+            }
             setVisible(true);
         }
     }

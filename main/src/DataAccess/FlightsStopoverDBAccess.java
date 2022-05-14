@@ -1,6 +1,6 @@
 package DataAccess;
 
-import Model.FlightStopover;
+import Model.Flight;
 import Model.Locality;
 
 import java.sql.Connection;
@@ -22,10 +22,10 @@ public class FlightsStopoverDBAccess implements FlightsStopoverDataAccess {
     }
 
 
-    public ArrayList<FlightStopover> getFlightsStopover(Locality departure, Locality arrival, boolean withStopover) throws FlightsStopover {
+    public ArrayList<Flight> getFlightsStopover(Locality departure, Locality arrival, boolean withStopover) throws FlightsStopover {
 
         String sqlInstruction =
-                "select f.id, da.name as 'departure_airport', aa.name as 'arrival_airport', f.departure_date, f.expected_arrival_date, f.departure_hour, f.expected_arrival_hour " +
+                "select f.id, da.name as 'departure_airport', aa.name as 'arrival_airport', f.departure_date, f.expected_arrival_date, f.departure_hour, f.expected_arrival_hour, f.price " +
                         "from flight f " +
                         "inner join airport da on (f.departure_airport_id = da.id) " +
                         "inner join airport aa on (f.arrival_airport_id = aa.id) " +
@@ -37,7 +37,7 @@ public class FlightsStopoverDBAccess implements FlightsStopoverDataAccess {
                         "(? and not exists (select flight_id from stopover s where f.id = s.flight_id))" +
                         ")";
 
-        ArrayList<FlightStopover> flightsStopovers = new ArrayList<>();
+        ArrayList<Flight> flightsStopovers = new ArrayList<>();
         // traitement
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
@@ -52,7 +52,7 @@ public class FlightsStopoverDBAccess implements FlightsStopoverDataAccess {
 
 
             ResultSet data = preparedStatement.executeQuery();
-            FlightStopover flightStopover;
+            Flight flight;
             GregorianCalendar departureDate;
             GregorianCalendar arrivalDate;
 
@@ -62,17 +62,17 @@ public class FlightsStopoverDBAccess implements FlightsStopoverDataAccess {
                 arrivalDate = new GregorianCalendar();
                 arrivalDate.setTime(data.getDate("expected_arrival_date"));
 
-                flightStopover = new FlightStopover (
+                flight = new Flight(
                         data.getInt("id"),
                         data.getString("departure_airport"),
                         data.getString("arrival_airport"),
                         departureDate,
                         arrivalDate,
                         data.getString("departure_hour"),
-                        data.getString("expected_arrival_hour")
-
+                        data.getString("expected_arrival_hour"),
+                        data.getDouble("price")
                 );
-                flightsStopovers.add(flightStopover);
+                flightsStopovers.add(flight);
             }
 
         } catch (SQLException exception) {
