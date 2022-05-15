@@ -276,12 +276,15 @@ public class AddBookingJPanel extends JPanel {
     private class ValidationListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(buttonYesLuggage.isSelected() && weightLuggageBox.getSelectedItem().toString() == ""){
+
+             if(buttonYesLuggage.isSelected() && weightLuggageBox.getSelectedItem().toString() == ""){
                 JOptionPane.showMessageDialog(null, "Veuillez sélectionner le poids de vos bagages", "Problème", JOptionPane.WARNING_MESSAGE);
 
-            }else if (buttonYesBusinessFlight.isSelected() && companyName.getText().isEmpty()) {
+            }
+            else if (buttonYesBusinessFlight.isSelected() && companyName.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Vous devez entrer le nom de votre société", "Problème", JOptionPane.WARNING_MESSAGE);
-            } else {
+            }
+            else {
                 String luggageWeight = null;
                 if (buttonYesLuggage.isSelected()) {
                     Pattern patternLuggage = Pattern.compile("(^.*kg)", Pattern.CASE_INSENSITIVE);

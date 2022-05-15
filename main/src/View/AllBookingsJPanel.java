@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class AllBookingsJPanel extends JPanel {
     private ApplicationController controller;
-    private JButton delete, modification;
+    private JButton delete, modification,addition;
     private ListSelectionModel listSelect;
     private ArrayList<Booking> bookings;
     private Container frameContainer;
@@ -31,6 +31,9 @@ public class AllBookingsJPanel extends JPanel {
 
             this.add(new JScrollPane(bookingsTable), BorderLayout.NORTH);
             Panel buttonsPanel = new Panel();
+            addition = new JButton("Ajout");
+            addition.addActionListener(new AddListener());
+            buttonsPanel.add(addition);
             modification = new JButton("Modification");
             modification.addActionListener(new ModifyListener());
             buttonsPanel.add(modification);
@@ -47,6 +50,24 @@ public class AllBookingsJPanel extends JPanel {
         }
         catch (ConnectionException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+
+    private class AddListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            int reponse = JOptionPane.showConfirmDialog(null,"Etes-vous sûr de vouloir ajouter cette réservation ?", "Modification", JOptionPane.YES_NO_OPTION);
+            if(reponse == 0) {
+                try {
+                    frameContainer.removeAll();
+                    frameContainer.revalidate();
+                    frameContainer.repaint();
+                    frameContainer.add(new AddBookingJPanel(frameContainer), BorderLayout.CENTER);
+
+                } catch (ConnectionException exception) {
+                    JOptionPane.showMessageDialog(null, exception.getMessage());
+                }
+            }
         }
     }
 

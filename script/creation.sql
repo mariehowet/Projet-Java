@@ -11,7 +11,8 @@ CREATE TABLE `airplane` (
 CREATE TABLE `seat_type` (
                              `name` varchar(20) NOT NULL,
                              `additional_price` int NOT NULL,
-                             PRIMARY KEY (`name`)
+                             PRIMARY KEY (`name`),
+                             CHECK (additional_price >= 0)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 CREATE TABLE `seat` (
@@ -23,6 +24,7 @@ CREATE TABLE `seat` (
                         PRIMARY KEY (`id`),
                         KEY `seat_type_idx` (`seat_type`),
                         KEY `airplane_seat_fk_idx` (`airplane_id`),
+                        CHECK (number >= 0),
                         CONSTRAINT `airplane_seat_fk` FOREIGN KEY (`airplane_id`) REFERENCES `airplane` (`id`),
                         CONSTRAINT `seat_type` FOREIGN KEY (`seat_type`) REFERENCES `seat_type` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
@@ -60,6 +62,7 @@ CREATE TABLE `flight` (
                           KEY `airplane_fk_idx` (`airplane_id`),
                           KEY `departure_airport_fk_idx` (`departure_airport_id`),
                           KEY `arrival_airport_fk_idx` (`arrival_airport_id`),
+                          CHECK (price >= 0),
                           CONSTRAINT `airplane_fk` FOREIGN KEY (`airplane_id`) REFERENCES `airplane` (`id`),
                           CONSTRAINT `arrival_airport_fk` FOREIGN KEY (`arrival_airport_id`) REFERENCES `airport` (`id`),
                           CONSTRAINT `departure_airport_fk` FOREIGN KEY (`departure_airport_id`) REFERENCES `airport` (`id`)
@@ -69,6 +72,7 @@ CREATE TABLE `stopover` (
                             `flight_id` int NOT NULL,
                             `airport_id` int NOT NULL,
                             `duration` int NOT NULL,
+                            CHECK (duration >= 0),
                             PRIMARY KEY (`flight_id`,`airport_id`),
                             KEY `airport_stopover_fk_idx` (`airport_id`),
                             CONSTRAINT `airport_stopover_fk` FOREIGN KEY (`airport_id`) REFERENCES `airport` (`id`),
@@ -107,10 +111,13 @@ CREATE TABLE `booking` (
                            KEY `flight_fk_idx` (`flight_id`),
                            KEY `seat_booking_fk_idx` (`seat_id`),
                            KEY `passenger_booking_fk_idx` (`passenger_id`),
+                           CHECK (real_price >= 0),
                            CONSTRAINT `flight_fk` FOREIGN KEY (`flight_id`) REFERENCES `flight` (`id`),
                            CONSTRAINT `passenger_booking_fk` FOREIGN KEY (`passenger_id`) REFERENCES `passenger` (`id`),
                            CONSTRAINT `seat_booking_fk` FOREIGN KEY (`seat_id`) REFERENCES `seat` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+
 
 /*
 DROP TABLE booking;
