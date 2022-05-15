@@ -1,7 +1,7 @@
 package View;
 
 import Controller.ApplicationController;
-import Model.Flight;
+import Model.FlightResearch;
 import Model.Locality;
 
 import javax.swing.*;
@@ -13,7 +13,7 @@ import Exception.*;
 public class FlightStopoverJPanel extends JPanel {
     private ApplicationController controller;
     private ListSelectionModel listSelect;
-    private ArrayList<Flight> flightsStopover;
+    private ArrayList<FlightResearch> flightsStopover;
 
     public FlightStopoverJPanel(Locality departure, Locality arrival, boolean withStopover) {
         try {

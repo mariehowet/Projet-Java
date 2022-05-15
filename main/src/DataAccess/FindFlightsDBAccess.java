@@ -1,57 +1,59 @@
 package DataAccess;
 
+import Model.FlightOfDepartureAirport;
 import Model.FlightResearch;
-import Model.Locality;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 import Exception.*;
+import Model.Locality;
 
-public class FlightsStopoverDBAccess implements FlightsStopoverDataAccess {
+public class FindFlightsDBAccess implements FindFlightsDataAccess {
 
     private Connection connection;
 
-    public FlightsStopoverDBAccess() throws ConnectionException {
+    public FindFlightsDBAccess() throws ConnectionException {
         connection = SingletonConnection.getInstance();
         // connection.close(); throws SQLException
     }
 
-
-    public ArrayList<FlightResearch> getFlightsStopover(Locality departure, Locality arrival, boolean withStopover) throws FlightsStopover {
-
+    public ArrayList<FlightResearch> getFlights(Locality departure, Locality arrival, Date startDate, Date endDate) throws FlightsException {
+        ArrayList<FlightResearch> flights = new ArrayList<>();
         String sqlInstruction =
                 "select f.id, da.name as 'departure_airport', aa.name as 'arrival_airport', f.departure_date, f.expected_arrival_date, f.departure_hour, f.expected_arrival_hour, f.price " +
-                        "from flight f " +
-                        "inner join airport da on (f.departure_airport_id = da.id) " +
-                        "inner join airport aa on (f.arrival_airport_id = aa.id) " +
-                        "where " +
-                        "da.city = ? and da.post_code = ? and da.country = ? " +
-                        "and aa.city = ? and aa.post_code = ? and aa.country = ? " +
-                        "and (" +
-                        "(? and exists (select flight_id from stopover s where f.id = s.flight_id) ) OR" +
-                        "(? and not exists (select flight_id from stopover s where f.id = s.flight_id))" +
-                        ")";
+                "from flight f " +
+                "inner join airport da on (f.departure_airport_id = da.id) " +
+                "inner join airport aa on (f.arrival_airport_id = aa.id) " +
+                "where " +
+                "f.departure_date between ? and ? " +
+                "and da.city = ? and da.post_code = ? and da.country = ? " +
+                "and aa.city = ? and aa.post_code = ? and aa.country = ?;";
 
-        ArrayList<FlightResearch> flightsStopovers = new ArrayList<>();
+        java.sql.Date sqlStartDate = new java.sql.Date(startDate.getTime());
+        java.sql.Date sqlEndDate = new java.sql.Date(endDate.getTime());
+        System.out.println(sqlStartDate);
+        System.out.println(sqlEndDate);
+
         // traitement
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
-            preparedStatement.setString(1, departure.getCity());
-            preparedStatement.setString(2, departure.getPostCode());
-            preparedStatement.setString(3, departure.getCountry());
-            preparedStatement.setString(4, arrival.getCity());
-            preparedStatement.setString(5, arrival.getPostCode());
-            preparedStatement.setString(6, arrival.getCountry());
-            preparedStatement.setBoolean(7, withStopover);
-            preparedStatement.setBoolean(8, !withStopover);
-
+            preparedStatement.setDate(1, sqlStartDate);
+            preparedStatement.setDate(2, sqlEndDate);
+            preparedStatement.setString(3, departure.getCity());
+            preparedStatement.setString(4, departure.getPostCode());
+            preparedStatement.setString(5, departure.getCountry());
+            preparedStatement.setString(6, arrival.getCity());
+            preparedStatement.setString(7, arrival.getPostCode());
+            preparedStatement.setString(8, arrival.getCountry());
 
             ResultSet data = preparedStatement.executeQuery();
+
             FlightResearch flightResearch;
             GregorianCalendar departureDate;
             GregorianCalendar arrivalDate;
@@ -72,12 +74,13 @@ public class FlightsStopoverDBAccess implements FlightsStopoverDataAccess {
                         data.getString("expected_arrival_hour"),
                         data.getDouble("price")
                 );
-                flightsStopovers.add(flightResearch);
+                flights.add(flightResearch);
             }
+            return flights;
 
         } catch (SQLException exception) {
-            throw new FlightsStopover();
+            throw new FlightsException();
         }
-        return flightsStopovers;
+
     }
 }

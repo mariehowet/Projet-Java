@@ -112,6 +112,7 @@ public class FindFlight extends JPanel {
         researchPanel.add(gridResearch);
 
         this.add(researchPanel, BorderLayout.NORTH);
+        this.add(displayPanel, BorderLayout.CENTER);
     }
 
     private class ResearchListener implements ActionListener {
@@ -129,10 +130,11 @@ public class FindFlight extends JPanel {
                 Locality departure = ConvertManager.stringIntoLocality(departureCity.getSelectedItem().toString());
                 Locality arrival = ConvertManager.stringIntoLocality(arrivalCity.getSelectedItem().toString());
 
-                researchDisplay = new JPanel(); // A MODIF
+                researchDisplay = new FindFlightsJPanel(departure, arrival, chooserStartDate.getDate(), chooserEndDate.getDate());
                 frameContainer.revalidate();
                 frameContainer.repaint();
                 panel.add(researchDisplay, BorderLayout.CENTER);
+                System.out.println("test");
             }
             catch (DatesException ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Problème", JOptionPane.WARNING_MESSAGE);

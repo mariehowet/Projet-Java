@@ -1,6 +1,6 @@
 package View;
 
-import Model.Flight;
+import Model.FlightResearch;
 
 
 import javax.swing.table.AbstractTableModel;
@@ -9,9 +9,9 @@ import java.util.Date;
 
 public class FlightsModel extends AbstractTableModel {
     private ArrayList<String> columnNames;
-    private ArrayList<Flight> contents;
+    private ArrayList<FlightResearch> contents;
 
-    public FlightsModel(ArrayList<Flight> contents) {
+    public FlightsModel(ArrayList<FlightResearch> contents) {
         columnNames = new ArrayList<>();
         columnNames.add("Numéro vol");
         columnNames.add("Aéroport départ");
@@ -20,6 +20,7 @@ public class FlightsModel extends AbstractTableModel {
         columnNames.add("Date arrivée");
         columnNames.add("Heure départ");
         columnNames.add("Heure d'arrivée");
+        columnNames.add("Prix du vol");
         this.contents = contents;
     }
 
@@ -38,23 +39,25 @@ public class FlightsModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Flight flight = contents.get(rowIndex);
+        FlightResearch flightResearch = contents.get(rowIndex);
 
         switch (columnIndex) {
             case 0:
-                return flight.getFlightId();
+                return flightResearch.getFlightId();
             case 1:
-                return flight.getDepartureAirportName();
+                return flightResearch.getDepartureAirportName();
             case 2:
-                return flight.getArrivalAirportName();
+                return flightResearch.getArrivalAirportName();
             case 3:
-                return flight.getDepartureDate().getTime();
+                return flightResearch.getDepartureDate().getTime();
             case 4:
-                return flight.getArrivalDate().getTime();
+                return flightResearch.getArrivalDate().getTime();
             case 5:
-                return flight.getDepartureHour();
+                return flightResearch.getDepartureHour();
             case 6:
-                return flight.getArrivalHour();
+                return flightResearch.getArrivalHour();
+            case 7:
+                return flightResearch.getPrice();
             default:
                 return null;
         }
@@ -69,6 +72,9 @@ public class FlightsModel extends AbstractTableModel {
             case 3:
             case 4:
                 c = Date.class;
+                break;
+            case 7:
+                c = Double.class;
                 break;
             default:
                 c = String.class;

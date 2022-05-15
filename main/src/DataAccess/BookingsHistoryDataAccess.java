@@ -8,5 +8,4 @@ import Exception.*;
 
 public interface BookingsHistoryDataAccess {
     public ArrayList<PassengerBooking> getBookingsHistory(int idPassenger) throws BookingsHistoryException;
-    public ArrayList<Passenger> getAllPassengers() throws PassengerException;
 }
