@@ -11,6 +11,7 @@ CREATE TABLE `airplane` (
 CREATE TABLE `seat_type` (
                              `name` varchar(20) NOT NULL,
                              `additional_price` int NOT NULL,
+                             CHECK ( additional_price >= 0 ),
                              PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
@@ -20,6 +21,7 @@ CREATE TABLE `seat` (
                         `column_letter` char(1) NOT NULL,
                         `seat_type` varchar(20) NOT NULL,
                         `airplane_id` int NOT NULL,
+                        CHECK ( number >= 0 ),
                         PRIMARY KEY (`id`),
                         KEY `seat_type_idx` (`seat_type`),
                         KEY `airplane_seat_fk_idx` (`airplane_id`),
@@ -56,6 +58,7 @@ CREATE TABLE `flightResearch` (
                           `airplane_id` int NOT NULL,
                           `departure_airport_id` int NOT NULL,
                           `arrival_airport_id` int NOT NULL,
+                          CHECK ( price >= 0 ),
                           PRIMARY KEY (`id`),
                           KEY `airplane_fk_idx` (`airplane_id`),
                           KEY `departure_airport_fk_idx` (`departure_airport_id`),
@@ -69,6 +72,7 @@ CREATE TABLE `stopover` (
                             `flight_id` int NOT NULL,
                             `airport_id` int NOT NULL,
                             `duration` int NOT NULL,
+                            CHECK ( duration >= 0 ),
                             PRIMARY KEY (`flight_id`,`airport_id`),
                             KEY `airport_stopover_fk_idx` (`airport_id`),
                             CONSTRAINT `airport_stopover_fk` FOREIGN KEY (`airport_id`) REFERENCES `airport` (`id`),
@@ -103,6 +107,7 @@ CREATE TABLE `booking` (
                            `flight_id` int NOT NULL,
                            `seat_id` int NOT NULL,
                            `passenger_id` int NOT NULL,
+                           CHECK ( real_price >= 0 ),
                            PRIMARY KEY (`id`),
                            KEY `flight_fk_idx` (`flight_id`),
                            KEY `seat_booking_fk_idx` (`seat_id`),

@@ -116,6 +116,7 @@ public class UpdateBookingJPanel extends JPanel {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
+
         //-------------------------Seat--------------------------------------
         seatLabel = new JLabel("Votre siège :");
         formPanel.add(seatLabel);
@@ -310,9 +311,16 @@ public class UpdateBookingJPanel extends JPanel {
                 }
                 if (matcherST.find())
                     seatTypePrice = Double.parseDouble(matcherST.group(1));
-                if (matcherWL.find())
-                    luggagePrice = Double.parseDouble(matcherWL.group(1));
+                if(buttonNoLuggage.isSelected())
+                    luggagePrice = 0.0;
+                else  {
+                    if (matcherWL.find())
+                        luggagePrice = Double.parseDouble(matcherWL.group(1));
+                }
+
                 totalPrice = flightPrice + seatTypePrice + luggagePrice;
+
+
                 totalPriceText.setText(totalPrice + "");
             }
         }
@@ -338,7 +346,7 @@ public class UpdateBookingJPanel extends JPanel {
 
 
                     try {
-                        controller.updateBooking(bookingID, new GregorianCalendar(), buttonPayNow.isSelected(), luggageWeight.toString(), company_name, mealTypeBox.getSelectedItem().toString(), Double.parseDouble(totalPriceText.getText()), seatIDs.get(seatBox.getSelectedIndex()));
+                        controller.updateBooking(bookingID, new GregorianCalendar(), buttonPayNow.isSelected(),buttonNoLuggage.isSelected()? null : luggageWeight.toString(), company_name, mealTypeBox.getSelectedItem().toString(), totalPrice, seatIDs.get(seatBox.getSelectedIndex()));
                         JOptionPane.showMessageDialog(null, "Modification effectué avec succès");
                         frameContainer.removeAll();
                         frameContainer.revalidate();

@@ -67,8 +67,10 @@ public class AddBookingJPanel extends JPanel {
             }
 
             flightBox = new JComboBox(flightValues);
+            flightBox.setSelectedItem(0);
             flightBox.addActionListener(new SearchSeatListener());
             flightBox.addActionListener(new CalculateListener());
+            flightBox.setSelectedItem(0);
             formPanel.add(flightBox);
 
         } catch (AllFlightsException e) {
@@ -221,6 +223,8 @@ public class AddBookingJPanel extends JPanel {
         this.add(title, BorderLayout.NORTH);
         this.add(formPanel, BorderLayout.CENTER);
         this.add(buttonPanel, BorderLayout.SOUTH);
+
+
     }
 
     private class SearchSeatListener implements ActionListener {
@@ -276,21 +280,30 @@ public class AddBookingJPanel extends JPanel {
     private class ValidationListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            Pattern patternCompanyName = Pattern.compile("(\\w+)", Pattern.CASE_INSENSITIVE);
+            Matcher matcherCN = patternCompanyName.matcher(companyName.getText());
+            if (seatBox.getSelectedItem() == null) {
+                JOptionPane.showMessageDialog(null, "Veuillez sélectionner un vol et le type de siège " +
+                        "\nAvant de choisir votre siège ", "Problème", JOptionPane.WARNING_MESSAGE);
 
-             if(buttonYesLuggage.isSelected() && weightLuggageBox.getSelectedItem().toString() == ""){
+            }
+            else if (buttonYesLuggage.isSelected() && weightLuggageBox.getSelectedItem().toString() == "") {
                 JOptionPane.showMessageDialog(null, "Veuillez sélectionner le poids de vos bagages", "Problème", JOptionPane.WARNING_MESSAGE);
 
             }
             else if (buttonYesBusinessFlight.isSelected() && companyName.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Vous devez entrer le nom de votre société", "Problème", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Veuillez entrer le nom de votre société", "Problème", JOptionPane.WARNING_MESSAGE);
+             }
+            else if(buttonYesBusinessFlight.isSelected () &&!matcherCN.find()) {
+                    JOptionPane.showMessageDialog(null, "Veuillez entrer un nom de société correcte", "Problème", JOptionPane.WARNING_MESSAGE);
             }
             else {
                 String luggageWeight = null;
                 if (buttonYesLuggage.isSelected()) {
                     Pattern patternLuggage = Pattern.compile("(^.*kg)", Pattern.CASE_INSENSITIVE);
-                    Matcher matcher = patternLuggage.matcher(weightLuggageBox.getSelectedItem().toString());
-                    if (matcher.find())
-                        luggageWeight = matcher.group(1);
+                    Matcher matcherLuggage = patternLuggage.matcher(weightLuggageBox.getSelectedItem().toString());
+                    if (matcherLuggage.find())
+                        luggageWeight = matcherLuggage.group(1);
                 }
                 String company_name = buttonYesBusinessFlight.isSelected() ? companyName.getText() : null;
                 Booking booking = new Booking(
