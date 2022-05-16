@@ -1,6 +1,6 @@
 package Model;
 
-import java.util.Optional;
+import Exception.SeatNumberException;
 
 public class Seat {
     private int id;
@@ -9,15 +9,15 @@ public class Seat {
 
 
 
-    public Seat(int number, String columnLetter, String seatType, int airplaneId) {
+    public Seat(int number, String columnLetter, String seatType, int airplaneId)  {
         this.number = number;
         this.columnLetter = columnLetter;
 
     }
 
-    public Seat(int id, int number, String columnLetter) {
+    public Seat(int id, int number, String columnLetter) throws SeatNumberException {
         this.id = id;
-        this.number = number;
+        setNumber(number);
         this.columnLetter = columnLetter;
 
     }
@@ -28,6 +28,13 @@ public class Seat {
 
     public int getNumber() {
         return number;
+    }
+
+    public void setNumber(int number) throws SeatNumberException{
+        if( number < 0)
+            throw new SeatNumberException();
+        else
+            this.number = number;
     }
 
     public String getColumnLetter() {

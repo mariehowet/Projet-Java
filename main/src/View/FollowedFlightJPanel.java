@@ -5,40 +5,35 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class FollowedFlightJPanel extends ResearchJPanel {
+public class FollowedFlightJPanel extends JPanel{
     private JButton researchButton;
-    private JLabel flightNumberLabel;
-    private JTextField flightNumber;
+    private JLabel label;
+    private Container frameContainer;
+
 
     public FollowedFlightJPanel(Container frameContainer){
-        super(frameContainer);
+        this.frameContainer = frameContainer;
 
         // Button
-        researchButton = new JButton("Rechercher");
+        researchButton = new JButton("Afiicher");
 
         // JLabel
-        flightNumberLabel = new JLabel("Numéro de vol ");
-        flightNumber = new JTextField(10);
+        label = new JLabel("Suivez en direct le vol Paris  -> New-York ");
+
 
         // Panel de recherche
-        researchPanel.add(flightNumberLabel);
-        researchPanel.add(flightNumber);
-        researchPanel.add(researchButton);
-        researchButton.addActionListener(new ResearchListener(this));
-        add(researchPanel, BorderLayout.NORTH);
+        this.add(label);
+        this.add(researchButton);
+        researchButton.addActionListener(new ResearchListener());
 
     }
 
     private class ResearchListener implements ActionListener {
-        JPanel jpanel;
-        public ResearchListener(JPanel jpanel) {
-            this.jpanel = jpanel;
-        }
         @Override
         public void actionPerformed(ActionEvent e) {
             frameContainer.revalidate();
             frameContainer.repaint();
-            jpanel.add(new ThreadJPanel(), BorderLayout.CENTER);
+            frameContainer.add(new ThreadJPanel(), BorderLayout.CENTER);
         }
     }
 }

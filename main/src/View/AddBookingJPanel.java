@@ -25,7 +25,7 @@ public class AddBookingJPanel extends JPanel {
     private JComboBox seatTypeBox, weightLuggageBox, mealTypeBox, passengerBox, flightBox, seatBox;
     private ButtonGroup hasLuggage, isBusinessFlight, payment;
     private ApplicationController controller;
-    private Double flightPrice = 0.0, seatTypePrice = 0.0, luggagePrice = 0.0, totalPrice;
+    private Double flightPrice, seatTypePrice, luggagePrice, totalPrice;
     private ArrayList<Double> flightPrices;
     private ArrayList<Integer> flightIDs, passengerIDs, seatIDs;
     private ArrayList<String> seatTypeIDs;
@@ -40,6 +40,9 @@ public class AddBookingJPanel extends JPanel {
         title = new JLabel("<html><h1 style='margin: 30px 0 15px 0'>Créer une réservation</h1></html>");
         title.setHorizontalAlignment(SwingConstants.CENTER);
         this.controller  = new ApplicationController();
+        flightPrice = 0.0;
+        seatTypePrice = 0.0;
+        luggagePrice = 0.0;
 
         //----------------FormPanel--------------------------------------------------
         formPanel = new JPanel();
@@ -73,7 +76,7 @@ public class AddBookingJPanel extends JPanel {
             flightBox.setSelectedItem(0);
             formPanel.add(flightBox);
 
-        } catch (AllFlightsException e) {
+        } catch (AllFlightsException | PriceException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
@@ -132,8 +135,9 @@ public class AddBookingJPanel extends JPanel {
 
         } catch (SeatTypeException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
+        } catch (PriceException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
-
 
         //-------------------------Seat--------------------------------------
         seatLabel = new JLabel("Votre siège :");
@@ -148,9 +152,8 @@ public class AddBookingJPanel extends JPanel {
         buttonYesLuggage = new JRadioButton("Je dispose de bagages");
         formPanel.add(buttonYesLuggage);
         buttonNoLuggage = new JRadioButton("Je ne dispose pas de bagages");
-        LuggageListener luggageListener = new LuggageListener();
-        buttonNoLuggage.addItemListener(luggageListener);
-        buttonYesLuggage.setSelected(true);
+        buttonYesLuggage.addItemListener(new LuggageListener());
+        buttonNoLuggage.setSelected(true);
         formPanel.add(buttonNoLuggage);
         hasLuggage.add(buttonYesLuggage);
         hasLuggage.add(buttonNoLuggage);
@@ -162,6 +165,7 @@ public class AddBookingJPanel extends JPanel {
         String[] weights = {"","0 < 10 kg (+0€)","10 < 20 kg (+10€)","20 < 30 kg (+20€)","Max 35 kg (+25€)"};
         weightLuggageBox = new JComboBox(weights);
         weightLuggageBox.addActionListener(new CalculateListener());
+        weightLuggageBox.setEnabled(false);
         formPanel.add(weightLuggageBox);
 
 
@@ -170,9 +174,8 @@ public class AddBookingJPanel extends JPanel {
         buttonYesBusinessFlight = new JRadioButton("Je voyage pour affaire");
         formPanel.add(buttonYesBusinessFlight);
         buttonNoBusinessFlight = new JRadioButton("Je ne voyage pas pour affaire");
-        CompanyListener companyListener = new CompanyListener();
-        buttonNoBusinessFlight.addItemListener(companyListener);
-        buttonYesBusinessFlight.setSelected(true);
+        buttonYesBusinessFlight.addItemListener(new CompanyListener());
+        buttonNoBusinessFlight.setSelected(true);
         formPanel.add(buttonNoBusinessFlight);
         isBusinessFlight.add(buttonYesBusinessFlight);
         isBusinessFlight.add(buttonNoBusinessFlight);
@@ -180,6 +183,7 @@ public class AddBookingJPanel extends JPanel {
         companyNameLabel = new JLabel("Nom de la société : ");
         formPanel.add(companyNameLabel);
         companyName = new JTextField();
+        companyName.setEnabled(false);
         formPanel.add(companyName);
 
         //----------------------------Meal----------------------------------------------
@@ -227,6 +231,33 @@ public class AddBookingJPanel extends JPanel {
 
     }
 
+    private class LuggageListener implements ItemListener {
+
+        @Override
+        public void itemStateChanged(ItemEvent e) {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                weightLuggageBox.setEnabled(true);
+            } else {
+
+                weightLuggageBox.setEnabled(false);
+                weightLuggageBox.setSelectedItem("");
+            }
+        }
+    }
+
+    private class CompanyListener implements ItemListener {
+
+        @Override
+        public void itemStateChanged(ItemEvent e) {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                companyName.setEnabled(true);
+            } else {
+                companyName.setEnabled(false);
+                companyName.setText("");
+            }
+        }
+    }
+
     private class SearchSeatListener implements ActionListener {
 
         @Override
@@ -250,10 +281,11 @@ public class AddBookingJPanel extends JPanel {
                 }
 
                 seatBox.setEnabled(true);
-            } catch (AvailableSeatsException ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage());
+            } catch (AvailableSeatsException exception) {
+                JOptionPane.showMessageDialog(null, exception.getMessage());
+            } catch (SeatNumberException exception) {
+                JOptionPane.showMessageDialog(null, exception.getMessage());
             }
-
         }
     }
 
@@ -280,12 +312,9 @@ public class AddBookingJPanel extends JPanel {
     private class ValidationListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            Pattern patternCompanyName = Pattern.compile("(\\w+)", Pattern.CASE_INSENSITIVE);
-            Matcher matcherCN = patternCompanyName.matcher(companyName.getText());
             if (seatBox.getSelectedItem() == null) {
                 JOptionPane.showMessageDialog(null, "Veuillez sélectionner un vol et le type de siège " +
                         "\nAvant de choisir votre siège ", "Problème", JOptionPane.WARNING_MESSAGE);
-
             }
             else if (buttonYesLuggage.isSelected() && weightLuggageBox.getSelectedItem().toString() == "") {
                 JOptionPane.showMessageDialog(null, "Veuillez sélectionner le poids de vos bagages", "Problème", JOptionPane.WARNING_MESSAGE);
@@ -293,9 +322,6 @@ public class AddBookingJPanel extends JPanel {
             }
             else if (buttonYesBusinessFlight.isSelected() && companyName.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Veuillez entrer le nom de votre société", "Problème", JOptionPane.WARNING_MESSAGE);
-             }
-            else if(buttonYesBusinessFlight.isSelected () &&!matcherCN.find()) {
-                    JOptionPane.showMessageDialog(null, "Veuillez entrer un nom de société correcte", "Problème", JOptionPane.WARNING_MESSAGE);
             }
             else {
                 String luggageWeight = null;
@@ -306,56 +332,37 @@ public class AddBookingJPanel extends JPanel {
                         luggageWeight = matcherLuggage.group(1);
                 }
                 String company_name = buttonYesBusinessFlight.isSelected() ? companyName.getText() : null;
-                Booking booking = new Booking(
-                        buttonPayNow.isSelected(), //has_paid
-                        luggageWeight,//luggage_weight
-                        company_name, // companyName
-                        mealTypeBox.getSelectedItem().toString(),  // mealType
-                        Double.parseDouble(totalPriceText.getText()), // real_price
-                        flightIDs.get(flightBox.getSelectedIndex()), // flight_id
-                        seatIDs.get(seatBox.getSelectedIndex()), // seat_id
-                        passengerIDs.get(passengerBox.getSelectedIndex()) // passenger_id
-                );
-
+                Booking booking;
                 try {
+                    booking = new Booking(
+                            buttonPayNow.isSelected(), //has_paid
+                            luggageWeight,//luggage_weight
+                            company_name, // companyName
+                            mealTypeBox.getSelectedItem().toString(),  // mealType
+                            totalPrice, // real_price
+                            flightIDs.get(flightBox.getSelectedIndex()), // flight_id
+                            seatIDs.get(seatBox.getSelectedIndex()), // seat_id
+                            passengerIDs.get(passengerBox.getSelectedIndex()) // passenger_id
+                    );
+
                     controller.addBooking(booking);
                     JOptionPane.showMessageDialog(null, "Ajout effectué avec succès");
                     frameContainer.removeAll();
                     frameContainer.revalidate();
                     frameContainer.repaint();
                     frameContainer.add(new AddBookingJPanel(frameContainer));
-                } catch (AddBookingException | ConnectionException exception) {
+                } catch (AddBookingException  exception) {
+                    JOptionPane.showMessageDialog(null, exception.getMessage());
+                } catch (ConnectionException exception) {
+                    JOptionPane.showMessageDialog(null, exception.getMessage());
+                } catch (PriceException exception) {
                     JOptionPane.showMessageDialog(null, exception.getMessage());
                 }
             }
         }
     }
 
-    private class LuggageListener implements ItemListener {
 
-        @Override
-        public void itemStateChanged(ItemEvent e) {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                weightLuggageBox.setEnabled(false);
-                weightLuggageBox.setSelectedItem("");
-            } else {
-                weightLuggageBox.setEnabled(true);
-            }
-        }
-    }
-
-    private class CompanyListener implements ItemListener {
-
-        @Override
-        public void itemStateChanged(ItemEvent e) {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                companyName.setEnabled(false);
-                companyName.setText("");
-            } else {
-                companyName.setEnabled(true);
-            }
-        }
-    }
 }
 
 

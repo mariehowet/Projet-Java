@@ -21,20 +21,9 @@ public class Airport {
     public int getCode() {
         return code;
     }
-
     public String getName() {
         return name;
     }
 
-    public String getCity() {
-        return city;
-    }
 
-    public String getPostCode() {
-        return postCode;
-    }
-
-    public String getCountry() {
-        return country;
-    }
 }

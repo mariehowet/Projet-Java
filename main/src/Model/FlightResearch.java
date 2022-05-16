@@ -1,6 +1,7 @@
 package Model;
 
 import java.util.GregorianCalendar;
+import Exception.PriceException;
 
 public class FlightResearch {
     private int flightId;
@@ -13,7 +14,7 @@ public class FlightResearch {
     private double price;
 
 
-    public FlightResearch(int flightId, String departureAirportName, String arrivalAirportName, GregorianCalendar departureDate, GregorianCalendar arrivalDate, String departureHour, String arrivalHour, Double price) {
+    public FlightResearch(int flightId, String departureAirportName, String arrivalAirportName, GregorianCalendar departureDate, GregorianCalendar arrivalDate, String departureHour, String arrivalHour, Double price) throws PriceException{
         this.flightId = flightId;
         this.departureAirportName = departureAirportName;
         this.arrivalAirportName = arrivalAirportName;
@@ -21,7 +22,7 @@ public class FlightResearch {
         this.arrivalDate = arrivalDate;
         this.departureHour = departureHour;
         this.arrivalHour = arrivalHour;
-        this.price = price;
+        setPrice(price);
     }
 
     public double getPrice() {return price;}
@@ -52,5 +53,12 @@ public class FlightResearch {
 
     public String getArrivalHour() {
         return arrivalHour;
+    }
+
+    public void setPrice(double price) throws PriceException {
+        if(price < 0)
+            throw new PriceException();
+        else
+            this.price = price;
     }
 }

@@ -8,6 +8,6 @@ import java.util.ArrayList;
 import Exception.*;
 
 public interface FlightsStopoverDataAccess {
-    public ArrayList<FlightResearch> getFlightsStopover(Locality departure, Locality arrival, boolean withStopover) throws FlightsStopover;
+    public ArrayList<FlightResearch> getFlightsStopover(Locality departure, Locality arrival, boolean withStopover) throws FlightsStopover, PriceException;
 
 }

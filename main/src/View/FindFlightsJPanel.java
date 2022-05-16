@@ -37,6 +37,8 @@ public class FindFlightsJPanel extends JPanel {
         }
         catch (ConnectionException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
+        } catch (PriceException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
     }

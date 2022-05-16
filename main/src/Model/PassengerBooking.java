@@ -1,6 +1,7 @@
 package Model;
 
 import java.util.GregorianCalendar;
+import Exception.PriceException;
 
 public class PassengerBooking {
     private int idBooking;
@@ -13,7 +14,7 @@ public class PassengerBooking {
     private Double realPrice;
 
 
-    public PassengerBooking(int idBooking, GregorianCalendar dateBooking, int flightID, String departureAirportName, String arrivalAirportName, GregorianCalendar departureDate, String seatType, Double realPrice) {
+    public PassengerBooking(int idBooking, GregorianCalendar dateBooking, int flightID, String departureAirportName, String arrivalAirportName, GregorianCalendar departureDate, String seatType, Double realPrice) throws PriceException {
         this.idBooking = idBooking;
         this.dateBooking = dateBooking;
         this.flightID = flightID;
@@ -21,7 +22,7 @@ public class PassengerBooking {
         this.arrivalAirportName = arrivalAirportName;
         this.departureDate = departureDate;
         this.seatType = seatType;
-        this.realPrice = realPrice;
+        setRealPrice(realPrice);
     }
 
     public int getIdBooking() {
@@ -54,5 +55,12 @@ public class PassengerBooking {
 
     public Double getRealPrice() {
         return realPrice;
+    }
+
+    public void setRealPrice(Double realPrice) throws PriceException {
+        if(realPrice < 0)
+            throw new PriceException();
+        else
+            this.realPrice = realPrice;
     }
 }

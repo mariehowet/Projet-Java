@@ -30,13 +30,13 @@ public class BusinessManager {
         daoFlights = new FindFlightsDBAccess();
     }
 
-    public ArrayList<Booking> getAllBookings() throws AllBookingsException {
-        ArrayList<Booking>  bookingList = daoBooking.getAllBookings();
-        // traitement
-        return bookingList;
+    public ArrayList<Booking> getAllBookings() throws AllBookingsException, PriceException {
+        return daoBooking.getAllBookings();
     }
 
-    public void updateBooking(int id, GregorianCalendar date, Boolean hasPaid, String luggageWeight, String companyName, String mealType, Double realPrice, int seatID) throws UpdateException{
+    public void updateBooking(int id, GregorianCalendar date, Boolean hasPaid, String luggageWeight, String companyName, String mealType, Double realPrice, int seatID) throws UpdateException, PriceException{
+        if(realPrice < 0)
+            throw new PriceException();
         daoBooking.updateBooking(id, date, hasPaid, luggageWeight, companyName, mealType, realPrice, seatID);
     }
 
@@ -48,9 +48,6 @@ public class BusinessManager {
         daoBooking.addBooking(booking);
     }
 
-    public void setdaoBooking(BookingDataAccess daoBooking) {
-        this.daoBooking = daoBooking;
-    }
 
     public void closeConnection() throws CloseDataException {
         daoGeneral.closeConnection();
@@ -60,14 +57,14 @@ public class BusinessManager {
         return daoGeneral.getAllPassengers();
     }
 
-    public ArrayList<SeatType> getAllSeatTypes() throws SeatTypeException {
+    public ArrayList<SeatType> getAllSeatTypes() throws SeatTypeException, PriceException{
         return daoBooking.getAllSeatTypes();
     }
 
-    public ArrayList<Flight> getAllFlights() throws AllFlightsException {
+    public ArrayList<Flight> getAllFlights() throws AllFlightsException, PriceException {
         return daoBooking.getAllFlights();
     }
-    public ArrayList<Seat> getAvailableSeats(String seatType, int flightID) throws AvailableSeatsException {
+    public ArrayList<Seat> getAvailableSeats(String seatType, int flightID) throws AvailableSeatsException, SeatNumberException {
         return daoBooking.getAvailableSeats(seatType, flightID);
     }
 
@@ -78,15 +75,15 @@ public class BusinessManager {
         return daoBooking.getSeatTypeName(seatID);
     }
 
-    public Seat getActualSeat (int seatID) throws ActualSeatException {
+    public Seat getActualSeat (int seatID) throws ActualSeatException, SeatNumberException{
         return daoBooking.getActualSeat(seatID);
     }
 
-    public ArrayList<PassengerBooking> getBookingsHistory(int idPassenger) throws BookingsHistoryException {
+    public ArrayList<PassengerBooking> getBookingsHistory(int idPassenger) throws BookingsHistoryException , PriceException{
         return daoBookingsHistory.getBookingsHistory(idPassenger);
     }
 
-    public ArrayList<FlightResearch> getFlightsStopover(Locality departure, Locality arrival, boolean withStopover) throws FlightsStopover {
+    public ArrayList<FlightResearch> getFlightsStopover(Locality departure, Locality arrival, boolean withStopover) throws FlightsStopover, PriceException {
         return daoFlightsStopover.getFlightsStopover(departure, arrival, withStopover);
     }
 
@@ -102,7 +99,7 @@ public class BusinessManager {
     }
 
 
-    public ArrayList<FlightResearch> getFlights(Locality departure, Locality arrival, Date startDate, Date endDate) throws FlightsException {
+    public ArrayList<FlightResearch> getFlights(Locality departure, Locality arrival, Date startDate, Date endDate) throws FlightsException, PriceException {
         return daoFlights.getFlights(departure, arrival, startDate, endDate);
     }
 

@@ -68,7 +68,7 @@ public class BookingDBAccess implements BookingDataAccess {
     }
 
     @Override
-    public ArrayList<Booking> getAllBookings() throws AllBookingsException {
+    public ArrayList<Booking> getAllBookings() throws AllBookingsException, PriceException {
         String sqlInstruction = "select * from booking";
         ArrayList<Booking> allBookings = new ArrayList<>();
         // traitement
@@ -83,7 +83,8 @@ public class BookingDBAccess implements BookingDataAccess {
             while(data.next()) {
                 calendar = new GregorianCalendar();
                 calendar.setTime(data.getDate("date_booking"));
-               booking = new Booking (
+
+                booking = new Booking(
                         data.getInt("id"),
                         calendar,
                         data.getBoolean("has_paid"),
@@ -93,6 +94,7 @@ public class BookingDBAccess implements BookingDataAccess {
                         data.getInt("seat_id"),
                         data.getInt("passenger_id")
                 );
+
                 luggageWeight = data.getString("luggage_weight");
                 if(!data.wasNull())
                     booking.setLuggageWeight(luggageWeight);
@@ -106,6 +108,8 @@ public class BookingDBAccess implements BookingDataAccess {
 
         } catch (SQLException exception) {
             throw new AllBookingsException();
+        }catch (PriceException exception) {
+            throw new PriceException();
         }
         return allBookings;
     }
@@ -116,6 +120,7 @@ public class BookingDBAccess implements BookingDataAccess {
         String sqlInstruction = "update booking set date_booking = ?, has_paid = ?, luggage_weight = ?, company_name = ?, meal_type = ?,real_price = ?,  seat_id = ? where id = ? ";
         GregorianCalendar calendar = date;
         java.sql.Date sqlDate = new Date(calendar.getTimeInMillis());
+
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             preparedStatement.setDate(1, sqlDate);
@@ -131,7 +136,6 @@ public class BookingDBAccess implements BookingDataAccess {
             connection.setAutoCommit(true);
         }
         catch (SQLException exception) {
-            System.out.println(exception.getMessage());
             throw new UpdateException();
         }
     }
@@ -153,7 +157,7 @@ public class BookingDBAccess implements BookingDataAccess {
 
     }
 
-    public ArrayList<Seat> getAvailableSeats(String seatType, int flightID) throws AvailableSeatsException {
+    public ArrayList<Seat> getAvailableSeats(String seatType, int flightID) throws AvailableSeatsException, SeatNumberException{
         String sqlInstruction ="select s.id, s.number, s.column_letter from seat s inner join airplane a on(s.airplane_id = a.id)  " +
                 "inner join seat_type st on(st.name = s.seat_type)  " +
                 "inner join flight f on (f.airplane_id = s.airplane_id)  " +
@@ -178,49 +182,13 @@ public class BookingDBAccess implements BookingDataAccess {
 
         } catch (SQLException exception) {
             throw new AvailableSeatsException();
+        } catch (SeatNumberException exception) {
+            throw new SeatNumberException();
         }
     }
 
     @Override
-    public ArrayList<Passenger> getAllPassengers() throws PassengerException { // changer en fonction des besoins
-        String sqlInstruction = "select * from passenger";
-        ArrayList<Passenger>  allPassengers = new ArrayList<>();
-
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
-            ResultSet data = preparedStatement.executeQuery();
-
-            Passenger passenger;
-            GregorianCalendar calendar;
-
-            while(data.next()) {
-                calendar = new GregorianCalendar();
-                calendar.setTime(data.getDate("birth_date"));
-                passenger = new Passenger(
-                        data.getInt("id"),
-                        data.getString("last_name"),
-                        data.getString("first_name"),
-                        data.getString("initial_middle_name"),
-                        calendar,
-                        data.getString("email"),
-                        data.getString("phone_number"),
-                        data.getString("street_and_number"),
-                        data.getString("city"),
-                        data.getString("post_code"),
-                        data.getString("country")
-                );
-
-                allPassengers.add(passenger);
-            }
-            return allPassengers;
-
-        } catch (SQLException exception) {
-            throw new PassengerException();
-        }
-    }
-
-    @Override
-    public ArrayList<SeatType> getAllSeatTypes() throws SeatTypeException {
+    public ArrayList<SeatType> getAllSeatTypes() throws SeatTypeException, PriceException {
         String sqlInstruction = "select * from seat_type";
         ArrayList<SeatType>  allSeatTypes = new ArrayList<>();
 
@@ -241,10 +209,12 @@ public class BookingDBAccess implements BookingDataAccess {
 
         } catch (SQLException exception) {
             throw new SeatTypeException();
+        } catch (PriceException exception) {
+            throw new PriceException();
         }
     }
 
-    public ArrayList<Flight> getAllFlights() throws AllFlightsException { // changer prendre que ce dont j'ai besoin
+    public ArrayList<Flight> getAllFlights() throws AllFlightsException, PriceException { // changer prendre que ce dont j'ai besoin
         String sqlInstruction = "select * from flight";
         ArrayList<Flight>  allFlights = new ArrayList<>();
 
@@ -279,6 +249,8 @@ public class BookingDBAccess implements BookingDataAccess {
 
         } catch (SQLException exception) {
             throw new AllFlightsException();
+        } catch (PriceException exception) {
+            throw new PriceException();
         }
     }
 
@@ -318,7 +290,7 @@ public class BookingDBAccess implements BookingDataAccess {
         }
     }
 
-    public Seat getActualSeat (int seatID) throws ActualSeatException{
+    public Seat getActualSeat (int seatID) throws ActualSeatException, SeatNumberException{
         String sqlInstruction = "select id, number, column_letter from seat where id = ?";
         Seat actualSeat = null;
 
@@ -335,6 +307,8 @@ public class BookingDBAccess implements BookingDataAccess {
             return actualSeat;
         } catch (SQLException e) {
             throw new ActualSeatException();
+        }catch (SeatNumberException e) {
+            throw  new SeatNumberException();
         }
     }
 

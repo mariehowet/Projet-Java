@@ -50,6 +50,8 @@ public class AllBookingsJPanel extends JPanel {
         }
         catch (ConnectionException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
+        } catch (PriceException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
 
@@ -129,14 +131,5 @@ public class AllBookingsJPanel extends JPanel {
         }
     }
 
-    private class RefreshListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            frameContainer.removeAll();
-            frameContainer.add(new AllBookingsJPanel(frameContainer), BorderLayout.CENTER);
-            setVisible(true);
-        }
-    }
 
 }

@@ -22,7 +22,7 @@ public class FlightsStopoverDBAccess implements FlightsStopoverDataAccess {
     }
 
 
-    public ArrayList<FlightResearch> getFlightsStopover(Locality departure, Locality arrival, boolean withStopover) throws FlightsStopover {
+    public ArrayList<FlightResearch> getFlightsStopover(Locality departure, Locality arrival, boolean withStopover) throws FlightsStopover, PriceException {
 
         String sqlInstruction =
                 "select f.id, da.name as 'departure_airport', aa.name as 'arrival_airport', f.departure_date, f.expected_arrival_date, f.departure_hour, f.expected_arrival_hour, f.price " +
@@ -77,6 +77,8 @@ public class FlightsStopoverDBAccess implements FlightsStopoverDataAccess {
 
         } catch (SQLException exception) {
             throw new FlightsStopover();
+        } catch (PriceException exception) {
+            throw new PriceException();
         }
         return flightsStopovers;
     }

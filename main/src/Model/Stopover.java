@@ -11,4 +11,5 @@ public class Stopover {
         this.airport = airport;
         this.duration = duration;
     }
+
 }

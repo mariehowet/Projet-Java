@@ -1,15 +1,15 @@
 package Model;
 
-import java.util.HashSet;
+import Exception.PriceException;
 
 public class SeatType {
     private String name;
     private int additionalPrice;
 
 
-    public SeatType(String name, int additionalPrice) {
+    public SeatType(String name, int additionalPrice) throws PriceException {
         this.name = name;
-        this.additionalPrice = additionalPrice;
+        setAdditionalPrice(additionalPrice);
     }
 
     public String getName() {
@@ -18,5 +18,12 @@ public class SeatType {
 
     public int getAdditionalPrice() {
         return additionalPrice;
+    }
+
+    public void setAdditionalPrice(int additionalPrice) throws PriceException{
+        if(additionalPrice < 0)
+            throw new PriceException();
+        else
+            this.additionalPrice = additionalPrice;
     }
 }

@@ -22,7 +22,7 @@ public class BookingsHistoryDBAccess implements BookingsHistoryDataAccess {
     }
 
     @Override
-    public ArrayList<PassengerBooking> getBookingsHistory(int idPassenger) throws BookingsHistoryException {
+    public ArrayList<PassengerBooking> getBookingsHistory(int idPassenger) throws BookingsHistoryException, PriceException{
         String sqlInstruction =
                 "SELECT b.id, b.date_booking, b.real_price, b.flight_id, f.departure_date , da.name as 'departure_airport', aa.name as 'arrival_airport', s.seat_type " +
                         "FROM booking b " +
@@ -65,6 +65,8 @@ public class BookingsHistoryDBAccess implements BookingsHistoryDataAccess {
 
         } catch (SQLException exception) {
             throw new BookingsHistoryException();
+        } catch (PriceException exception) {
+            throw new PriceException();
         }
         return bookingsHistory;
     }

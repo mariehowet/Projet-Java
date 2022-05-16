@@ -248,8 +248,8 @@ INSERT INTO passenger (last_name, first_name, initial_middle_name, birth_date, e
 VALUES('Hanquet', 'Julien',null, '2000-01-01', 'jh@gmail.com','0478955465', 'Rue du truc, 10', 'Namur', '5000', 'Belgique');
 
 -- -------------------- booking ------------
-INSERT INTO booking (date_booking, has_paid, luggage_weight, company_name, meal_type, real_price, flight_id, seat_id, passenger_id)
+/*INSERT INTO booking (date_booking, has_paid, luggage_weight, company_name, meal_type, real_price, flight_id, seat_id, passenger_id)
 VALUES ('2022-05-09',true,'0 < 10 kg','Protellux','Poulet',1000.0,1,5,1);
 
 INSERT INTO booking (date_booking, has_paid, luggage_weight, company_name, meal_type, real_price, flight_id, seat_id, passenger_id)
-VALUES ('2022-05-10',false,'10 < 20 kg',null,'Porc',2000.0,2,13,1);
+VALUES ('2022-05-10',false,'10 < 20 kg',null,'Porc',2000.0,2,13,1);*/

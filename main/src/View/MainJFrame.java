@@ -82,7 +82,7 @@ public class MainJFrame extends JFrame {
         findFlightMenu.add(menuIemFlightMenu);
 
         // Monitoring
-        monitoringFlight = new JMenuItem(" Suivez votre vol en direct !");
+        monitoringFlight = new JMenuItem(" Suivez un vol en direct !");
         monitoringFlight.addActionListener(new ThreadListener());
         monitoringFlightMenu.add(monitoringFlight);
 
@@ -165,7 +165,9 @@ public class MainJFrame extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             frameContainer.removeAll();
-            frameContainer.add(new FollowedFlightJPanel(frameContainer), BorderLayout.CENTER);
+            frameContainer.revalidate();
+            frameContainer.repaint();
+            frameContainer.add(new FollowedFlightJPanel(frameContainer), BorderLayout.NORTH);
             setVisible(true);
         }
     }

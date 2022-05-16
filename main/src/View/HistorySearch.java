@@ -9,9 +9,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import Exception.*;
 
 public class HistorySearch extends JPanel {
@@ -58,10 +55,6 @@ public class HistorySearch extends JPanel {
         } catch (PassengerException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
-
-
-
-
 
 
         // Button

@@ -21,20 +21,17 @@ public class FlightOfDepartureAirport {
     public int getFlightId() {
         return flightId;
     }
-
     public String getArrivalAirportName() {
         return arrivalAirportName;
     }
-
     public GregorianCalendar getDepartureDate() {
         return departureDate;
     }
-
     public GregorianCalendar getArrivalDate() {
         return arrivalDate;
     }
-
     public Integer getRemainingSeats() {
         return remainingSeats;
     }
+
 }

@@ -1,6 +1,7 @@
 package Model;
 
 import java.util.GregorianCalendar;
+import Exception.PriceException;
 
 public class Flight {
     private int id;
@@ -14,24 +15,24 @@ public class Flight {
     private int arrivalAirportId;
 
 
-    public Flight(GregorianCalendar departureDate, String departureHour, GregorianCalendar expectedArrivalDate, String expectedArrivalHour, double price, int airplaneId, int departureAirportId, int arrivalAirportId) {
+    public Flight(GregorianCalendar departureDate, String departureHour, GregorianCalendar expectedArrivalDate, String expectedArrivalHour, double price, int airplaneId, int departureAirportId, int arrivalAirportId) throws PriceException{
         this.departureDate = departureDate;
         this.departureHour = departureHour;
         this.expectedArrivalDate = expectedArrivalDate;
         this.expectedArrivalHour = expectedArrivalHour;
-        this.price = price;
+        setPrice(price);
         this.airplaneId = airplaneId;
         this.departureAirportId = departureAirportId;
         this.arrivalAirportId = arrivalAirportId;
     }
 
-    public Flight(int id, GregorianCalendar departureDate, String departureHour, GregorianCalendar expectedArrivalDate, String expectedArrivalHour, double price, int airplaneId, int departureAirportId, int arrivalAirportId) {
+    public Flight(int id, GregorianCalendar departureDate, String departureHour, GregorianCalendar expectedArrivalDate, String expectedArrivalHour, double price, int airplaneId, int departureAirportId, int arrivalAirportId) throws PriceException {
         this.id = id;
         this.departureDate = departureDate;
         this.departureHour = departureHour;
         this.expectedArrivalDate = expectedArrivalDate;
         this.expectedArrivalHour = expectedArrivalHour;
-        this.price = price;
+        setPrice(price);
         this.airplaneId = airplaneId;
         this.departureAirportId = departureAirportId;
         this.arrivalAirportId = arrivalAirportId;
@@ -40,12 +41,14 @@ public class Flight {
     public int getId() {
         return id;
     }
-
     public double getPrice() {
         return price;
     }
 
-    public int getAirplaneId() {
-        return airplaneId;
+    public void setPrice(double price) throws PriceException{
+        if(price < 0)
+            throw new PriceException();
+        else
+         this.price = price;
     }
 }

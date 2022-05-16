@@ -19,14 +19,14 @@ public class ApplicationController {
         manager.addBooking(booking);
     }
 
-    public ArrayList<Booking> getAllBookings () throws AllBookingsException {
+    public ArrayList<Booking> getAllBookings () throws AllBookingsException, PriceException {
         return manager.getAllBookings();
     }
 
     public void closeConnection() throws  CloseDataException {
         manager.closeConnection();
     }
-    public void updateBooking(int id, GregorianCalendar date, Boolean hasPaid, String luggageWeight, String companyName, String mealType, Double realPrice, int seatID) throws UpdateException{
+    public void updateBooking(int id, GregorianCalendar date, Boolean hasPaid, String luggageWeight, String companyName, String mealType, Double realPrice, int seatID) throws UpdateException, PriceException{
         manager.updateBooking( id,  date,  hasPaid,  luggageWeight,  companyName,  mealType,  realPrice,  seatID);
     }
 
@@ -38,14 +38,14 @@ public class ApplicationController {
         return manager.getAllPassengers();
     }
 
-    public ArrayList<SeatType> getAllSeatTypes() throws SeatTypeException {
+    public ArrayList<SeatType> getAllSeatTypes() throws SeatTypeException, PriceException {
         return manager.getAllSeatTypes();
     }
 
-    public ArrayList<Flight> getAllFlights() throws AllFlightsException {
+    public ArrayList<Flight> getAllFlights() throws AllFlightsException,PriceException {
         return manager.getAllFlights();
     }
-    public ArrayList<Seat> getAvailableSeats(String seatType, int flightID) throws AvailableSeatsException {
+    public ArrayList<Seat> getAvailableSeats(String seatType, int flightID) throws AvailableSeatsException, SeatNumberException {
         return manager.getAvailableSeats(seatType, flightID);
     }
 
@@ -57,15 +57,15 @@ public class ApplicationController {
         return manager.getSeatTypeName(seatID);
     }
 
-    public Seat getActualSeat (int seatID) throws ActualSeatException {
+    public Seat getActualSeat (int seatID) throws ActualSeatException, SeatNumberException {
         return manager.getActualSeat(seatID);
     }
 
-    public ArrayList<PassengerBooking> getBookingsHistory(int idPassenger) throws BookingsHistoryException {
+    public ArrayList<PassengerBooking> getBookingsHistory(int idPassenger) throws BookingsHistoryException, PriceException {
         return manager.getBookingsHistory(idPassenger);
     }
 
-    public ArrayList<FlightResearch> getFlightsStopover(Locality departure, Locality arrival, boolean withStopover) throws FlightsStopover {
+    public ArrayList<FlightResearch> getFlightsStopover(Locality departure, Locality arrival, boolean withStopover) throws FlightsStopover, PriceException {
         return manager.getFlightsStopover(departure, arrival, withStopover);
     }
 
@@ -80,7 +80,7 @@ public class ApplicationController {
         return manager.getFlightsOfDepartureAirport(startDate, endDate, idAirport);
     }
 
-    public ArrayList<FlightResearch> getFlights(Locality departure, Locality arrival, Date startDate, Date endDate) throws FlightsException {
+    public ArrayList<FlightResearch> getFlights(Locality departure, Locality arrival, Date startDate, Date endDate) throws FlightsException, PriceException {
         return manager.getFlights(departure, arrival, startDate, endDate);
     }
 

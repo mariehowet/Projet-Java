@@ -7,5 +7,5 @@ import java.util.ArrayList;
 import Exception.*;
 
 public interface BookingsHistoryDataAccess {
-    public ArrayList<PassengerBooking> getBookingsHistory(int idPassenger) throws BookingsHistoryException;
+    public ArrayList<PassengerBooking> getBookingsHistory(int idPassenger) throws BookingsHistoryException, PriceException;
 }
