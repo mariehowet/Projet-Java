@@ -23,7 +23,7 @@ public class AllBookingsJPanel extends JPanel {
             controller = new ApplicationController();
             bookings = controller.getAllBookings();
             this.setLayout(new BorderLayout());
-            AllBookingsModel model = new AllBookingsModel(bookings);
+            AllBookingsModel model = new AllBookingsModel(bookings, controller);
             JTable bookingsTable = new JTable(model);
             bookingsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             listSelect = bookingsTable.getSelectionModel();
@@ -58,8 +58,8 @@ public class AllBookingsJPanel extends JPanel {
     private class AddListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            int reponse = JOptionPane.showConfirmDialog(null,"Etes-vous sûr de vouloir ajouter cette réservation ?", "Modification", JOptionPane.YES_NO_OPTION);
-            if(reponse == 0) {
+            int response = JOptionPane.showConfirmDialog(null,"Etes-vous sûr de vouloir ajouter cette réservation ?", "Modification", JOptionPane.YES_NO_OPTION);
+            if(response == 0) {
                 try {
                     frameContainer.removeAll();
                     frameContainer.revalidate();
@@ -83,9 +83,9 @@ public class AllBookingsJPanel extends JPanel {
 
             if(indSelectedLine != -1) {
 
-                int reponse = JOptionPane.showConfirmDialog(null,"Etes-vous sûr de vouloir modifier cette réservation ?", "Modification", JOptionPane.YES_NO_OPTION);
+                int response = JOptionPane.showConfirmDialog(null,"Etes-vous sûr de vouloir modifier cette réservation ?", "Modification", JOptionPane.YES_NO_OPTION);
 
-                if(reponse == 0) {
+                if(response == 0) {
                     Booking booking = bookings.get(indSelectedLine);
 
                     try {
@@ -111,8 +111,8 @@ public class AllBookingsJPanel extends JPanel {
         public void actionPerformed(ActionEvent e) {
             int indSelectedLine = listSelect.getMinSelectionIndex();
             if (indSelectedLine != -1) {
-                int reponse = JOptionPane.showConfirmDialog(null, "Etes-vous sûr de vouloir supprimer cette réservation ?", "Suppression", JOptionPane.YES_NO_OPTION);
-                if (reponse == 0) {
+                int response = JOptionPane.showConfirmDialog(null, "Etes-vous sûr de vouloir supprimer cette réservation ?", "Suppression", JOptionPane.YES_NO_OPTION);
+                if (response == 0) {
                     Booking booking = bookings.get(indSelectedLine);
                     try {
                         controller.deleteBooking(booking);

@@ -3,6 +3,7 @@ package View;
 import Model.FlightOfDepartureAirport;
 
 import javax.swing.table.AbstractTableModel;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -43,9 +44,9 @@ public class FlightsOfDepartureAirportModel extends AbstractTableModel {
             case 1:
                 return flightOfDepartureAirport.getArrivalAirportName();
             case 2:
-                return flightOfDepartureAirport.getDepartureDate().getTime();
+                return DateFormat.getDateInstance(DateFormat.DATE_FIELD).format(flightOfDepartureAirport.getDepartureDate().getTime());
             case 3:
-                return flightOfDepartureAirport.getArrivalDate().getTime();
+                return DateFormat.getDateInstance(DateFormat.DATE_FIELD).format(flightOfDepartureAirport.getArrivalDate().getTime());
             case 4:
                 return flightOfDepartureAirport.getRemainingSeats();
             default:

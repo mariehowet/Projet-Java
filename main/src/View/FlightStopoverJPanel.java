@@ -20,15 +20,18 @@ public class FlightStopoverJPanel extends JPanel {
 
             controller = new ApplicationController();
             flightsStopover = controller.getFlightsStopover(departure, arrival, withStopover);
-            FlightsModel model = new FlightsModel(flightsStopover);
-            JTable flightsStopoverTable = new JTable(model);
-            flightsStopoverTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            listSelect = flightsStopoverTable.getSelectionModel();
-            flightsStopoverTable.setPreferredScrollableViewportSize(new Dimension(900, 100));
+            if (flightsStopover.isEmpty()){
+                JOptionPane.showMessageDialog(null, "Votre recherche n'a pas donné de solution");
+            } else {
+                FlightsModel model = new FlightsModel(flightsStopover);
+                JTable flightsStopoverTable = new JTable(model);
+                flightsStopoverTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                listSelect = flightsStopoverTable.getSelectionModel();
+                flightsStopoverTable.setPreferredScrollableViewportSize(new Dimension(900, 100));
 
-            this.setLayout(new FlowLayout());
-            this.add(new JScrollPane(flightsStopoverTable));
-
+                this.setLayout(new FlowLayout());
+                this.add(new JScrollPane(flightsStopoverTable));
+            }
 
         }
         catch (FlightsStopover e) {

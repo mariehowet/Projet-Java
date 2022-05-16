@@ -124,6 +124,12 @@ public class FindFlight extends JPanel {
         public void actionPerformed(ActionEvent e) {
             panel.removeAll();
             try {
+                if (chooserStartDate.getDate() == null) {
+                    throw new DatesNullException("début");
+                }
+                if (chooserEndDate.getDate() == null) {
+                    throw new DatesNullException("fin");
+                }
                 if (chooserStartDate.getDate().after(chooserEndDate.getDate())) {
                     throw new DatesException();
                 }
@@ -141,6 +147,9 @@ public class FindFlight extends JPanel {
             }
             catch (LocalityException localityException) {
                 JOptionPane.showMessageDialog(null, localityException.getMessage(), "Problème", JOptionPane.WARNING_MESSAGE);
+            }
+            catch (DatesNullException dateNullException) {
+                JOptionPane.showMessageDialog(null, dateNullException.getMessage(), "Problème", JOptionPane.WARNING_MESSAGE);
             }
         }
     }

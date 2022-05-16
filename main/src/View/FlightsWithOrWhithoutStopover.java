@@ -97,26 +97,15 @@ public class FlightsWithOrWhithoutStopover extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             panel.removeAll();
-
+            panel.revalidate();
+            panel.repaint();
             try {
                 Locality departure = ConvertManager.stringIntoLocality(departureCity.getSelectedItem().toString());
                 Locality arrival = ConvertManager.stringIntoLocality(arrivalCity.getSelectedItem().toString());
-                System.out.println(departure.getCity());
-                System.out.println(departure.getCountry());
-                System.out.println(departure.getPostCode());
-
-                System.out.println(arrival.getCity());
-                System.out.println(arrival.getCountry());
-                System.out.println(arrival.getPostCode());
-
-
-
-
                 researchDisplay = new FlightStopoverJPanel(departure, arrival,withStopover.isSelected());
+                panel.add(researchDisplay, BorderLayout.CENTER);
                 frameContainer.revalidate();
                 frameContainer.repaint();
-                panel.add(researchDisplay, BorderLayout.CENTER);
-
             }
             catch (LocalityException localityException) {
                 System.out.println("erreur");

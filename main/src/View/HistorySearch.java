@@ -78,13 +78,14 @@ public class HistorySearch extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             panel.removeAll();
+            panel.revalidate();
+            panel.repaint();
             try {
                 int idPassenger = ConvertManager.stringIntoId(passenger.getSelectedItem().toString());
                 researchDisplay = new BookingsHistoryJPanel(idPassenger);
-
+                panel.add(researchDisplay, BorderLayout.CENTER);
                 frameContainer.revalidate();
                 frameContainer.repaint();
-                panel.add(researchDisplay, BorderLayout.CENTER);
             }
             catch (IdException idException) {
                 JOptionPane.showMessageDialog(null, idException.getMessage(), "Problème", JOptionPane.WARNING_MESSAGE);

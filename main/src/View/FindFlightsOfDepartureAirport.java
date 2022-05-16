@@ -106,6 +106,12 @@ public class FindFlightsOfDepartureAirport extends JPanel {
         public void actionPerformed(ActionEvent e) {
             panel.removeAll();
             try {
+                if (chooserStartDate.getDate() == null) {
+                    throw new DatesNullException("début");
+                }
+                if (chooserEndDate.getDate() == null) {
+                    throw new DatesNullException("fin");
+                }
                 if (chooserStartDate.getDate().after(chooserEndDate.getDate())) {
                     throw new DatesException();
                 }
@@ -124,6 +130,9 @@ public class FindFlightsOfDepartureAirport extends JPanel {
             }
             catch (DatesException ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Problème", JOptionPane.WARNING_MESSAGE);
+            }
+            catch (DatesNullException dateNullException) {
+                JOptionPane.showMessageDialog(null, dateNullException.getMessage(), "Problème", JOptionPane.WARNING_MESSAGE);
             }
         }
     }

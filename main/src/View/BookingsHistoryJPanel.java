@@ -19,15 +19,17 @@ public class BookingsHistoryJPanel extends JPanel {
 
             controller = new ApplicationController();
             bookingsHistory = controller.getBookingsHistory(idPassenger);
-            BookingsHistoryModel model = new BookingsHistoryModel(bookingsHistory);
-            JTable bookingsHistoryTable = new JTable(model);
-            bookingsHistoryTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            listSelect = bookingsHistoryTable.getSelectionModel();
-            bookingsHistoryTable.setPreferredScrollableViewportSize(new Dimension(900, 100));
-
-            this.setLayout(new FlowLayout());
-            this.add(new JScrollPane(bookingsHistoryTable));
-
+            if (bookingsHistory.isEmpty()){
+                JOptionPane.showMessageDialog(null, "Ce passagé n'as pas d'historique de vol");
+            } else {
+                BookingsHistoryModel model = new BookingsHistoryModel(bookingsHistory);
+                JTable bookingsHistoryTable = new JTable(model);
+                bookingsHistoryTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                listSelect = bookingsHistoryTable.getSelectionModel();
+                bookingsHistoryTable.setPreferredScrollableViewportSize(new Dimension(900, 100));
+                this.setLayout(new FlowLayout());
+                this.add(new JScrollPane(bookingsHistoryTable));
+            }
 
         }
         catch (BookingsHistoryException e) {
