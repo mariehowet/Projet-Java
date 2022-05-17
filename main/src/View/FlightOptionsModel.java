@@ -17,7 +17,7 @@ public class FlightOptionsModel extends AbstractTableModel {
         columnNames.add("Prix du type de siège");
         columnNames.add("Poids des bagages");
         columnNames.add("Prix du poids des bagages");
-        columnNames.add("Prix Total");
+        columnNames.add("Prix Total (€)");
         this.contents = contents;
     }
 

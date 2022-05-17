@@ -136,11 +136,10 @@ public class FindFlight extends JPanel {
                 Locality departure = ConvertManager.stringIntoLocality(departureCity.getSelectedItem().toString());
                 Locality arrival = ConvertManager.stringIntoLocality(arrivalCity.getSelectedItem().toString());
 
-                researchDisplay = new FindFlightsJPanel(departure, arrival, chooserStartDate.getDate(), chooserEndDate.getDate());
+                researchDisplay = new FindFlightsJPanel(frameContainer,panel ,departure, arrival, chooserStartDate.getDate(), chooserEndDate.getDate());
                 frameContainer.revalidate();
                 frameContainer.repaint();
                 panel.add(researchDisplay, BorderLayout.CENTER);
-                System.out.println("test");
             }
             catch (DatesException ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Problème", JOptionPane.WARNING_MESSAGE);
