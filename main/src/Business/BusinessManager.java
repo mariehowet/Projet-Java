@@ -6,11 +6,13 @@ import Model.*;
 import Exception.*;
 
 import Exception.AddBookingException;
+import test.Calculator;
 
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import test.*;
 
 
 public class BusinessManager {
@@ -108,15 +110,24 @@ public class BusinessManager {
         return daoFlights.getFlights(departure, arrival, startDate, endDate);
     }
 
-    public ArrayList<FlightOption> getFlightOptions(int flightId) {
+    public ArrayList<FlightOption> getFlightOptions(FlightResearch flight) {
         ArrayList<FlightOption> flightsOptions = new ArrayList<>();
 
         try {
             ArrayList<SeatType> allSeatTypes = daoBooking.getAllSeatTypes();
+            String[] weights = {"sans bagage","0 < 10 kg","10 < 20 kg","20 < 30 kg","Max 35 kg"};
+            Double[] priceWeights = {0.0,0.0,10.0,20.0,25.0};
+            Calculator calculator = new Calculator();
             // remplir le tableau des options de vol
             // peut etre faire une boucle sur les différents siege et a l'interieur faire une boucle sur les différents
 
+            for (SeatType seatType : allSeatTypes) {
+                for (int i = 0; i < weights.length; i++) {
+                    flightsOptions.add(new FlightOption(seatType.getName(),seatType.getAdditionalPrice(),weights[i], priceWeights[i], calculator.add(flight.getPrice(),(double)seatType.getAdditionalPrice(),priceWeights[i])));
+                }
+            }
 
+            return flightsOptions;
 
         }
         catch (SeatTypeException seatTypeException) {

@@ -19,7 +19,7 @@ public class AllBookingsModel extends AbstractTableModel {
         columnNames = new ArrayList<>();
         columnNames.add("Identifiant");
         columnNames.add("Date");
-        columnNames.add("PayÃ©e ?");
+        columnNames.add("Payé ?");
         columnNames.add("Poids baggages");
         columnNames.add("Entreprise");
         columnNames.add("Repas");

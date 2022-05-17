@@ -19,9 +19,11 @@ public class FindFlightsJPanel extends JPanel {
     private ListSelectionModel listSelect;
     private ArrayList<FlightResearch> flightResearches;
     private JButton optionsButton;
-    private JPanel researchOptionsPanel;
-    public FindFlightsJPanel(Locality departure, Locality arrival, Date startDate, Date endDate) {
-
+    private JPanel researchOptionsPanel, displayPanel;
+    Container frameContainer;
+    public FindFlightsJPanel(Container frameContainer, JPanel displayPanel,Locality departure, Locality arrival, Date startDate, Date endDate) {
+        this.frameContainer = frameContainer;
+        this.displayPanel = displayPanel;
         try {
 
             controller = new ApplicationController();
@@ -78,12 +80,11 @@ public class FindFlightsJPanel extends JPanel {
                 if (response == 0) {
                     FlightResearch flightResearch = flightResearches.get(indSelectedLine);
 
-
-
-
-
                     try {
-                        FlightOptionsJPanel flightOptionsJPanel = new FlightOptionsJPanel(flightResearch.getFlightId());
+                        FlightOptionsJPanel flightOptionsJPanel = new FlightOptionsJPanel(flightResearch);
+                        frameContainer.revalidate();
+                        frameContainer.repaint();
+                        displayPanel.add(flightOptionsJPanel, BorderLayout.SOUTH);
                     }
                     catch (ConnectionException connectionException) {
                         JOptionPane.showMessageDialog(null, connectionException.getMessage(), "Problème", JOptionPane.WARNING_MESSAGE);

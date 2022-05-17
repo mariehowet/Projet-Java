@@ -12,7 +12,7 @@ class CalculatorTest {
 
     @org.junit.jupiter.api.Test
     void add() {
-        assertEquals(1000.0, calculator.add(900.0,100.0),0.01);
+        assertEquals(1000.0, calculator.add(900.0,100.0,12.0),0.01);
     }
 
     @org.junit.jupiter.api.Test

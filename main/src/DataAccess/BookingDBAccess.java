@@ -189,7 +189,7 @@ public class BookingDBAccess implements BookingDataAccess {
 
     @Override
     public ArrayList<SeatType> getAllSeatTypes() throws SeatTypeException, PriceException {
-        String sqlInstruction = "select * from seat_type";
+        String sqlInstruction = "select * from seat_type order by additional_price";
         ArrayList<SeatType>  allSeatTypes = new ArrayList<>();
 
         try {

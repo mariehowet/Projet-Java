@@ -2,12 +2,12 @@ package Model;
 
 public class FlightOption {
     private String seatType;
-    private Double priceSeatType;
+    private int priceSeatType;
     private String luggageWeight;
     private Double priceLuggageWeight;
     private Double totalPrice;
 
-    public FlightOption(String seatType, Double priceSeatType, String luggageWeight, Double priceLuggageWeight, Double totalPrice) {
+    public FlightOption(String seatType, int priceSeatType, String luggageWeight, Double priceLuggageWeight, Double totalPrice) {
         this.seatType = seatType;
         this.priceSeatType = priceSeatType;
         this.luggageWeight = luggageWeight;
@@ -19,7 +19,7 @@ public class FlightOption {
         return seatType;
     }
 
-    public Double getPriceSeatType() {
+    public int getPriceSeatType() {
         return priceSeatType;
     }
 

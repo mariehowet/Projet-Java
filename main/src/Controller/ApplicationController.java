@@ -88,8 +88,8 @@ public class ApplicationController {
         return manager.getFlights(departure, arrival, startDate, endDate);
     }
 
-    public ArrayList<FlightOption> getFlightOptions(int flightId) {
-        return manager.getFlightOptions(flightId);
+    public ArrayList<FlightOption> getFlightOptions(FlightResearch flight) {
+        return manager.getFlightOptions(flight);
     }
 
 }
