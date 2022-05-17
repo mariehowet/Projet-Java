@@ -25,6 +25,7 @@ public class FindFlightsDBAccess implements FindFlightsDataAccess {
 
     public ArrayList<FlightResearch> getFlights(Locality departure, Locality arrival, Date startDate, Date endDate) throws FlightsException, PriceException {
         ArrayList<FlightResearch> flights = new ArrayList<>();
+        // passer par la table localitée
         String sqlInstruction =
                 "select f.id, da.name as 'departure_airport', aa.name as 'arrival_airport', f.departure_date, f.expected_arrival_date, f.departure_hour, f.expected_arrival_hour, f.price " +
                 "from flight f " +

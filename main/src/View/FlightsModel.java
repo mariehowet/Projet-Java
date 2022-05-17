@@ -4,6 +4,7 @@ import Model.FlightResearch;
 
 
 import javax.swing.table.AbstractTableModel;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -49,9 +50,9 @@ public class FlightsModel extends AbstractTableModel {
             case 2:
                 return flightResearch.getArrivalAirportName();
             case 3:
-                return flightResearch.getDepartureDate().getTime();
+                return DateFormat.getDateInstance(DateFormat.DATE_FIELD).format(flightResearch.getDepartureDate().getTime());
             case 4:
-                return flightResearch.getArrivalDate().getTime();
+                return DateFormat.getDateInstance(DateFormat.DATE_FIELD).format(flightResearch.getArrivalDate().getTime());
             case 5:
                 return flightResearch.getDepartureHour();
             case 6:

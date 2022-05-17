@@ -7,6 +7,7 @@ import Exception.*;
 
 import Exception.AddBookingException;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -101,6 +102,26 @@ public class BusinessManager {
 
     public ArrayList<FlightResearch> getFlights(Locality departure, Locality arrival, Date startDate, Date endDate) throws FlightsException, PriceException {
         return daoFlights.getFlights(departure, arrival, startDate, endDate);
+    }
+
+    public ArrayList<FlightOption> getFlightOptions(int flightId) {
+        ArrayList<FlightOption> flightsOptions = new ArrayList<>();
+
+        try {
+            ArrayList<SeatType> allSeatTypes = daoBooking.getAllSeatTypes();
+            // remplir le tableau des options de vol
+            // peut etre faire une boucle sur les différents siege et a l'interieur faire une boucle sur les différents
+
+
+
+        }
+        catch (SeatTypeException seatTypeException) {
+            JOptionPane.showMessageDialog(null, seatTypeException.getMessage(), "Problème", JOptionPane.WARNING_MESSAGE);
+        }
+        catch (PriceException priceException) {
+            JOptionPane.showMessageDialog(null, priceException.getMessage(), "Problème", JOptionPane.WARNING_MESSAGE);
+        }
+        return flightsOptions;
     }
 
 }

@@ -6,6 +6,7 @@ import Model.Airplane;
 import Model.PassengerBooking;
 
 import javax.swing.table.AbstractTableModel;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -48,7 +49,7 @@ public class BookingsHistoryModel extends AbstractTableModel {
             case 0:
                 return passengerBooking.getIdBooking();
             case 1:
-                return passengerBooking.getDateBooking().getTime();
+                return DateFormat.getDateInstance(DateFormat.DATE_FIELD).format(passengerBooking.getDateBooking().getTime());
             case 2:
                 return passengerBooking.getFlightID();
             case 3:
@@ -56,7 +57,7 @@ public class BookingsHistoryModel extends AbstractTableModel {
             case 4:
                 return passengerBooking.getArrivalAirportName();
             case 5:
-                return passengerBooking.getDepartureDate().getTime();
+                return DateFormat.getDateInstance(DateFormat.DATE_FIELD).format(passengerBooking.getDepartureDate().getTime());
             case 6:
                 return passengerBooking.getSeatType();
             case 7:
