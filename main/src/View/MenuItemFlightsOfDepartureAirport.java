@@ -3,7 +3,6 @@ package View;
 import Business.ConvertManager;
 import Controller.ApplicationController;
 import Model.Airport;
-import Model.Passenger;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,13 +10,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import Exception.*;
 import com.toedter.calendar.JDateChooser;
 
-public class FindFlightsOfDepartureAirport extends JPanel {
+public class MenuItemFlightsOfDepartureAirport extends JPanel {
     private JLabel startDateLabel, endDateLabel, departureAirportLabel;
     private JComboBox airport;
     private JPanel researchPanel, displayPanel,researchDisplay;
@@ -26,7 +23,7 @@ public class FindFlightsOfDepartureAirport extends JPanel {
     private ApplicationController controller;
     private JDateChooser chooserStartDate, chooserEndDate;
 
-    public FindFlightsOfDepartureAirport(Container frameContainer) throws ConnectionException {
+    public MenuItemFlightsOfDepartureAirport(Container frameContainer) throws ConnectionException {
         this.controller = new ApplicationController();
         this.frameContainer = frameContainer;
         this.setLayout(new BorderLayout());
@@ -105,6 +102,8 @@ public class FindFlightsOfDepartureAirport extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             panel.removeAll();
+            panel.revalidate();
+            panel.repaint();
             try {
                 if (chooserStartDate.getDate() == null) {
                     throw new DatesNullException("début");

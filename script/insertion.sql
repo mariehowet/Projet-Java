@@ -11,6 +11,25 @@ select f.id, da.name as 'departure_airport', aa.name as 'arrival_airport', f.dep
 
 
 
+select f.id, da.name , f.departure_date, f.expected_arrival_date,
+((select count(*)
+ from seat
+          inner join airplane a1 on seat.airplane_id = a1.id
+ where a1.id = a.id) - count(*)) as 'NB places'
+
+from flight f
+         inner join airport da on (f.departure_airport_id = da.id)
+         inner join airplane a on (f.airplane_id = a.id)
+            inner join booking b on f.id = b.flight_id
+
+
+where f.arrival_airport_id = 10
+  and f.departure_date between '2022-04-10' and '2022-06-21'
+group by f.id, da.name, f.departure_date, f.expected_arrival_date;
+
+
+
+
 -- ----------------- airplane---------------
 INSERT INTO airplane (airplane_type)
 VALUES ('AIRBUS A380');

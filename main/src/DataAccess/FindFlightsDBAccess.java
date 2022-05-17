@@ -38,8 +38,6 @@ public class FindFlightsDBAccess implements FindFlightsDataAccess {
 
         java.sql.Date sqlStartDate = new java.sql.Date(startDate.getTime());
         java.sql.Date sqlEndDate = new java.sql.Date(endDate.getTime());
-        System.out.println(sqlStartDate);
-        System.out.println(sqlEndDate);
 
         // traitement
         try {

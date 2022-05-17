@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import Exception.*;
 
-public class HistorySearch extends JPanel {
+public class MenuItemHistorySearch extends JPanel {
     private JPanel researchPanel, researchDisplay, displayPanel;
     private JButton researchButton;
     private JLabel passengerLabel;
@@ -19,7 +19,7 @@ public class HistorySearch extends JPanel {
     private Container frameContainer;
     private ApplicationController controller;
 
-    public HistorySearch(Container frameContainer) throws ConnectionException {
+    public MenuItemHistorySearch(Container frameContainer) throws ConnectionException {
         this.controller = new ApplicationController();
         this.frameContainer = frameContainer;
         this.setLayout(new BorderLayout());

@@ -20,14 +20,19 @@ public class FlightsOfDepartureAirportJPanel extends JPanel {
 
             controller = new ApplicationController();
             flightsOfDepartureAirport = controller.getFlightsOfDepartureAirport(startDate,endDate,idAirport);
-            FlightsOfDepartureAirportModel model = new FlightsOfDepartureAirportModel(flightsOfDepartureAirport);
-            JTable flightsTable = new JTable(model);
-            flightsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            listSelect = flightsTable.getSelectionModel();
-            flightsTable.setPreferredScrollableViewportSize(new Dimension(900, 100));
 
-            this.setLayout(new FlowLayout());
-            this.add(new JScrollPane(flightsTable));
+            if (flightsOfDepartureAirport.isEmpty()){
+                JOptionPane.showMessageDialog(null, "Il n'y a pas de vols qui correspondent à vos critères de recherche");
+            } else {
+                FlightsOfDepartureAirportModel model = new FlightsOfDepartureAirportModel(flightsOfDepartureAirport);
+                JTable flightsTable = new JTable(model);
+                flightsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                listSelect = flightsTable.getSelectionModel();
+                flightsTable.setPreferredScrollableViewportSize(new Dimension(900, 100));
+
+                this.setLayout(new FlowLayout());
+                this.add(new JScrollPane(flightsTable));
+            }
 
 
         }

@@ -21,7 +21,7 @@ public class FlightStopoverJPanel extends JPanel {
             controller = new ApplicationController();
             flightsStopover = controller.getFlightsStopover(departure, arrival, withStopover);
             if (flightsStopover.isEmpty()){
-                JOptionPane.showMessageDialog(null, "Votre recherche n'a pas donné de solution");
+                JOptionPane.showMessageDialog(null, "Il n'y a pas de vols qui correspondent à vos critères de recherche");
             } else {
                 FlightsModel model = new FlightsModel(flightsStopover);
                 JTable flightsStopoverTable = new JTable(model);

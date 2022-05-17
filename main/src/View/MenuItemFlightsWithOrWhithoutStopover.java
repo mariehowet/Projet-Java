@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 import Exception.*;
 
-public class FlightsWithOrWhithoutStopover extends JPanel {
+public class MenuItemFlightsWithOrWhithoutStopover extends JPanel {
     private JPanel researchPanel, researchDisplay, displayPanel;
     private JButton researchButton;
     private JLabel departureCityLabel, arrivalCityLabel;
@@ -22,7 +22,7 @@ public class FlightsWithOrWhithoutStopover extends JPanel {
     private ButtonGroup stopover;
     private JRadioButton withStopover, withoutStopover;
 
-    public FlightsWithOrWhithoutStopover(Container frameContainer) throws ConnectionException {
+    public MenuItemFlightsWithOrWhithoutStopover(Container frameContainer) throws ConnectionException {
         this.controller = new ApplicationController();
         this.frameContainer = frameContainer;
         this.setLayout(new BorderLayout());

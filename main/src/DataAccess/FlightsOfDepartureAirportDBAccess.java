@@ -22,22 +22,29 @@ public class FlightsOfDepartureAirportDBAccess implements FlightsOfDepartureAirp
     }
 
     public ArrayList<FlightOfDepartureAirport> getFlightsOfDepartureAirport(Date startDate, Date endDate, int idAirport) throws FlightsOfDepartureAirportException {
-        String sqlInstruction = "";
+        String sqlInstruction =
+                "select f.id, aa.name as 'arrival_airport', f.departure_date, f.expected_arrival_date, " +
+                "((select count(*) from seat inner join airplane a1 on seat.airplane_id = a1.id " +
+                "where a1.id = a.id) - count(*)) as 'remaining_seats' " +
+                "from flight f " +
+                    "inner join airport aa on (f.arrival_airport_id = aa.id) " +
+                    "inner join airplane a on (f.airplane_id = a.id) " +
+                    "inner join booking b on f.id = b.flight_id " +
+                "where f.departure_airport_id = ? " +
+                        "and f.departure_date between ? and ? " +
+                "group by f.id, aa.name, f.departure_date, f.expected_arrival_date";
 
         ArrayList<FlightOfDepartureAirport> flightsOfDepartureAirport = new ArrayList<>();
 
         java.sql.Date sqlStartDate = new java.sql.Date(startDate.getTime());
         java.sql.Date sqlEndDate = new java.sql.Date(endDate.getTime());
-        System.out.println(sqlStartDate);
-        System.out.println(sqlEndDate);
 
         // traitement
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
-            preparedStatement.setDate(1, sqlStartDate);
-            preparedStatement.setDate(2, sqlEndDate);
-            preparedStatement.setInt(8, idAirport);
-
+            preparedStatement.setInt(1, idAirport);
+            preparedStatement.setDate(2, sqlStartDate);
+            preparedStatement.setDate(3, sqlEndDate);
 
             ResultSet data = preparedStatement.executeQuery();
             FlightOfDepartureAirport flightOfDepartureAirport;
@@ -52,10 +59,10 @@ public class FlightsOfDepartureAirportDBAccess implements FlightsOfDepartureAirp
 
                 flightOfDepartureAirport = new FlightOfDepartureAirport (
                         data.getInt("id"),
-                        data.getString("departure_airport"),
+                        data.getString("arrival_airport"),
                         departureDate,
                         arrivalDate,
-                        data.getInt("remainingSeats")
+                        data.getInt("remaining_seats")
 
                 );
                 flightsOfDepartureAirport.add(flightOfDepartureAirport);
