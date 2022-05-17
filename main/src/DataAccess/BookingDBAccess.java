@@ -292,9 +292,9 @@ public class BookingDBAccess implements BookingDataAccess {
 
     public Seat getActualSeat (int seatID) throws ActualSeatException, SeatNumberException{
         String sqlInstruction = "select id, number, column_letter from seat where id = ?";
-        Seat actualSeat = null;
 
         try {
+            Seat actualSeat = null;
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             preparedStatement.setInt(1, seatID);
             ResultSet data = preparedStatement.executeQuery();
@@ -309,6 +309,27 @@ public class BookingDBAccess implements BookingDataAccess {
             throw new ActualSeatException();
         }catch (SeatNumberException e) {
             throw  new SeatNumberException();
+        }
+    }
+
+    public Passenger getActualPassenger(int passengerID) throws ActualPassengerException{
+        String sqlInstruction = "select id, last_name, first_name, initial_middle_name from passenger where id = ?";
+
+        try {
+            Passenger actualPassenger = null;
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+            preparedStatement.setInt(1, passengerID);
+            ResultSet data = preparedStatement.executeQuery();
+
+            while (data.next()) {
+                actualPassenger = new Passenger (data.getInt("id"),
+                        data.getString("last_name"),
+                        data.getString("first_name"),
+                        data.getString("initial_middle_name"));
+            }
+            return actualPassenger;
+        } catch (SQLException e) {
+            throw new ActualPassengerException();
         }
     }
 

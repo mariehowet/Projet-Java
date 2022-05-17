@@ -44,25 +44,14 @@ public class GeneralDBAccess implements GeneralDataAccess {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             ResultSet data = preparedStatement.executeQuery();
-
             Passenger passenger;
-            GregorianCalendar calendar;
 
             while(data.next()) {
-                calendar = new GregorianCalendar();
-                calendar.setTime(data.getDate("birth_date"));
                 passenger = new Passenger(
                         data.getInt("id"),
                         data.getString("last_name"),
                         data.getString("first_name"),
-                        data.getString("initial_middle_name"),
-                        calendar,
-                        data.getString("email"),
-                        data.getString("phone_number"),
-                        data.getString("street_and_number"),
-                        data.getString("city"),
-                        data.getString("post_code"),
-                        data.getString("country")
+                        data.getString("initial_middle_name")
                 );
 
                 allPassengers.add(passenger);

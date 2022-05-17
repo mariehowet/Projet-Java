@@ -80,6 +80,10 @@ public class BusinessManager {
         return daoBooking.getActualSeat(seatID);
     }
 
+    public Passenger getActualPassenger(int passengerID) throws ActualPassengerException {
+        return daoBooking.getActualPassenger(passengerID);
+    }
+
     public ArrayList<PassengerBooking> getBookingsHistory(int idPassenger) throws BookingsHistoryException , PriceException{
         return daoBookingsHistory.getBookingsHistory(idPassenger);
     }

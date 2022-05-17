@@ -61,6 +61,10 @@ public class ApplicationController {
         return manager.getActualSeat(seatID);
     }
 
+    public Passenger getActualPassenger(int passengerID) throws ActualPassengerException {
+        return manager.getActualPassenger(passengerID);
+    }
+
     public ArrayList<PassengerBooking> getBookingsHistory(int idPassenger) throws BookingsHistoryException, PriceException {
         return manager.getBookingsHistory(idPassenger);
     }

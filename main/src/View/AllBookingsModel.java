@@ -1,9 +1,9 @@
 package View;
 
 import Controller.ApplicationController;
-import Model.Booking;
-import Model.Seat;
+import Model.*;
 
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -45,8 +45,9 @@ public class AllBookingsModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Booking booking = contents.get(rowIndex);
-        //Passenger passenger = controller.getActualPassenger();
+
         try {
+            Passenger passenger = controller.getActualPassenger(booking.getPassengerID());
             Seat seat = controller.getActualSeat(booking.getSeatID());
             switch (columnIndex) {
                 case 0:
@@ -66,16 +67,19 @@ public class AllBookingsModel extends AbstractTableModel {
                 case 7:
                     return booking.getFlightID();
                 case 8:
-                    return booking.getPassengerID();
+                    return passenger.getFirstName() + " " + passenger.getLastName() + " "
+                            + (passenger.getInitialMiddleName() != null ? passenger.getInitialMiddleName() : "null");
                 case 9:
                     return seat.getNumber() + seat.getColumnLetter();
                 default:
                     return null;
             }
         } catch (ActualSeatException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage());
         } catch (SeatNumberException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        } catch (ActualPassengerException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
         return null;
     }
