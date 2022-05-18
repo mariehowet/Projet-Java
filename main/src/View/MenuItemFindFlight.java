@@ -11,12 +11,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import Exception.*;
 
-public class FindFlight extends JPanel {
+public class MenuItemFindFlight extends JPanel {
     private JLabel departureCityLabel, arrivalCityLabel, startDateLabel, endDateLabel;
     private JComboBox departureCity, arrivalCity;
     private JDateChooser chooserStartDate, chooserEndDate;
@@ -25,7 +23,7 @@ public class FindFlight extends JPanel {
     private JPanel researchPanel, displayPanel, researchDisplay, panelStartDate, panelEndDate, gridFields, buttonPanel, gridResearch;
     private JButton researchButton;
 
-    public FindFlight(Container frameContainer) throws ConnectionException {
+    public MenuItemFindFlight(Container frameContainer) throws ConnectionException {
         this.controller = new ApplicationController();
         this.frameContainer = frameContainer;
         this.setLayout(new BorderLayout());
@@ -123,6 +121,8 @@ public class FindFlight extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             panel.removeAll();
+            panel.revalidate();
+            panel.repaint();
             try {
                 if (chooserStartDate.getDate() == null) {
                     throw new DatesNullException("début");

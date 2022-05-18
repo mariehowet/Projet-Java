@@ -1,16 +1,5 @@
 USE marvinairline;
 
-select f.id, da.name as 'departure_airport', aa.name as 'arrival_airport', f.departure_date, f.expected_arrival_date, f.departure_hour, f.expected_arrival_hour, f.price
-                        from flight f
-                        inner join airport da on (f.departure_airport_id = da.id)
-                        inner join airport aa on (f.arrival_airport_id = aa.id)
-                        where
-                        f.departure_date between '2022-04-10' and '2022-06-21'
-                        and da.city = ? and da.post_code = ? and da.country = ?
-                        and aa.city = ? and aa.post_code = ? and aa.country = ?;
-
-
-
 -- ----------------- airplane---------------
 INSERT INTO airplane (airplane_type)
 VALUES ('AIRBUS A380');

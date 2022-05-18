@@ -111,7 +111,7 @@ public class MainJFrame extends JFrame {
         public void actionPerformed(ActionEvent e) {
             frameContainer.removeAll();
             try {
-                frameContainer.add(new FindFlightsOfDepartureAirport(frameContainer), BorderLayout.CENTER);
+                frameContainer.add(new MenuItemFlightsOfDepartureAirport(frameContainer), BorderLayout.CENTER);
             }
             catch (ConnectionException connectionFindFlightsOfDepartureAirportException) {
                 JOptionPane.showMessageDialog(null, connectionFindFlightsOfDepartureAirportException.getMessage());
@@ -126,7 +126,7 @@ public class MainJFrame extends JFrame {
         public void actionPerformed(ActionEvent e) {
             frameContainer.removeAll();
             try {
-                frameContainer.add(new FlightsWithOrWhithoutStopover(frameContainer), BorderLayout.CENTER);
+                frameContainer.add(new MenuItemFlightsWithOrWhithoutStopover(frameContainer), BorderLayout.CENTER);
             } catch (ConnectionException stopoverConnectionException) {
                 JOptionPane.showMessageDialog(null, stopoverConnectionException.getMessage());
             }
@@ -138,7 +138,7 @@ public class MainJFrame extends JFrame {
         public void actionPerformed(ActionEvent e) {
             frameContainer.removeAll();
             try{
-                frameContainer.add(new HistorySearch(frameContainer), BorderLayout.CENTER);
+                frameContainer.add(new MenuItemHistorySearch(frameContainer), BorderLayout.CENTER);
             } catch (ConnectionException historyConnectionException) {
                 JOptionPane.showMessageDialog(null, historyConnectionException.getMessage());
             }
@@ -151,7 +151,7 @@ public class MainJFrame extends JFrame {
         public void actionPerformed(ActionEvent e) {
             frameContainer.removeAll();
             try {
-                frameContainer.add(new FindFlight(frameContainer), BorderLayout.CENTER);
+                frameContainer.add(new MenuItemFindFlight(frameContainer), BorderLayout.CENTER);
             }
             catch (ConnectionException findFlightException) {
                 JOptionPane.showMessageDialog(null, findFlightException.getMessage(), "Problème", JOptionPane.WARNING_MESSAGE);
