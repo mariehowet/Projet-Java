@@ -1,10 +1,6 @@
 package View;
 
-import Model.Airport;
-import Model.Booking;
-import Model.Airplane;
 import Model.PassengerBooking;
-
 import javax.swing.table.AbstractTableModel;
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -27,7 +23,6 @@ public class BookingsHistoryModel extends AbstractTableModel {
 
         this.contents = contents;
     }
-
 
     @Override
     public int getRowCount() {

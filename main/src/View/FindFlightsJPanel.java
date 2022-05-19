@@ -20,18 +20,18 @@ public class FindFlightsJPanel extends JPanel {
     private ArrayList<FlightResearch> flightResearches;
     private JButton optionsButton;
     private JPanel researchOptionsPanel, displayPanel;
-    Container frameContainer;
+    private Container frameContainer;
+
     public FindFlightsJPanel(Container frameContainer, JPanel displayPanel,Locality departure, Locality arrival, Date startDate, Date endDate) {
         this.frameContainer = frameContainer;
         this.displayPanel = displayPanel;
-        try {
 
+        try {
             controller = new ApplicationController();
             flightResearches = controller.getFlights(departure, arrival, startDate, endDate);
             if (flightResearches.isEmpty()){
                 JOptionPane.showMessageDialog(null, "Il n'y a pas de vols qui correspondent à vos critères de recherche");
             } else {
-
                 FlightsModel model = new FlightsModel(flightResearches);
                 JTable flightsTable = new JTable(model);
                 flightsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -48,12 +48,9 @@ public class FindFlightsJPanel extends JPanel {
 
                 researchOptionsPanel.add(optionsButton);
 
-
-
                 this.add(new JScrollPane(flightsTable), BorderLayout.NORTH);
                 this.add(researchOptionsPanel, BorderLayout.SOUTH);
             }
-
         }
         catch (FlightsException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -63,7 +60,6 @@ public class FindFlightsJPanel extends JPanel {
         } catch (PriceException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
-
     }
 
     private class OptionsListener implements ActionListener {
@@ -91,7 +87,6 @@ public class FindFlightsJPanel extends JPanel {
                     }
                 }
             }
-
         }
     }
 }

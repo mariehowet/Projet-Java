@@ -3,7 +3,6 @@ package DataAccess;
 import Model.Booking;
 import Exception.*;
 import Model.*;
-
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -17,7 +16,7 @@ public interface BookingDataAccess {
 
     void deleteBooking(Booking booking) throws DeleteException;
 
-    ArrayList<SeatType> getAllSeatTypes() throws SeatTypeException, PriceException;
+    ArrayList<SeatType> getAllSeatTypes() throws AllSeatTypesException, PriceException;
 
     ArrayList<Flight> getAllFlights() throws AllFlightsException, PriceException;
 
@@ -25,7 +24,7 @@ public interface BookingDataAccess {
 
     Double getFlightPrice(int flightID) throws FlightPriceException;
 
-    String getSeatTypeName(int seatID) throws SeatTypeNameException;
+    SeatType getActualSeatType(int seatID) throws SeatTypeException, PriceException;
 
     Seat getActualSeat(int seatID) throws ActualSeatException, SeatNumberException;
 

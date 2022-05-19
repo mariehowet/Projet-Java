@@ -242,3 +242,8 @@ VALUES ('2022-05-09',true,'0 < 10 kg','Protellux','Poulet',1000.0,1,5,1);
 
 INSERT INTO booking (date_booking, has_paid, luggage_weight, company_name, meal_type, real_price, flight_id, seat_id, passenger_id)
 VALUES ('2022-05-10',false,'10 < 20 kg',null,'Porc',2000.0,2,13,1);*/
+
+
+select st.name, st.additional_price from seat s
+inner join seat_type st on(st.name = s.seat_type)
+ where s.id = ?

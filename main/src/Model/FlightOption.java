@@ -18,19 +18,15 @@ public class FlightOption {
     public String getSeatType() {
         return seatType;
     }
-
     public int getPriceSeatType() {
         return priceSeatType;
     }
-
     public String getLuggageWeight() {
         return luggageWeight;
     }
-
     public Double getPriceLuggageWeight() {
         return priceLuggageWeight;
     }
-
     public Double getTotalPrice() {
         return totalPrice;
     }

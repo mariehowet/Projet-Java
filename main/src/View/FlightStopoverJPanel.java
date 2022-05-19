@@ -3,11 +3,9 @@ package View;
 import Controller.ApplicationController;
 import Model.FlightResearch;
 import Model.Locality;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-
 import Exception.*;
 
 public class FlightStopoverJPanel extends JPanel {
@@ -17,7 +15,6 @@ public class FlightStopoverJPanel extends JPanel {
 
     public FlightStopoverJPanel(Locality departure, Locality arrival, boolean withStopover) {
         try {
-
             controller = new ApplicationController();
             flightsStopover = controller.getFlightsStopover(departure, arrival, withStopover);
             if (flightsStopover.isEmpty()){

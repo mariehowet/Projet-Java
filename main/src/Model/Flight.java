@@ -14,18 +14,6 @@ public class Flight {
     private int departureAirportId;
     private int arrivalAirportId;
 
-
-    public Flight(GregorianCalendar departureDate, String departureHour, GregorianCalendar expectedArrivalDate, String expectedArrivalHour, double price, int airplaneId, int departureAirportId, int arrivalAirportId) throws PriceException{
-        this.departureDate = departureDate;
-        this.departureHour = departureHour;
-        this.expectedArrivalDate = expectedArrivalDate;
-        this.expectedArrivalHour = expectedArrivalHour;
-        setPrice(price);
-        this.airplaneId = airplaneId;
-        this.departureAirportId = departureAirportId;
-        this.arrivalAirportId = arrivalAirportId;
-    }
-
     public Flight(int id, GregorianCalendar departureDate, String departureHour, GregorianCalendar expectedArrivalDate, String expectedArrivalHour, double price, int airplaneId, int departureAirportId, int arrivalAirportId) throws PriceException {
         this.id = id;
         this.departureDate = departureDate;
@@ -49,6 +37,6 @@ public class Flight {
         if(price < 0)
             throw new PriceException();
         else
-         this.price = price;
+            this.price = price;
     }
 }

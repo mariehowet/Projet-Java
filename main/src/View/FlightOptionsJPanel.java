@@ -2,8 +2,6 @@ package View;
 
 import Controller.ApplicationController;
 import Model.FlightOption;
-
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -14,6 +12,7 @@ public class FlightOptionsJPanel extends JPanel {
     private ApplicationController controller;
     private ListSelectionModel listSelect;
     private ArrayList<FlightOption> flightOptions;
+
     public FlightOptionsJPanel(FlightResearch flight) throws ConnectionException {
         controller = new ApplicationController();
         flightOptions = controller.getFlightOptions(flight);

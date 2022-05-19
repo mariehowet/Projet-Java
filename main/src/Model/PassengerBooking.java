@@ -28,31 +28,24 @@ public class PassengerBooking {
     public int getIdBooking() {
         return idBooking;
     }
-
     public GregorianCalendar getDateBooking() {
         return dateBooking;
     }
-
     public int getFlightID() {
         return flightID;
     }
-
     public String getDepartureAirportName() {
         return departureAirportName;
     }
-
     public String getArrivalAirportName() {
         return arrivalAirportName;
     }
-
     public GregorianCalendar getDepartureDate() {
         return departureDate;
     }
-
     public String getSeatType() {
         return seatType;
     }
-
     public Double getRealPrice() {
         return realPrice;
     }

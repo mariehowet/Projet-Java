@@ -3,7 +3,6 @@ package View;
 import Business.ConvertManager;
 import Controller.ApplicationController;
 import Model.Airport;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -31,14 +30,11 @@ public class MenuItemFlightsOfDepartureAirport extends JPanel {
         // Panel de recherche
         researchPanel = new JPanel();
         researchPanel.setLayout(new FlowLayout());
+
         // Panel Affichage
         displayPanel = new JPanel();
 
-
-
-
         String [] airportsValues;
-
         try {
             ArrayList<Airport> airportsList = controller.getAllAirports();
             ArrayList<String> airports = new ArrayList<>();
@@ -59,7 +55,6 @@ public class MenuItemFlightsOfDepartureAirport extends JPanel {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
-        // Création des dates
         chooserStartDate = new JDateChooser();
         chooserStartDate.setLocale(Locale.FRENCH);
 
@@ -74,9 +69,7 @@ public class MenuItemFlightsOfDepartureAirport extends JPanel {
         panelEndDate.add(new JLabel("Date de fin "));
         panelEndDate.add(chooserEndDate);
 
-
         departureAirportLabel = new JLabel("Aéroport de départ ");
-
 
         // Button
         researchButton = new JButton("Rechercher");

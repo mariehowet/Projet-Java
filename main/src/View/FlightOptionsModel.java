@@ -1,11 +1,9 @@
 package View;
 
 import Model.FlightOption;
-import Model.PassengerBooking;
-
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
-import java.util.Date;
+
 
 public class FlightOptionsModel extends AbstractTableModel {
     private ArrayList<String> columnNames;
@@ -20,7 +18,6 @@ public class FlightOptionsModel extends AbstractTableModel {
         columnNames.add("Prix Total (€)");
         this.contents = contents;
     }
-
 
     @Override
     public int getRowCount() {

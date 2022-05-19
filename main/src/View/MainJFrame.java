@@ -2,7 +2,6 @@ package View;
 
 import Controller.ApplicationController;
 import Exception.*;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,7 +18,6 @@ public class MainJFrame extends JFrame {
     private JMenu marvinAirline,researchMenu, findFlightMenu, monitoringFlightMenu, form, bookings;
     private JMenuItem exitMenuItem, backToWelcomePanel, research1, research2, research3, menuIemFlightMenu, monitoringFlight, bookingsMenuItem, addBookingMenuItem;
     private JPanel BookingForm;
-
 
     public MainJFrame() {
         // fenetre
@@ -60,7 +58,6 @@ public class MainJFrame extends JFrame {
         marvinAirline.add(backToWelcomePanel);
         marvinAirline.add(exitMenuItem);
 
-
         // Item : recherche 1
         research1 = new JMenuItem("Vols partant d'un aéroport");
         research1.addActionListener(new Research1Listener());
@@ -86,7 +83,6 @@ public class MainJFrame extends JFrame {
         monitoringFlight.addActionListener(new ThreadListener());
         monitoringFlightMenu.add(monitoringFlight);
 
-
         // Bookings
         bookingsMenuItem = new JMenuItem("Liste des réservations");
         addBookingMenuItem = new JMenuItem("Ajouter une réservation");
@@ -95,14 +91,7 @@ public class MainJFrame extends JFrame {
         bookings.add(bookingsMenuItem);
         bookings.add(addBookingMenuItem);
 
-
-        // Ajout des données dans la BD
-
-
-        this.addWindowListener(new ClosingListener());
-
-
-        // Affichage
+        addWindowListener(new ClosingListener());
         setVisible(true);
     }
 
@@ -155,7 +144,6 @@ public class MainJFrame extends JFrame {
             }
             catch (ConnectionException findFlightException) {
                 JOptionPane.showMessageDialog(null, findFlightException.getMessage(), "Problème", JOptionPane.WARNING_MESSAGE);
-
             }
             setVisible(true);
         }
@@ -240,7 +228,6 @@ public class MainJFrame extends JFrame {
             System.exit(0);
         }
     }
-
 }
 
 

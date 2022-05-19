@@ -3,12 +3,12 @@ package Controller;
 import Exception.*;
 import Business.BusinessManager;
 import Model.*;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class ApplicationController {
+
     private BusinessManager manager;
 
     public ApplicationController() throws ConnectionException{
@@ -38,7 +38,7 @@ public class ApplicationController {
         return manager.getAllPassengers();
     }
 
-    public ArrayList<SeatType> getAllSeatTypes() throws SeatTypeException, PriceException {
+    public ArrayList<SeatType> getAllSeatTypes() throws AllSeatTypesException, PriceException {
         return manager.getAllSeatTypes();
     }
 
@@ -53,8 +53,8 @@ public class ApplicationController {
         return manager.getFlightPrice(flightID);
     }
 
-    public String getSeatTypeName(int seatID) throws SeatTypeNameException{
-        return manager.getSeatTypeName(seatID);
+    public  SeatType getActualSeatType(int seatID) throws SeatTypeException, PriceException{
+        return manager.getActualSeatType(seatID);
     }
 
     public Seat getActualSeat (int seatID) throws ActualSeatException, SeatNumberException {

@@ -7,14 +7,6 @@ public class Seat {
     private int number;
     private String columnLetter;
 
-
-
-    public Seat(int number, String columnLetter, String seatType, int airplaneId)  {
-        this.number = number;
-        this.columnLetter = columnLetter;
-
-    }
-
     public Seat(int id, int number, String columnLetter) throws SeatNumberException {
         this.id = id;
         setNumber(number);
@@ -25,9 +17,11 @@ public class Seat {
     public int getId() {
         return id;
     }
-
     public int getNumber() {
         return number;
+    }
+    public String getColumnLetter() {
+        return columnLetter;
     }
 
     public void setNumber(int number) throws SeatNumberException{
@@ -35,9 +29,5 @@ public class Seat {
             throw new SeatNumberException();
         else
             this.number = number;
-    }
-
-    public String getColumnLetter() {
-        return columnLetter;
     }
 }

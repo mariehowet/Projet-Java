@@ -3,7 +3,6 @@ package View;
 import Business.ConvertManager;
 import Controller.ApplicationController;
 import Model.Passenger;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -24,10 +23,10 @@ public class MenuItemHistorySearch extends JPanel {
         this.frameContainer = frameContainer;
         this.setLayout(new BorderLayout());
 
-
         // Panel de recherche
         researchPanel = new JPanel();
         researchPanel.setLayout(new FlowLayout());
+
         // Panel Affichage
         displayPanel = new JPanel();
 
@@ -35,7 +34,6 @@ public class MenuItemHistorySearch extends JPanel {
         passengerLabel = new JLabel("Passager");
 
         String [] passengersValues;
-
         try {
             ArrayList<Passenger> passengerList = controller.getAllPassengers();
             ArrayList<String> passengers = new ArrayList<>();
@@ -43,6 +41,7 @@ public class MenuItemHistorySearch extends JPanel {
             for(Passenger pas : passengerList) {
                 passengers.add(pas.getId() + "-" + pas.getFirstName() + " " + pas.getLastName() + (pas.getInitialMiddleName() != null ? pas.getInitialMiddleName() : "" ));
             }
+
             int nbPassengers = passengers.size();
             passengersValues = new String[nbPassengers];
 
@@ -55,7 +54,6 @@ public class MenuItemHistorySearch extends JPanel {
         } catch (PassengerException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
-
 
         // Button
         researchButton = new JButton("Rechercher");
@@ -80,6 +78,7 @@ public class MenuItemHistorySearch extends JPanel {
             panel.removeAll();
             panel.revalidate();
             panel.repaint();
+
             try {
                 int idPassenger = ConvertManager.stringIntoId(passenger.getSelectedItem().toString());
                 researchDisplay = new BookingsHistoryJPanel(idPassenger);

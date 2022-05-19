@@ -4,7 +4,6 @@ import Controller.ApplicationController;
 import Model.Booking;
 import javax.swing.*;
 import Exception.*;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -78,26 +77,23 @@ public class AllBookingsJPanel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
             int indSelectedLine = listSelect.getMinSelectionIndex();
 
             if(indSelectedLine != -1) {
-
                 int response = JOptionPane.showConfirmDialog(null,"Etes-vous sûr de vouloir modifier cette réservation ?", "Modification", JOptionPane.YES_NO_OPTION);
 
-                if(response == 0) {
-                    Booking booking = bookings.get(indSelectedLine);
+            if(response == 0) {
+                Booking booking = bookings.get(indSelectedLine);
+                try {
+                    frameContainer.removeAll();
+                    frameContainer.revalidate();
+                    frameContainer.repaint();
+                    frameContainer.add(new UpdateBookingJPanel(frameContainer, booking), BorderLayout.CENTER);
 
-                    try {
-                        frameContainer.removeAll();
-                        frameContainer.revalidate();
-                        frameContainer.repaint();
-                        frameContainer.add(new UpdateBookingJPanel(frameContainer, booking), BorderLayout.CENTER);
-
-                    } catch (ConnectionException exception) {
-                        JOptionPane.showMessageDialog(null, exception.getMessage());
-                    }
+                } catch (ConnectionException exception) {
+                    JOptionPane.showMessageDialog(null, exception.getMessage());
                 }
+            }
 
             } else {
                 JOptionPane.showMessageDialog(null, "Sélectionnez une ligne à modifier");
@@ -110,26 +106,25 @@ public class AllBookingsJPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             int indSelectedLine = listSelect.getMinSelectionIndex();
+
             if (indSelectedLine != -1) {
                 int response = JOptionPane.showConfirmDialog(null, "Etes-vous sûr de vouloir supprimer cette réservation ?", "Suppression", JOptionPane.YES_NO_OPTION);
-                if (response == 0) {
-                    Booking booking = bookings.get(indSelectedLine);
-                    try {
-                        controller.deleteBooking(booking);
-                        frameContainer.removeAll();
-                        frameContainer.revalidate();
-                        frameContainer.repaint();
-                        frameContainer.add(new AllBookingsJPanel(frameContainer));
-                    } catch (DeleteException exception) {
-                        JOptionPane.showMessageDialog(null, exception.getMessage());
-                    }
-                }
 
+            if (response == 0) {
+                Booking booking = bookings.get(indSelectedLine);
+                try {
+                    controller.deleteBooking(booking);
+                    frameContainer.removeAll();
+                    frameContainer.revalidate();
+                    frameContainer.repaint();
+                    frameContainer.add(new AllBookingsJPanel(frameContainer));
+                } catch (DeleteException exception) {
+                    JOptionPane.showMessageDialog(null, exception.getMessage());
+                }
+            }
             } else {
                 JOptionPane.showMessageDialog(null, "Sélectionnez une ligne à supprimer");
             }
         }
     }
-
-
 }

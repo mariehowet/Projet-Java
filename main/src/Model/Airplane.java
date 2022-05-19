@@ -1,7 +1,5 @@
 package Model;
 
-import java.util.HashSet;
-
 public class Airplane {
     private int id;
     private String airplaneType;

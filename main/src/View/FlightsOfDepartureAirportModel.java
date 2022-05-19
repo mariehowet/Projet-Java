@@ -1,7 +1,6 @@
 package View;
 
 import Model.FlightOfDepartureAirport;
-
 import javax.swing.table.AbstractTableModel;
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -20,7 +19,6 @@ public class FlightsOfDepartureAirportModel extends AbstractTableModel {
         columnNames.add("Nombre de places restantes");
         this.contents = contents;
     }
-
 
     @Override
     public int getRowCount() {

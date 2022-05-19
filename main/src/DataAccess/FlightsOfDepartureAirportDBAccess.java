@@ -9,8 +9,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
-
-import Exception.*;
+import Exception.ConnectionException;
+import Exception.AllAirportsException;
+import Exception.FlightsOfDepartureAirportException;
 import Model.FlightOfDepartureAirport;
 
 public class FlightsOfDepartureAirportDBAccess implements FlightsOfDepartureAirportDataAccess {
@@ -18,7 +19,6 @@ public class FlightsOfDepartureAirportDBAccess implements FlightsOfDepartureAirp
 
     public FlightsOfDepartureAirportDBAccess() throws ConnectionException {
         connection = SingletonConnection.getInstance();
-        // connection.close(); throws SQLException
     }
 
     public ArrayList<FlightOfDepartureAirport> getFlightsOfDepartureAirport(Date startDate, Date endDate, int idAirport) throws FlightsOfDepartureAirportException {
@@ -39,7 +39,6 @@ public class FlightsOfDepartureAirportDBAccess implements FlightsOfDepartureAirp
         java.sql.Date sqlStartDate = new java.sql.Date(startDate.getTime());
         java.sql.Date sqlEndDate = new java.sql.Date(endDate.getTime());
 
-        // traitement
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             preparedStatement.setInt(1, idAirport);
@@ -86,8 +85,6 @@ public class FlightsOfDepartureAirportDBAccess implements FlightsOfDepartureAirp
             Airport airport;
 
             while(data.next()) {
-
-
                 airport = new Airport(
                         data.getInt("id"),
                         data.getString("name"),

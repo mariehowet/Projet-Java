@@ -3,13 +3,11 @@ package View;
 import Business.ConvertManager;
 import Controller.ApplicationController;
 import Model.Locality;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
 import Exception.*;
 
 public class MenuItemFlightsWithOrWhithoutStopover extends JPanel {
@@ -27,10 +25,10 @@ public class MenuItemFlightsWithOrWhithoutStopover extends JPanel {
         this.frameContainer = frameContainer;
         this.setLayout(new BorderLayout());
 
-
         // Panel de recherche
         researchPanel = new JPanel();
         researchPanel.setLayout(new FlowLayout());
+
         // Panel Affichage
         displayPanel = new JPanel();
 
@@ -50,7 +48,6 @@ public class MenuItemFlightsWithOrWhithoutStopover extends JPanel {
                 localitiesValues[j] = localities.get(j);
             }
 
-
             // Labels
             departureCityLabel = new JLabel("Ville de départ ");
             researchPanel.add(departureCityLabel);
@@ -66,7 +63,6 @@ public class MenuItemFlightsWithOrWhithoutStopover extends JPanel {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
-
         // Buttons stopover
         withoutStopover = new JRadioButton("Sans escale");
         researchPanel.add(withoutStopover);
@@ -78,7 +74,6 @@ public class MenuItemFlightsWithOrWhithoutStopover extends JPanel {
         stopover.add(withStopover);
         withoutStopover.setSelected(true);
 
-
         // Button
         researchButton = new JButton("Rechercher");
         researchButton.addActionListener(new ResearchListener(displayPanel));
@@ -86,7 +81,6 @@ public class MenuItemFlightsWithOrWhithoutStopover extends JPanel {
 
         this.add(researchPanel, BorderLayout.NORTH);
         this.add(displayPanel, BorderLayout.CENTER);
-
     }
 
     private class ResearchListener implements ActionListener {
@@ -111,6 +105,5 @@ public class MenuItemFlightsWithOrWhithoutStopover extends JPanel {
                 System.out.println("erreur");
             }
         }
-
     }
 }

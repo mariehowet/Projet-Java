@@ -1,7 +1,5 @@
 package Model;
 
-import java.util.HashSet;
-
 public class Locality {
     private String city;
     private String postCode;
@@ -16,11 +14,9 @@ public class Locality {
     public String getCity() {
         return city;
     }
-
     public String getPostCode() {
         return postCode;
     }
-
     public String getCountry() {
         return country;
     }

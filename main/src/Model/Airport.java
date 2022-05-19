@@ -1,7 +1,5 @@
 package Model;
 
-import java.util.HashSet;
-
 public class Airport {
     private int code;
     private String name;

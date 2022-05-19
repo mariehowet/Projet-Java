@@ -1,12 +1,10 @@
 package View;
 
 import Controller.ApplicationController;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Date;
-
 import Exception.*;
 import Model.FlightOfDepartureAirport;
 
@@ -15,9 +13,9 @@ public class FlightsOfDepartureAirportJPanel extends JPanel {
     private ApplicationController controller;
     private ListSelectionModel listSelect;
     private ArrayList<FlightOfDepartureAirport> flightsOfDepartureAirport;
+
     public FlightsOfDepartureAirportJPanel(Date startDate, Date endDate, int idAirport) {
         try {
-
             controller = new ApplicationController();
             flightsOfDepartureAirport = controller.getFlightsOfDepartureAirport(startDate,endDate,idAirport);
 
@@ -33,8 +31,6 @@ public class FlightsOfDepartureAirportJPanel extends JPanel {
                 this.setLayout(new FlowLayout());
                 this.add(new JScrollPane(flightsTable));
             }
-
-
         }
         catch (FlightsOfDepartureAirportException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());

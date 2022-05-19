@@ -1,16 +1,16 @@
 package DataAccess;
 
-import Model.Passenger;
-import Model.PassengerBooking;
 
+import Model.PassengerBooking;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
-
-import Exception.*;
+import Exception.ConnectionException;
+import Exception.BookingsHistoryException;
+import Exception.PriceException;
 
 public class BookingsHistoryDBAccess implements BookingsHistoryDataAccess {
 
@@ -18,7 +18,6 @@ public class BookingsHistoryDBAccess implements BookingsHistoryDataAccess {
 
     public BookingsHistoryDBAccess() throws ConnectionException {
         connection = SingletonConnection.getInstance();
-        // connection.close(); throws SQLException
     }
 
     @Override
@@ -33,7 +32,6 @@ public class BookingsHistoryDBAccess implements BookingsHistoryDataAccess {
                         "where passenger_id = ?";
 
         ArrayList<PassengerBooking> bookingsHistory = new ArrayList<>();
-        // traitement
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             preparedStatement.setInt(1, idPassenger);
@@ -70,5 +68,4 @@ public class BookingsHistoryDBAccess implements BookingsHistoryDataAccess {
         }
         return bookingsHistory;
     }
-
 }

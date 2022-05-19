@@ -26,35 +26,27 @@ public class FlightResearch {
     }
 
     public double getPrice() {return price;}
-
     public int getFlightId() {
         return flightId;
     }
-
     public String getDepartureAirportName() {
         return departureAirportName;
     }
-
     public String getArrivalAirportName() {
         return arrivalAirportName;
     }
-
     public GregorianCalendar getDepartureDate() {
         return departureDate;
     }
-
     public GregorianCalendar getArrivalDate() {
         return arrivalDate;
     }
-
     public String getDepartureHour() {
         return departureHour;
     }
-
     public String getArrivalHour() {
         return arrivalHour;
     }
-
     public void setPrice(double price) throws PriceException {
         if(price < 0)
             throw new PriceException();

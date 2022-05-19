@@ -4,7 +4,6 @@ import Business.ConvertManager;
 import Controller.ApplicationController;
 import Model.Locality;
 import com.toedter.calendar.JDateChooser;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -15,7 +14,7 @@ import java.util.Locale;
 import Exception.*;
 
 public class MenuItemFindFlight extends JPanel {
-    private JLabel departureCityLabel, arrivalCityLabel, startDateLabel, endDateLabel;
+    private JLabel departureCityLabel, arrivalCityLabel;
     private JComboBox departureCity, arrivalCity;
     private JDateChooser chooserStartDate, chooserEndDate;
     private Container frameContainer;
@@ -28,7 +27,6 @@ public class MenuItemFindFlight extends JPanel {
         this.frameContainer = frameContainer;
         this.setLayout(new BorderLayout());
 
-
         // Panel de recherche
         researchPanel = new JPanel();
         researchPanel.setLayout(new FlowLayout());
@@ -39,7 +37,6 @@ public class MenuItemFindFlight extends JPanel {
 
         // Panel Affichage
         displayPanel = new JPanel();
-
 
         try {
             String[] localitiesValues;
@@ -56,7 +53,6 @@ public class MenuItemFindFlight extends JPanel {
             for (int j = 0; j < nbPassengers; j++) {
                 localitiesValues[j] = localities.get(j);
             }
-
 
             // Labels
             departureCityLabel = new JLabel("Ville de départ        ");
@@ -75,8 +71,6 @@ public class MenuItemFindFlight extends JPanel {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
-
-        // Création des dates
         chooserStartDate = new JDateChooser();
         chooserStartDate.setLocale(Locale.FRENCH);
 
@@ -91,7 +85,6 @@ public class MenuItemFindFlight extends JPanel {
         panelEndDate.add(new JLabel("Date de fin "));
         panelEndDate.add(chooserEndDate);
 
-
         // Button
         buttonPanel = new JPanel(new FlowLayout());
         researchButton = new JButton("Rechercher");
@@ -105,7 +98,6 @@ public class MenuItemFindFlight extends JPanel {
         gridResearch = new JPanel(new GridLayout(2,1));
         gridResearch.add(gridFields);
         gridResearch.add(buttonPanel);
-
 
         researchPanel.add(gridResearch);
 
@@ -141,14 +133,14 @@ public class MenuItemFindFlight extends JPanel {
                 frameContainer.repaint();
                 panel.add(researchDisplay, BorderLayout.CENTER);
             }
-            catch (DatesException ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage(), "Problème", JOptionPane.WARNING_MESSAGE);
+            catch (DatesException exception) {
+                JOptionPane.showMessageDialog(null, exception.getMessage(), "Problème", JOptionPane.WARNING_MESSAGE);
             }
-            catch (LocalityException localityException) {
-                JOptionPane.showMessageDialog(null, localityException.getMessage(), "Problème", JOptionPane.WARNING_MESSAGE);
+            catch (LocalityException exception) {
+                JOptionPane.showMessageDialog(null, exception.getMessage(), "Problème", JOptionPane.WARNING_MESSAGE);
             }
-            catch (DatesNullException dateNullException) {
-                JOptionPane.showMessageDialog(null, dateNullException.getMessage(), "Problème", JOptionPane.WARNING_MESSAGE);
+            catch (DatesNullException exception) {
+                JOptionPane.showMessageDialog(null, exception.getMessage(), "Problème", JOptionPane.WARNING_MESSAGE);
             }
         }
     }

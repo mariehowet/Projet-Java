@@ -1,9 +1,7 @@
 package DataAccess;
 
 import Model.*;
-
 import Exception.*;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -13,23 +11,17 @@ public class BookingDBAccess implements BookingDataAccess {
 
     public BookingDBAccess() throws ConnectionException {
         connection = SingletonConnection.getInstance();
-        // connection.close(); throws SQLException
     }
 
     @Override
     public void addBooking(Booking booking) throws AddBookingException {
 
         String sqlInstruction = "insert into booking (date_booking, has_paid, meal_type, real_price, flight_id, seat_id, passenger_id) values (?,?,?,?,?,?,?)";
-        // Créer l'instruction SQL avec ? pour empêcher les injections SQL
         GregorianCalendar calendar = booking.getDate();
         java.sql.Date sqlDate = new Date(calendar.getTimeInMillis());
 
-
-        // Créer le PreparedStatement à partir de cette instruction SQL
-
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction, PreparedStatement.RETURN_GENERATED_KEYS);
-            // Remplacer les ? via les filtres (settors)
 
             preparedStatement.setDate(1, sqlDate);
             preparedStatement.setBoolean(2,booking.getHasPaid());
@@ -38,7 +30,7 @@ public class BookingDBAccess implements BookingDataAccess {
             preparedStatement.setInt(5, booking.getFlightID());
             preparedStatement.setInt(6, booking.getSeatID());
             preparedStatement.setInt(7, booking.getPassengerID());
-            // Exécuter + Récupérer le nombre de lignes modifiées
+
             preparedStatement.executeUpdate();
 
             ResultSet data = preparedStatement.getGeneratedKeys();
@@ -71,7 +63,7 @@ public class BookingDBAccess implements BookingDataAccess {
     public ArrayList<Booking> getAllBookings() throws AllBookingsException, PriceException {
         String sqlInstruction = "select * from booking";
         ArrayList<Booking> allBookings = new ArrayList<>();
-        // traitement
+
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             ResultSet data = preparedStatement.executeQuery();
@@ -123,6 +115,7 @@ public class BookingDBAccess implements BookingDataAccess {
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+
             preparedStatement.setDate(1, sqlDate);
             preparedStatement.setBoolean(2,hasPaid);
             preparedStatement.setString(3,luggageWeight);
@@ -131,8 +124,8 @@ public class BookingDBAccess implements BookingDataAccess {
             preparedStatement.setDouble(6, realPrice);
             preparedStatement.setInt(7,seatID);
             preparedStatement.setInt(8, id);
-            preparedStatement.executeUpdate();
 
+            preparedStatement.executeUpdate();
             connection.setAutoCommit(true);
         }
         catch (SQLException exception) {
@@ -148,7 +141,6 @@ public class BookingDBAccess implements BookingDataAccess {
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             preparedStatement.setInt(1, booking.getId());
             preparedStatement.executeUpdate();
-
             connection.setAutoCommit(true);
         } catch (SQLException e) {
             throw new DeleteException();
@@ -158,11 +150,13 @@ public class BookingDBAccess implements BookingDataAccess {
     }
 
     public ArrayList<Seat> getAvailableSeats(String seatType, int flightID) throws AvailableSeatsException, SeatNumberException{
-        String sqlInstruction ="select s.id, s.number, s.column_letter from seat s inner join airplane a on(s.airplane_id = a.id)  " +
+        String sqlInstruction ="select s.id, s.number, s.column_letter from seat s " +
+                "inner join airplane a on(s.airplane_id = a.id)  " +
                 "inner join seat_type st on(st.name = s.seat_type)  " +
                 "inner join flight f on (f.airplane_id = s.airplane_id)  " +
                 "where st.name = ? and f.id = ? and s.id not in (select seat_id from booking) ";
-                ArrayList<Seat> availableSeats = new ArrayList<>();
+        ArrayList<Seat> availableSeats = new ArrayList<>();
+
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             preparedStatement.setString(1, seatType);
@@ -188,7 +182,7 @@ public class BookingDBAccess implements BookingDataAccess {
     }
 
     @Override
-    public ArrayList<SeatType> getAllSeatTypes() throws SeatTypeException, PriceException {
+    public ArrayList<SeatType> getAllSeatTypes() throws AllSeatTypesException, PriceException {
         String sqlInstruction = "select * from seat_type order by additional_price";
         ArrayList<SeatType>  allSeatTypes = new ArrayList<>();
 
@@ -208,7 +202,7 @@ public class BookingDBAccess implements BookingDataAccess {
             return allSeatTypes;
 
         } catch (SQLException exception) {
-            throw new SeatTypeException();
+            throw new AllSeatTypesException();
         } catch (PriceException exception) {
             throw new PriceException();
         }
@@ -254,11 +248,11 @@ public class BookingDBAccess implements BookingDataAccess {
         }
     }
 
-    public Double getFlightPrice(int flightID) throws FlightPriceException{
+    public Double getFlightPrice(int flightID) throws FlightPriceException {
         String sqlInstruction = "select price from flight where id = ?";
-        Double price = null;
 
         try {
+            Double price = null;
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             preparedStatement.setInt(1, flightID);
             ResultSet data = preparedStatement.executeQuery();
@@ -272,9 +266,12 @@ public class BookingDBAccess implements BookingDataAccess {
         }
     }
 
-    public String getSeatTypeName(int seatID) throws SeatTypeNameException{
-        String sqlInstruction = "select seat_type from seat where id = ?";
-        String seatType = null;
+    public SeatType getActualSeatType(int seatID) throws SeatTypeException, PriceException{
+        String sqlInstruction = "select st.name, st.additional_price  " +
+                "from seat s " +
+                "inner join seat_type st on(st.name = s.seat_type)" +
+                " where s.id = ?";
+        SeatType seatType = null;
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
@@ -282,11 +279,16 @@ public class BookingDBAccess implements BookingDataAccess {
             ResultSet data = preparedStatement.executeQuery();
 
             while (data.next()) {
-                seatType = data.getString("seat_type");
+                seatType = new SeatType(
+                        data.getString("name"),
+                        data.getInt("additional_price")
+                );
             }
             return seatType;
         } catch (SQLException e) {
-            throw new SeatTypeNameException();
+            throw new SeatTypeException();
+        } catch (PriceException e) {
+           throw new PriceException();
         }
     }
 
@@ -332,5 +334,4 @@ public class BookingDBAccess implements BookingDataAccess {
             throw new ActualPassengerException();
         }
     }
-
 }

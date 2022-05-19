@@ -3,11 +3,10 @@ package View;
 import Controller.ApplicationController;
 import Exception.*;
 import Model.*;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
+import java.awt.event.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -17,9 +16,9 @@ import java.util.regex.Pattern;
 
 public class AddBookingJPanel extends JPanel {
     private JLabel title;
-    private JButton validationButton, calculateButton, searchSeatButton;
+    private JButton validationButton;
     private JPanel formPanel, buttonPanel;
-    private JLabel idPassengerLabel, seatTypeLabel, weightLuggageLabel, companyNameLabel, mealTypeLabel, totalPriceLabel, flightLabel, seatLabel;
+    private JLabel idPassengerLabel, weightLuggageLabel, companyNameLabel, mealTypeLabel, totalPriceLabel, flightLabel, seatLabel;
     private JTextField  companyName, totalPriceText;
     private JRadioButton buttonYesLuggage, buttonNoLuggage, buttonYesBusinessFlight, buttonNoBusinessFlight, buttonPayNow, buttonPayAfter;
     private JComboBox seatTypeBox, weightLuggageBox, mealTypeBox, passengerBox, flightBox, seatBox;
@@ -133,7 +132,7 @@ public class AddBookingJPanel extends JPanel {
             seatTypeBox.addActionListener(new SearchSeatListener());
             formPanel.add(seatTypeBox);
 
-        } catch (SeatTypeException e) {
+        } catch (AllSeatTypesException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         } catch (PriceException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -351,6 +350,7 @@ public class AddBookingJPanel extends JPanel {
                     frameContainer.revalidate();
                     frameContainer.repaint();
                     frameContainer.add(new AddBookingJPanel(frameContainer));
+
                 } catch (AddBookingException  exception) {
                     JOptionPane.showMessageDialog(null, exception.getMessage());
                 } catch (ConnectionException exception) {
@@ -361,8 +361,6 @@ public class AddBookingJPanel extends JPanel {
             }
         }
     }
-
-
 }
 
 

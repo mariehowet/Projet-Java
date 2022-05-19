@@ -1,11 +1,10 @@
 package DataAccess;
 
-import Model.Passenger;
 import Model.PassengerBooking;
-
 import java.util.ArrayList;
-import Exception.*;
+import Exception.BookingsHistoryException;
+import Exception.PriceException;
 
 public interface BookingsHistoryDataAccess {
-    public ArrayList<PassengerBooking> getBookingsHistory(int idPassenger) throws BookingsHistoryException, PriceException;
+     ArrayList<PassengerBooking> getBookingsHistory(int idPassenger) throws BookingsHistoryException, PriceException;
 }

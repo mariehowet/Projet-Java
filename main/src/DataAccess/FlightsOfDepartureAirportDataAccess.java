@@ -1,14 +1,13 @@
 package DataAccess;
 
 import Model.Airport;
-
 import java.util.ArrayList;
 import java.util.Date;
-
-import Exception.*;
+import Exception.AllAirportsException;
+import Exception.FlightsOfDepartureAirportException;
 import Model.FlightOfDepartureAirport;
 
 public interface FlightsOfDepartureAirportDataAccess {
-    public ArrayList<Airport> getAllAirports() throws AllAirportsException;
-    public ArrayList<FlightOfDepartureAirport> getFlightsOfDepartureAirport(Date startDate, Date endDate, int idAirport) throws FlightsOfDepartureAirportException;
+     ArrayList<Airport> getAllAirports() throws AllAirportsException;
+     ArrayList<FlightOfDepartureAirport> getFlightsOfDepartureAirport(Date startDate, Date endDate, int idAirport) throws FlightsOfDepartureAirportException;
 }

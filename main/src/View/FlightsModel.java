@@ -1,8 +1,6 @@
 package View;
 
 import Model.FlightResearch;
-
-
 import javax.swing.table.AbstractTableModel;
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -24,7 +22,6 @@ public class FlightsModel extends AbstractTableModel {
         columnNames.add("Prix du vol");
         this.contents = contents;
     }
-
 
     @Override
     public int getRowCount() {

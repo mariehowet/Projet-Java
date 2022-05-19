@@ -5,13 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
-
-import Exception.*;
+import Exception.CloseDataException;
+import Exception.PassengerException;
+import Exception.AllLocalitiesException;
+import Exception.ConnectionException;
 import Model.Locality;
 import Model.Passenger;
-
-import javax.swing.*;
+import javax.swing.JOptionPane;
 
 public class GeneralDBAccess implements GeneralDataAccess {
 
@@ -19,10 +19,7 @@ public class GeneralDBAccess implements GeneralDataAccess {
 
     public GeneralDBAccess() throws ConnectionException {
         connection = SingletonConnection.getInstance();
-        // connection.close(); throws SQLException
     }
-
-
 
     public void closeConnection() throws CloseDataException {
         try {

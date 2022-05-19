@@ -20,12 +20,10 @@ public class FollowedFlightJPanel extends JPanel{
         // JLabel
         label = new JLabel("Suivez en direct le vol Paris  -> New-York ");
 
-
         // Panel de recherche
         this.add(label);
         this.add(researchButton);
         researchButton.addActionListener(new ResearchListener());
-
     }
 
     private class ResearchListener implements ActionListener {

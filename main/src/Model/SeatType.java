@@ -6,7 +6,6 @@ public class SeatType {
     private String name;
     private int additionalPrice;
 
-
     public SeatType(String name, int additionalPrice) throws PriceException {
         this.name = name;
         setAdditionalPrice(additionalPrice);
@@ -15,7 +14,6 @@ public class SeatType {
     public String getName() {
         return name;
     }
-
     public int getAdditionalPrice() {
         return additionalPrice;
     }

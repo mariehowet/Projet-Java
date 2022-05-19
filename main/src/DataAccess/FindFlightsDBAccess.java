@@ -1,8 +1,7 @@
 package DataAccess;
 
-import Model.FlightOfDepartureAirport;
-import Model.FlightResearch;
 
+import Model.FlightResearch;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,8 +9,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
-
-import Exception.*;
+import Exception.ConnectionException;
+import Exception.FlightsException;
+import Exception.PriceException;
 import Model.Locality;
 
 public class FindFlightsDBAccess implements FindFlightsDataAccess {
@@ -20,12 +20,10 @@ public class FindFlightsDBAccess implements FindFlightsDataAccess {
 
     public FindFlightsDBAccess() throws ConnectionException {
         connection = SingletonConnection.getInstance();
-        // connection.close(); throws SQLException
     }
 
     public ArrayList<FlightResearch> getFlights(Locality departure, Locality arrival, Date startDate, Date endDate) throws FlightsException, PriceException {
         ArrayList<FlightResearch> flights = new ArrayList<>();
-        // passer par la table localitée
         String sqlInstruction =
                 "select f.id, da.name as 'departure_airport', aa.name as 'arrival_airport', f.departure_date, f.expected_arrival_date, f.departure_hour, f.expected_arrival_hour, f.price " +
                 "from flight f " +
@@ -39,7 +37,6 @@ public class FindFlightsDBAccess implements FindFlightsDataAccess {
         java.sql.Date sqlStartDate = new java.sql.Date(startDate.getTime());
         java.sql.Date sqlEndDate = new java.sql.Date(endDate.getTime());
 
-        // traitement
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             preparedStatement.setDate(1, sqlStartDate);
@@ -82,6 +79,5 @@ public class FindFlightsDBAccess implements FindFlightsDataAccess {
         } catch (PriceException exception) {
             throw new PriceException();
         }
-
     }
 }

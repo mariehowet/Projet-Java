@@ -2,13 +2,14 @@ package DataAccess;
 
 
 import java.util.ArrayList;
-
-import Exception.*;
+import Exception.CloseDataException;
+import Exception.PassengerException;
+import Exception.AllLocalitiesException;
 import Model.Locality;
 import Model.Passenger;
 
 public interface GeneralDataAccess {
-    public void closeConnection() throws CloseDataException;
-    public ArrayList<Passenger> getAllPassengers() throws PassengerException;
-    public ArrayList<Locality> getAllLocalities() throws AllLocalitiesException;
+     void closeConnection() throws CloseDataException;
+     ArrayList<Passenger> getAllPassengers() throws PassengerException;
+     ArrayList<Locality> getAllLocalities() throws AllLocalitiesException;
 }

@@ -1,19 +1,14 @@
 package Business;
 
 import DataAccess.*;
-
 import Model.*;
 import Exception.*;
-
 import Exception.AddBookingException;
 import test.Calculator;
-
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import test.*;
-
 
 public class BusinessManager {
     private BookingDataAccess daoBooking;
@@ -51,7 +46,6 @@ public class BusinessManager {
         daoBooking.addBooking(booking);
     }
 
-
     public void closeConnection() throws CloseDataException {
         daoGeneral.closeConnection();
     }
@@ -60,7 +54,7 @@ public class BusinessManager {
         return daoGeneral.getAllPassengers();
     }
 
-    public ArrayList<SeatType> getAllSeatTypes() throws SeatTypeException, PriceException{
+    public ArrayList<SeatType> getAllSeatTypes() throws AllSeatTypesException, PriceException{
         return daoBooking.getAllSeatTypes();
     }
 
@@ -74,8 +68,8 @@ public class BusinessManager {
     public Double getFlightPrice(int flightID) throws FlightPriceException {
         return daoBooking.getFlightPrice(flightID);
     }
-    public String getSeatTypeName(int seatID) throws SeatTypeNameException{
-        return daoBooking.getSeatTypeName(seatID);
+    public  SeatType getActualSeatType(int seatID) throws SeatTypeException, PriceException{
+        return daoBooking.getActualSeatType(seatID);
     }
 
     public Seat getActualSeat (int seatID) throws ActualSeatException, SeatNumberException{
@@ -105,7 +99,6 @@ public class BusinessManager {
         return daoFlightsOfDepartureAirport.getFlightsOfDepartureAirport(startDate, endDate, idAirport);
     }
 
-
     public ArrayList<FlightResearch> getFlights(Locality departure, Locality arrival, Date startDate, Date endDate) throws FlightsException, PriceException {
         return daoFlights.getFlights(departure, arrival, startDate, endDate);
     }
@@ -128,15 +121,13 @@ public class BusinessManager {
             }
 
             return flightsOptions;
-
         }
-        catch (SeatTypeException seatTypeException) {
-            JOptionPane.showMessageDialog(null, seatTypeException.getMessage(), "Problème", JOptionPane.WARNING_MESSAGE);
+        catch (AllSeatTypesException allSeatTypesException) {
+            JOptionPane.showMessageDialog(null, allSeatTypesException.getMessage(), "Problème", JOptionPane.WARNING_MESSAGE);
         }
         catch (PriceException priceException) {
             JOptionPane.showMessageDialog(null, priceException.getMessage(), "Problème", JOptionPane.WARNING_MESSAGE);
         }
         return flightsOptions;
     }
-
 }
