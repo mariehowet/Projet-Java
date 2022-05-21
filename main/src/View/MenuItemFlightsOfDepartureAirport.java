@@ -14,18 +14,20 @@ import Exception.*;
 import com.toedter.calendar.JDateChooser;
 
 public class MenuItemFlightsOfDepartureAirport extends JPanel {
-    private JLabel startDateLabel, endDateLabel, departureAirportLabel;
+    private JLabel departureAirportLabel;
     private JComboBox airport;
-    private JPanel researchPanel, displayPanel,researchDisplay;
+    private JPanel researchPanel, displayPanel,researchDisplay,panelStartDate, panelEndDate;
     private JButton researchButton;
     private Container frameContainer;
     private ApplicationController controller;
     private JDateChooser chooserStartDate, chooserEndDate;
+    private ArrayList<Airport> airportsList;
 
     public MenuItemFlightsOfDepartureAirport(Container frameContainer) throws ConnectionException {
-        this.controller = new ApplicationController();
+
+        setLayout(new BorderLayout());
         this.frameContainer = frameContainer;
-        this.setLayout(new BorderLayout());
+        controller = new ApplicationController();
 
         // Panel de recherche
         researchPanel = new JPanel();
@@ -34,46 +36,41 @@ public class MenuItemFlightsOfDepartureAirport extends JPanel {
         // Panel Affichage
         displayPanel = new JPanel();
 
-        String [] airportsValues;
+        // Récupération des différents aéroports
         try {
-            ArrayList<Airport> airportsList = controller.getAllAirports();
-            ArrayList<String> airports = new ArrayList<>();
+            airportsList = controller.getAllAirports();
+            airport = new JComboBox();;
 
             for(Airport a : airportsList) {
-                airports.add(a.getCode() + "-" + a.getName());
-            }
-            int nbPassengers = airports.size();
-            airportsValues = new String[nbPassengers];
-
-            for (int j = 0; j < nbPassengers; j++) {
-                airportsValues[j] = airports.get(j);
+                airport.addItem(a.getCode() + "-" + a.getName());
             }
 
-            airport = new JComboBox(airportsValues);
-
+            departureAirportLabel = new JLabel("Aéroport de départ ");
         } catch (AllAirportsException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
+        // Date de Début
         chooserStartDate = new JDateChooser();
         chooserStartDate.setLocale(Locale.FRENCH);
+        chooserStartDate.setPreferredSize(new Dimension(125,25));
 
-        JPanel panelStartDate = new JPanel();
+        panelStartDate = new JPanel();
         panelStartDate.add(new JLabel("Date de début "));
         panelStartDate.add(chooserStartDate);
 
+        // Date de Fin
         chooserEndDate = new JDateChooser();
         chooserEndDate.setLocale(Locale.FRENCH);
+        chooserEndDate.setPreferredSize(new Dimension(125,25));
 
-        JPanel panelEndDate = new JPanel();
+        panelEndDate = new JPanel();
         panelEndDate.add(new JLabel("Date de fin "));
         panelEndDate.add(chooserEndDate);
 
-        departureAirportLabel = new JLabel("Aéroport de départ ");
-
         // Button
         researchButton = new JButton("Rechercher");
-        researchButton.addActionListener(new ResearchListener(displayPanel));
+        researchButton.addActionListener(new ResearchListener());
 
         // Ajout dans panel de recherche
         researchPanel.add(panelStartDate);
@@ -82,21 +79,17 @@ public class MenuItemFlightsOfDepartureAirport extends JPanel {
         researchPanel.add(airport);
         researchPanel.add(researchButton);
 
-        this.add(researchPanel, BorderLayout.NORTH);
-        this.add(displayPanel, BorderLayout.CENTER);
-
+        // Ajout dans la classe
+        add(researchPanel, BorderLayout.NORTH);
+        add(displayPanel, BorderLayout.CENTER);
     }
 
     private class ResearchListener implements ActionListener {
-        private JPanel panel;
-        public ResearchListener(JPanel panel) {
-            this.panel = panel;
-        };
         @Override
         public void actionPerformed(ActionEvent e) {
-            panel.removeAll();
-            panel.revalidate();
-            panel.repaint();
+            displayPanel.removeAll();
+            displayPanel.revalidate();
+            displayPanel.repaint();
             try {
                 if (chooserStartDate.getDate() == null) {
                     throw new DatesNullException("début");
@@ -108,23 +101,15 @@ public class MenuItemFlightsOfDepartureAirport extends JPanel {
                     throw new DatesException();
                 }
 
-                try {
-                    int idAirport = ConvertManager.stringIntoId(airport.getSelectedItem().toString());
-                    researchDisplay = new FlightsOfDepartureAirportJPanel(chooserStartDate.getDate(),chooserEndDate.getDate(),idAirport);
-                    frameContainer.revalidate();
-                    frameContainer.repaint();
-                    panel.add(researchDisplay, BorderLayout.CENTER);
-                }
-                catch (IdException idException) {
-                    JOptionPane.showMessageDialog(null, idException.getMessage(), "Problème", JOptionPane.WARNING_MESSAGE);
-                }
+                int idAirport = ConvertManager.stringIntoId(airport.getSelectedItem().toString());
+                researchDisplay = new FlightsOfDepartureAirportJPanel(chooserStartDate.getDate(),chooserEndDate.getDate(),idAirport);
+                frameContainer.revalidate();
+                frameContainer.repaint();
+                displayPanel.add(researchDisplay, BorderLayout.CENTER);
 
             }
-            catch (DatesException ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage(), "Problème", JOptionPane.WARNING_MESSAGE);
-            }
-            catch (DatesNullException dateNullException) {
-                JOptionPane.showMessageDialog(null, dateNullException.getMessage(), "Problème", JOptionPane.WARNING_MESSAGE);
+            catch (DatesException | DatesNullException | IdException exception) {
+                JOptionPane.showMessageDialog(null, exception.getMessage(), "Problème", JOptionPane.WARNING_MESSAGE);
             }
         }
     }

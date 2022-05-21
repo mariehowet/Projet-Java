@@ -374,7 +374,7 @@ public class UpdateBookingJPanel extends JPanel {
                     frameContainer.removeAll();
                     frameContainer.revalidate();
                     frameContainer.repaint();
-                    frameContainer.add(new AllBookingsJPanel(frameContainer));
+                    frameContainer.add(new MenuItemAllBookings(frameContainer));
                 } catch (UpdateException exception) {
                     JOptionPane.showMessageDialog(null, exception.getMessage());
                 } catch (PriceException exception) {

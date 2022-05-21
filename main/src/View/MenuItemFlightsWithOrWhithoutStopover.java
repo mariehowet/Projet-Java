@@ -32,38 +32,32 @@ public class MenuItemFlightsWithOrWhithoutStopover extends JPanel {
         // Panel Affichage
         displayPanel = new JPanel();
 
+        // Récupération des différentes localitées
         try {
-            String[] localitiesValues;
-
             ArrayList<Locality> localitiesList = controller.getAllLocalities();
-            ArrayList<String> localities = new ArrayList<>();
+            departureCity = new JComboBox();
+            arrivalCity = new JComboBox();
 
             for (Locality loc : localitiesList) {
-                localities.add(loc.getCity()+ "-" + loc.getCountry() + "-" + loc.getPostCode());
-            }
-            int nbPassengers = localities.size();
-            localitiesValues = new String[nbPassengers];
-
-            for (int j = 0; j < nbPassengers; j++) {
-                localitiesValues[j] = localities.get(j);
+                departureCity.addItem(loc.getCity()+ "-" + loc.getCountry() + "-" + loc.getPostCode());
+                arrivalCity.addItem(loc.getCity()+ "-" + loc.getCountry() + "-" + loc.getPostCode());
             }
 
-            // Labels
+            // Ville de départ
             departureCityLabel = new JLabel("Ville de départ ");
             researchPanel.add(departureCityLabel);
-            departureCity = new JComboBox(localitiesValues);
             researchPanel.add(departureCity);
 
+            // Ville de destination
             arrivalCityLabel = new JLabel("Ville de destination ");
             researchPanel.add(arrivalCityLabel);
-            arrivalCity = new JComboBox(localitiesValues);
             researchPanel.add(arrivalCity);
 
         } catch (AllLocalitiesException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
-        // Buttons stopover
+        // Boutons escale
         withoutStopover = new JRadioButton("Sans escale");
         researchPanel.add(withoutStopover);
         withStopover = new JRadioButton("Avec escale");
@@ -74,13 +68,13 @@ public class MenuItemFlightsWithOrWhithoutStopover extends JPanel {
         stopover.add(withStopover);
         withoutStopover.setSelected(true);
 
-        // Button
+        // Bouton de recherche
         researchButton = new JButton("Rechercher");
         researchButton.addActionListener(new ResearchListener(displayPanel));
         researchPanel.add(researchButton);
 
-        this.add(researchPanel, BorderLayout.NORTH);
-        this.add(displayPanel, BorderLayout.CENTER);
+        add(researchPanel, BorderLayout.NORTH);
+        add(displayPanel, BorderLayout.CENTER);
     }
 
     private class ResearchListener implements ActionListener {

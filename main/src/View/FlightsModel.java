@@ -47,9 +47,9 @@ public class FlightsModel extends AbstractTableModel {
             case 2:
                 return flightResearch.getArrivalAirportName();
             case 3:
-                return DateFormat.getDateInstance(DateFormat.DATE_FIELD).format(flightResearch.getDepartureDate().getTime());
+                return flightResearch.getDepartureDate().getTime();
             case 4:
-                return DateFormat.getDateInstance(DateFormat.DATE_FIELD).format(flightResearch.getArrivalDate().getTime());
+                return flightResearch.getArrivalDate().getTime();
             case 5:
                 return flightResearch.getDepartureHour();
             case 6:
@@ -61,7 +61,7 @@ public class FlightsModel extends AbstractTableModel {
         }
     }
 
-    public Class getColumClass(int column) {
+    public Class getColumnClass(int column) {
         Class c;
         switch(column) {
             case 0:

@@ -166,7 +166,7 @@ public class MainJFrame extends JFrame {
             frameContainer.removeAll();
             frameContainer.revalidate();
             frameContainer.repaint();
-            frameContainer.add(new AllBookingsJPanel(frameContainer), BorderLayout.CENTER);
+            frameContainer.add(new MenuItemAllBookings(frameContainer), BorderLayout.CENTER);
             setVisible(true);
         }
     }

@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class AllBookingsJPanel extends JPanel {
+public class MenuItemAllBookings extends JPanel {
     private ApplicationController controller;
     private JButton delete, modification,addition;
     private ListSelectionModel listSelect;
@@ -17,11 +17,14 @@ public class AllBookingsJPanel extends JPanel {
     private Container frameContainer;
     private AllBookingsModel model;
     private JTable bookingsTable;
-    private JPanel buttonsPanel;
+    private JPanel buttonsPanel, displayPanel, bookingsPanel;
+    private JLabel title;
 
-    public AllBookingsJPanel(Container frameContainer) {
+    public MenuItemAllBookings(Container frameContainer) {
+        setLayout(new BorderLayout());
+        title = new JLabel("<html><h1 style='margin: 30px 0 15px 0'>Liste des réservations</h1></html>", SwingConstants.CENTER);
         try {
-            setLayout(new BorderLayout());
+
 
             this.frameContainer = frameContainer;
             controller = new ApplicationController();
@@ -48,9 +51,17 @@ public class AllBookingsJPanel extends JPanel {
             delete.addActionListener(new DeleteListener());
             buttonsPanel.add(delete);
 
-            add(new JScrollPane(bookingsTable), BorderLayout.NORTH);
-            add(buttonsPanel, BorderLayout.CENTER);
-            setVisible(true);
+            bookingsPanel = new JPanel(new BorderLayout());
+
+            displayPanel = new JPanel();
+            displayPanel.setLayout(new FlowLayout());
+            displayPanel.add(new JScrollPane(bookingsTable));
+
+            bookingsPanel.add(displayPanel, BorderLayout.NORTH);
+            bookingsPanel.add(buttonsPanel, BorderLayout.CENTER);
+
+            add(title, BorderLayout.NORTH);
+            add(bookingsPanel, BorderLayout.CENTER);
         }
         catch (AllBookingsException | ConnectionException | PriceException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -60,7 +71,7 @@ public class AllBookingsJPanel extends JPanel {
     private class AddListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            int response = JOptionPane.showConfirmDialog(null,"Etes-vous sûr de vouloir ajouter cette réservation ?", "Modification", JOptionPane.YES_NO_OPTION);
+            int response = JOptionPane.showConfirmDialog(null,"Etes-vous sûr de vouloir ajouter une réservation ?", "Modification", JOptionPane.YES_NO_OPTION);
             if(response == 0) {
                 try {
                     frameContainer.removeAll();
@@ -120,7 +131,7 @@ public class AllBookingsJPanel extends JPanel {
                     frameContainer.removeAll();
                     frameContainer.revalidate();
                     frameContainer.repaint();
-                    frameContainer.add(new AllBookingsJPanel(frameContainer));
+                    frameContainer.add(new MenuItemAllBookings(frameContainer));
                 } catch (DeleteException exception) {
                     JOptionPane.showMessageDialog(null, exception.getMessage());
                 }

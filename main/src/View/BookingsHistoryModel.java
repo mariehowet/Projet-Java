@@ -2,7 +2,6 @@ package View;
 
 import Model.PassengerBooking;
 import javax.swing.table.AbstractTableModel;
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -12,14 +11,14 @@ public class BookingsHistoryModel extends AbstractTableModel {
 
     public BookingsHistoryModel (ArrayList<PassengerBooking> contents) {
         columnNames = new ArrayList<>();
-        columnNames.add("ID");
-        columnNames.add("Date réservation");
-        columnNames.add("Numéro vol");
-        columnNames.add("Aéroport départ");
-        columnNames.add("Aéroport arrivée");
-        columnNames.add("Date départ");
-        columnNames.add("Type siège");
-        columnNames.add("Prix");
+        columnNames.add("Numéro de réservation");
+        columnNames.add("Date de la réservation");
+        columnNames.add("Numéro de vol");
+        columnNames.add("Aéroport de départ");
+        columnNames.add("Aéroport d'arrivée");
+        columnNames.add("Date de départ");
+        columnNames.add("Type de siège");
+        columnNames.add("Prix (€)");
 
         this.contents = contents;
     }
@@ -44,7 +43,7 @@ public class BookingsHistoryModel extends AbstractTableModel {
             case 0:
                 return passengerBooking.getIdBooking();
             case 1:
-                return DateFormat.getDateInstance(DateFormat.DATE_FIELD).format(passengerBooking.getDateBooking().getTime());
+                return passengerBooking.getDateBooking().getTime();
             case 2:
                 return passengerBooking.getFlightID();
             case 3:
@@ -52,7 +51,7 @@ public class BookingsHistoryModel extends AbstractTableModel {
             case 4:
                 return passengerBooking.getArrivalAirportName();
             case 5:
-                return DateFormat.getDateInstance(DateFormat.DATE_FIELD).format(passengerBooking.getDepartureDate().getTime());
+                return passengerBooking.getDepartureDate().getTime();
             case 6:
                 return passengerBooking.getSeatType();
             case 7:
@@ -62,12 +61,12 @@ public class BookingsHistoryModel extends AbstractTableModel {
         }
     }
 
-    public Class getColumClass(int column) {
+    public Class getColumnClass(int column) {
         Class c;
         switch(column) {
             case 0:
             case 2 :
-                c = int.class;
+                c = Integer.class;
                 break;
             case 1 :
             case 5:

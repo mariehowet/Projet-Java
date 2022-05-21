@@ -51,7 +51,7 @@ public class FlightOptionsModel extends AbstractTableModel {
         }
     }
 
-    public Class getColumClass(int column) {
+    public Class getColumnClass(int column) {
         Class c;
         switch(column) {
             case 0:

@@ -33,56 +33,43 @@ public class MenuItemHistorySearch extends JPanel {
         // Label
         passengerLabel = new JLabel("Passager");
 
-        String [] passengersValues;
+        // Récupération des différents passagers
         try {
             ArrayList<Passenger> passengerList = controller.getAllPassengers();
-            ArrayList<String> passengers = new ArrayList<>();
+            passenger = new JComboBox();
 
             for(Passenger pas : passengerList) {
-                passengers.add(pas.getId() + "-" + pas.getFirstName() + " " + pas.getLastName() + (pas.getInitialMiddleName() != null ? pas.getInitialMiddleName() : "" ));
+                passenger.addItem(pas.getId() + "-" + pas.getFirstName() + " " + pas.getLastName() + (pas.getInitialMiddleName() != null ? pas.getInitialMiddleName() : "" ));
             }
-
-            int nbPassengers = passengers.size();
-            passengersValues = new String[nbPassengers];
-
-            for (int j = 0; j < nbPassengers; j++) {
-                passengersValues[j] = passengers.get(j);
-            }
-
-            passenger = new JComboBox(passengersValues);
 
         } catch (PassengerException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
-        // Button
+        // Boutton de recherche
         researchButton = new JButton("Rechercher");
-        researchButton.addActionListener(new ResearchListener(displayPanel));
+        researchButton.addActionListener(new ResearchListener());
 
         // Panel de recherche
         researchPanel.add(passengerLabel);
         researchPanel.add(passenger);
         researchPanel.add(researchButton);
 
-        this.add(researchPanel, BorderLayout.NORTH);
-        this.add(displayPanel, BorderLayout.CENTER);
+        add(researchPanel, BorderLayout.NORTH);
+        add(displayPanel, BorderLayout.CENTER);
     }
 
     private class ResearchListener implements ActionListener {
-        private JPanel panel;
-        public ResearchListener(JPanel panel) {
-            this.panel = panel;
-        };
         @Override
         public void actionPerformed(ActionEvent e) {
-            panel.removeAll();
-            panel.revalidate();
-            panel.repaint();
+            displayPanel.removeAll();
+            displayPanel.revalidate();
+            displayPanel.repaint();
 
             try {
                 int idPassenger = ConvertManager.stringIntoId(passenger.getSelectedItem().toString());
                 researchDisplay = new BookingsHistoryJPanel(idPassenger);
-                panel.add(researchDisplay, BorderLayout.CENTER);
+                displayPanel.add(researchDisplay, BorderLayout.CENTER);
                 frameContainer.revalidate();
                 frameContainer.repaint();
             }
