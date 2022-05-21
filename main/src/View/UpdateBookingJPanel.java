@@ -147,27 +147,27 @@ public class UpdateBookingJPanel extends JPanel {
             seatBox = new JComboBox(seatValues);
             seatBox.setSelectedItem(seatValues[ind]);
             formPanel.add(seatBox);
-            } catch(AvailableSeatsException exception) {
-                JOptionPane.showMessageDialog(null, exception.getMessage());
-            } catch (SeatTypeException exception) {
-                JOptionPane.showMessageDialog(null, exception.getMessage());
-            } catch (ActualSeatException exception) {
-                JOptionPane.showMessageDialog(null, exception.getMessage());
-            } catch (SeatNumberException exception) {
-                JOptionPane.showMessageDialog(null, exception.getMessage());
-            } catch (PriceException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage());
+        } catch(AvailableSeatsException exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage());
+        } catch (SeatTypeException exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage());
+        } catch (ActualSeatException exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage());
+        } catch (SeatNumberException exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage());
+        } catch (PriceException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
         //--------------------Luggage------------------------------------------
-            hasLuggage = new ButtonGroup();
-            buttonYesLuggage = new JRadioButton("Je dispose de bagages");
-            formPanel.add(buttonYesLuggage);
-            buttonNoLuggage = new JRadioButton("Je ne dispose pas de bagages");
-            buttonYesLuggage.addItemListener(new LuggageListener());
-            formPanel.add(buttonNoLuggage);
-            hasLuggage.add(buttonYesLuggage);
-            hasLuggage.add(buttonNoLuggage);
+        hasLuggage = new ButtonGroup();
+        buttonYesLuggage = new JRadioButton("Je dispose de bagages");
+        formPanel.add(buttonYesLuggage);
+        buttonNoLuggage = new JRadioButton("Je ne dispose pas de bagages");
+        buttonYesLuggage.addItemListener(new LuggageListener());
+        formPanel.add(buttonNoLuggage);
+        hasLuggage.add(buttonYesLuggage);
+        hasLuggage.add(buttonNoLuggage);
 
         //-----------------------------Weight---------------------------------------------
         weightLuggageLabel = new JLabel("Poids : ");
@@ -341,7 +341,7 @@ public class UpdateBookingJPanel extends JPanel {
 
 
             if (matcherWL.find())
-                    luggagePrice = Double.parseDouble(matcherWL.group(1));
+                luggagePrice = Double.parseDouble(matcherWL.group(1));
             else
                 luggagePrice = 0.0;
 
@@ -384,4 +384,3 @@ public class UpdateBookingJPanel extends JPanel {
         }
     }
 }
-

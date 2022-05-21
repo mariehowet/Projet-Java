@@ -15,22 +15,22 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AddBookingJPanel extends JPanel {
-    private JLabel title;
+    private JLabel title, passengerLabel, weightLuggageLabel, companyNameLabel, mealTypeLabel, totalPriceLabel, flightLabel, seatLabel;
     private JButton validationButton;
     private JPanel formPanel, buttonPanel;
-    private JLabel passengerLabel, weightLuggageLabel, companyNameLabel, mealTypeLabel, totalPriceLabel, flightLabel, seatLabel;
     private JTextField  companyName, totalPriceText;
     private JRadioButton buttonYesLuggage, buttonNoLuggage, buttonYesBusinessFlight, buttonNoBusinessFlight, buttonPayNow, buttonPayAfter;
     private JComboBox seatTypeBox, weightLuggageBox, mealTypeBox, passengerBox, flightBox, seatBox;
     private ButtonGroup hasLuggage, isBusinessFlight, payment;
     private ApplicationController controller;
     private Double flightPrice, seatTypePrice, luggagePrice, totalPrice;
-    private ArrayList<Double> flightPrices;
-    private ArrayList<Integer> flightIDs, passengerIDs, seatIDs;
     private String seatTypeName;
     private Integer flightID;
     private Container frameContainer;
     private ArrayList<SeatType> seatTypeList;
+    private ArrayList<Flight> flightList;
+    private ArrayList<Passenger> passengerList;
+    private ArrayList<Seat> seatList;
 
     public AddBookingJPanel(Container frameContainer) throws ConnectionException{
 
@@ -53,24 +53,14 @@ public class AddBookingJPanel extends JPanel {
         //------------------Flight----------------------------------
         flightLabel = new JLabel("<html><h3>Votre vol : </h3></html>");
         formPanel.add(flightLabel);
-        String [] flightValues;
         try {
-            ArrayList<Flight> flightList = controller.getAllFlights();
-            flightIDs = new ArrayList<>();
-            flightPrices = new ArrayList<>();
+            flightList = controller.getAllFlights();
+            flightBox = new JComboBox();
 
             for(Flight fl : flightList) {
-                flightIDs.add(fl.getId());
-                flightPrices.add(fl.getPrice());
-            }
-            int nb = flightIDs.size();
-            flightValues = new String[nb];
-
-            for (int j = 0; j < nb; j++) {
-                flightValues[j] = flightIDs.get(j).toString();
+                flightBox.addItem(fl.getId());
             }
 
-            flightBox = new JComboBox(flightValues);
             flightBox.addActionListener(new SearchSeatListener());
             flightBox.addActionListener(new CalculateListener());
             formPanel.add(flightBox);
@@ -82,25 +72,13 @@ public class AddBookingJPanel extends JPanel {
         //--------------------Passenger------------------------------
         passengerLabel = new JLabel("Votre nom : ");
         formPanel.add(passengerLabel);
-        String [] passengersValues;
 
         try {
-            ArrayList<Passenger> passengerList = controller.getAllPassengers();
-            ArrayList<String> passengers = new ArrayList<>();
-            passengerIDs = new ArrayList<>();
-
+            passengerList = controller.getAllPassengers();
+            passengerBox = new JComboBox();
             for(Passenger pas : passengerList) {
-                passengers.add(pas.getFirstName() + " " + pas.getLastName() + (pas.getInitialMiddleName() != null ? pas.getInitialMiddleName() : "" ));
-                passengerIDs.add(pas.getId());
+                passengerBox.addItem(pas.getFirstName() + " " + pas.getLastName() + (pas.getInitialMiddleName() != null ? pas.getInitialMiddleName() : "" ));
             }
-            int nbPassengers = passengers.size();
-            passengersValues = new String[nbPassengers];
-
-            for (int j = 0; j < nbPassengers; j++) {
-                passengersValues[j] = passengers.get(j);
-            }
-
-            passengerBox = new JComboBox(passengersValues);
             formPanel.add(passengerBox);
 
         } catch (PassengerException e) {
@@ -243,21 +221,12 @@ public class AddBookingJPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             seatTypeName = seatTypeList.get(seatTypeBox.getSelectedIndex()).getName();
-            flightID = flightIDs.get(flightBox.getSelectedIndex());
+            flightID = flightList.get(flightBox.getSelectedIndex()).getId();
             seatBox.removeAllItems();
             try {
-                ArrayList<Seat> seatList = controller.getAvailableSeats(seatTypeName, flightID);
-                ArrayList<String> seats = new ArrayList<>();
-                seatIDs = new ArrayList<>();
-
+                seatList = controller.getAvailableSeats(seatTypeName, flightID);
                 for(Seat st : seatList) {
-                    seats.add(st.getNumber() + st.getColumnLetter());
-                    seatIDs.add(st.getId());
-                }
-                int nb = seats.size();
-
-                for (int j = 0; j < nb; j++) {
-                    seatBox.addItem(seats.get(j));
+                    seatBox.addItem(st.getNumber() + st.getColumnLetter());
                 }
                 seatBox.setEnabled(true);
             } catch (AvailableSeatsException | SeatNumberException exception) {
@@ -276,7 +245,7 @@ public class AddBookingJPanel extends JPanel {
             Pattern patternWLPrice = Pattern.compile("(\\d+)€", Pattern.CASE_INSENSITIVE);
             Matcher matcherWL = patternWLPrice.matcher(weightLuggageBox.getSelectedItem().toString());
 
-            flightPrice = flightPrices.get(flightBox.getSelectedIndex());
+            flightPrice = flightList.get(flightBox.getSelectedIndex()).getPrice();
             if(matcherST.find())
                 seatTypePrice = Double.parseDouble(matcherST.group(1));
             if(matcherWL.find())
@@ -317,9 +286,9 @@ public class AddBookingJPanel extends JPanel {
                             company_name,
                             mealTypeBox.getSelectedItem().toString(),
                             totalPrice,
-                            flightIDs.get(flightBox.getSelectedIndex()),
-                            seatIDs.get(seatBox.getSelectedIndex()),
-                            passengerIDs.get(passengerBox.getSelectedIndex())
+                            flightList.get(flightBox.getSelectedIndex()).getId(),
+                            seatList.get(seatBox.getSelectedIndex()).getId(),
+                            passengerList.get(passengerBox.getSelectedIndex()).getId()
                     );
 
                     controller.addBooking(booking);
