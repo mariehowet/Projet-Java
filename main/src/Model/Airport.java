@@ -3,17 +3,10 @@ package Model;
 public class Airport {
     private int code;
     private String name;
-    private String city;
-    private String postCode;
-    private String country;
 
-
-    public Airport(int code, String name, String city, String postCode, String country) {
+    public Airport(int code, String name) {
         this.code = code;
         this.name = name;
-        this.city = city;
-        this.postCode = postCode;
-        this.country = country;
     }
 
     public int getCode() {

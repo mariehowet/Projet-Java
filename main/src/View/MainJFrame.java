@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
 import Exception.ConnectionException;
 
 public class MainJFrame extends JFrame {
@@ -17,11 +16,10 @@ public class MainJFrame extends JFrame {
     private JMenuBar menuBar;
     private JMenu marvinAirline,researchMenu, findFlightMenu, monitoringFlightMenu, form, bookings;
     private JMenuItem exitMenuItem, backToWelcomePanel, research1, research2, research3, menuIemFlightMenu, monitoringFlight, bookingsMenuItem, addBookingMenuItem;
-    private JPanel BookingForm;
 
     public MainJFrame() {
         // fenetre
-        super("Welcome");
+        super("Marvin Airline");
         setBounds(0,0,1000,750);
 
         // Container
@@ -92,6 +90,8 @@ public class MainJFrame extends JFrame {
         bookings.add(addBookingMenuItem);
 
         addWindowListener(new ClosingListener());
+
+        setLocationRelativeTo(null);
         setVisible(true);
     }
 
@@ -164,6 +164,8 @@ public class MainJFrame extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             frameContainer.removeAll();
+            frameContainer.revalidate();
+            frameContainer.repaint();
             frameContainer.add(new AllBookingsJPanel(frameContainer), BorderLayout.CENTER);
             setVisible(true);
         }

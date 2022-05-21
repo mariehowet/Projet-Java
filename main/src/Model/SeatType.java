@@ -2,6 +2,8 @@ package Model;
 
 import Exception.PriceException;
 
+import java.util.Objects;
+
 public class SeatType {
     private String name;
     private int additionalPrice;
@@ -24,4 +26,13 @@ public class SeatType {
         else
             this.additionalPrice = additionalPrice;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SeatType seatType = (SeatType) o;
+        return additionalPrice == seatType.additionalPrice && Objects.equals(name, seatType.name);
+    }
+
 }

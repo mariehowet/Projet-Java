@@ -87,10 +87,7 @@ public class FlightsOfDepartureAirportDBAccess implements FlightsOfDepartureAirp
             while(data.next()) {
                 airport = new Airport(
                         data.getInt("id"),
-                        data.getString("name"),
-                        data.getString("city"),
-                        data.getString("post_code"),
-                        data.getString("country")
+                        data.getString("name")
                 );
 
                 allAirports.add(airport);
