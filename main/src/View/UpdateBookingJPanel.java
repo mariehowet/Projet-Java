@@ -1,6 +1,6 @@
 package View;
 
-import Controller.ApplicationController;
+import Controller .ApplicationController;
 import Model.*;
 import Exception.*;
 import javax.swing.*;
@@ -28,10 +28,11 @@ public class UpdateBookingJPanel extends JPanel {
     private JButton  validationButton;
     private Double flightPrice, seatTypePrice, luggagePrice, totalPrice;
     private int bookingID;
-    private ArrayList<String> seatTypeIDs;
-    private ArrayList<Integer> seatIDs;
     private int flightID;
-
+    private ArrayList<SeatType> seatTypeList;
+    private ArrayList<Seat> seatList;
+    private SeatType actualSeatType;
+    private Seat actualSeat;
 
     public UpdateBookingJPanel(Container frameContainer, Booking booking) throws ConnectionException {
         this.frameContainer = frameContainer;
@@ -63,7 +64,7 @@ public class UpdateBookingJPanel extends JPanel {
 
             for (Passenger pas : passengerList) {
                 if (pas.getId() == booking.getPassengerID()) {
-                    passengerText = new JTextField(pas.getFirstName() + " " + pas.getLastName() + (pas.getInitialMiddleName() != null ? pas.getInitialMiddleName() : ""));
+                    passengerText = new JTextField(pas.getFirstName() + " " + pas.getLastName() + (pas.getInitialMiddleName() != null ? " " + pas.getInitialMiddleName() : ""));
                 }
             }
             passengerText.setEnabled(false);
@@ -75,88 +76,53 @@ public class UpdateBookingJPanel extends JPanel {
         //--------------------SeatType------------------------------
         seatLabel = new JLabel("Type de siège : ");
         formPanel.add(seatLabel);
-        String[] seatTypesValues;
-        SeatType seatType = null;
+        actualSeatType = null;
 
         try {
-            seatType = controller.getActualSeatType(booking.getSeatID());
-            ArrayList<SeatType> seatTypeList = controller.getAllSeatTypes();
-            ArrayList<String> seatTypes = new ArrayList<>();
-            seatTypeIDs = new ArrayList<>();
-
+            actualSeatType = controller.getActualSeatType(booking.getSeatID());
+            seatTypeList = controller.getAllSeatTypes();
+            seatTypeBox = new JComboBox();
             for (SeatType st : seatTypeList) {
-                seatTypes.add(st.getName() + " " + "(+ " + st.getAdditionalPrice() + "€)");
-                seatTypeIDs.add(st.getName());
+                seatTypeBox.addItem(st.getName() + " " + "(+ " + st.getAdditionalPrice() + "€)");
             }
 
-            int nbSeatTypes = seatTypes.size();
-            seatTypesValues = new String[nbSeatTypes];
-
-            for (int j = 0; j < nbSeatTypes; j++) {
-                seatTypesValues[j] = seatTypes.get(j);
-            }
             int i = 0;
             for (SeatType st : seatTypeList) {
-                if (st.getName().equals(seatType.getName()))
+                if (st.getName().equals(actualSeatType.getName()))
                     i = seatTypeList.indexOf(st);
             }
 
-            seatTypeBox = new JComboBox(seatTypesValues);
-            seatTypeBox.setSelectedItem(seatTypesValues[i]);
+            seatTypeBox.setSelectedIndex(i);
             seatTypeBox.addActionListener(new SearchSeatListener());
             seatTypeBox.addActionListener(new CalculateListener());
             formPanel.add(seatTypeBox);
 
-        } catch (AllSeatTypesException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        } catch (SeatTypeException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        } catch (PriceException e) {
+        } catch (AllSeatTypesException | SeatTypeException | PriceException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
         //-------------------------Seat--------------------------------------
         seatLabel = new JLabel("Votre siège :");
         formPanel.add(seatLabel);
-        String[] seatValues;
         try {
-            ArrayList<Seat> seatList = controller.getAvailableSeats(controller.getActualSeatType(booking.getSeatID()).getName(), booking.getFlightID());
-            Seat actualSeat = controller.getActualSeat(booking.getSeatID());
-            ArrayList<String> seats = new ArrayList<>();
-            seatIDs = new ArrayList<>();
+            seatList = controller.getAvailableSeats(controller.getActualSeatType(booking.getSeatID()).getName(), booking.getFlightID());
+            actualSeat = controller.getActualSeat(booking.getSeatID());
             seatList.add(actualSeat);
-
+            seatBox = new JComboBox();
             for (Seat st : seatList) {
-                seats.add(st.getNumber() + st.getColumnLetter());
-                seatIDs.add(st.getId());
-            }
-            int nb = seats.size();
-
-            seatValues = new String[nb];
-
-            for (int j = 0; j < nb; j++) {
-                seatValues[j] = seats.get(j);
+                seatBox.addItem(st.getNumber() + st.getColumnLetter());
             }
 
             int ind = 0;
-            for (int i = 0; i < seatIDs.size(); i++) {
-                if (seatIDs.get(i) == booking.getSeatID()) {
-                    ind = i;
+            for (Seat s : seatList) {
+                if (s.getId() == booking.getSeatID()) {
+                    ind = seatList.indexOf(s);
                 }
             }
-            seatBox = new JComboBox(seatValues);
-            seatBox.setSelectedItem(seatValues[ind]);
+            seatBox.setSelectedIndex(ind);
             formPanel.add(seatBox);
-        } catch(AvailableSeatsException exception) {
+        } catch(AvailableSeatsException |SeatTypeException |ActualSeatException|SeatNumberException| PriceException exception) {
             JOptionPane.showMessageDialog(null, exception.getMessage());
-        } catch (SeatTypeException exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage());
-        } catch (ActualSeatException exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage());
-        } catch (SeatNumberException exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage());
-        } catch (PriceException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
         //--------------------Luggage------------------------------------------
@@ -204,10 +170,10 @@ public class UpdateBookingJPanel extends JPanel {
         isBusinessFlight.add(buttonYesBusinessFlight);
         isBusinessFlight.add(buttonNoBusinessFlight);
 
-        //---------------------------CompanyName--------------------------
+        //---------------------------CompanyName--------------------------------------------
         companyNameLabel = new JLabel("Nom de la société : ");
         formPanel.add(companyNameLabel);
-        companyName = new JTextField("");
+        companyName = new JTextField();
         if (booking.getCompanyName() != null) {
             buttonYesBusinessFlight.setSelected(true);
             companyName.setText(booking.getCompanyName());
@@ -230,7 +196,7 @@ public class UpdateBookingJPanel extends JPanel {
         mealTypeBox.setSelectedItem(mealTypes[indSelectedMeal]);
         formPanel.add(mealTypeBox);
 
-        //------------------------------payement--------------------------------------------
+        //------------------------------Payement--------------------------------------------
         payment = new ButtonGroup();
         buttonPayNow = new JRadioButton("Je paye maintenant");
         formPanel.add(buttonPayNow);
@@ -261,9 +227,11 @@ public class UpdateBookingJPanel extends JPanel {
         buttonPanel.setLayout(new FlowLayout());
         buttonPanel.add(validationButton);
 
-        this.add(title, BorderLayout.NORTH);
-        this.add(formPanel, BorderLayout.CENTER);
-        this.add(buttonPanel, BorderLayout.SOUTH);
+        //--------------------AddPanels----------------------
+
+        add(title, BorderLayout.NORTH);
+        add(formPanel, BorderLayout.CENTER);
+        add(buttonPanel, BorderLayout.SOUTH);
     }
 
     private class LuggageListener implements ItemListener {
@@ -298,20 +266,12 @@ public class UpdateBookingJPanel extends JPanel {
         public void actionPerformed(ActionEvent e) {
             seatBox.removeAllItems();
             try {
-                ArrayList<Seat> seatList = controller.getAvailableSeats(seatTypeIDs.get(seatTypeBox.getSelectedIndex()),flightID);
-                ArrayList<String> seats = new ArrayList<>();
-                seatIDs = new ArrayList<>();
-
+                seatList = controller.getAvailableSeats(seatTypeList.get(seatTypeBox.getSelectedIndex()).getName(),flightID);
+                if(seatTypeList.get(seatTypeBox.getSelectedIndex()).getName().equals(actualSeatType.getName()))
+                    seatList.add(actualSeat);
                 for (Seat st : seatList) {
-                    seats.add(st.getNumber() + st.getColumnLetter());
-                    seatIDs.add(st.getId());
+                    seatBox.addItem(st.getNumber() + st.getColumnLetter());
                 }
-                int nb = seats.size();
-
-                for (int j = 0; j < nb; j++) {
-                    seatBox.addItem(seats.get(j));
-                }
-
                 seatBox.setEnabled(true);
             } catch (AvailableSeatsException exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage());
@@ -369,15 +329,13 @@ public class UpdateBookingJPanel extends JPanel {
                 }
                 String company_name = buttonYesBusinessFlight.isSelected() ? companyName.getText() : null;
                 try {
-                    controller.updateBooking(bookingID, new GregorianCalendar(), buttonPayNow.isSelected(),buttonNoLuggage.isSelected()? null : luggageWeight.toString(), company_name, mealTypeBox.getSelectedItem().toString(), totalPrice, seatIDs.get(seatBox.getSelectedIndex()));
+                    controller.updateBooking(bookingID, new GregorianCalendar(), buttonPayNow.isSelected(),buttonNoLuggage.isSelected()? null : luggageWeight, company_name, mealTypeBox.getSelectedItem().toString(), totalPrice, seatList.get(seatBox.getSelectedIndex()).getId());
                     JOptionPane.showMessageDialog(null, "Modification effectué avec succès");
                     frameContainer.removeAll();
                     frameContainer.revalidate();
                     frameContainer.repaint();
                     frameContainer.add(new MenuItemAllBookings(frameContainer));
-                } catch (UpdateException exception) {
-                    JOptionPane.showMessageDialog(null, exception.getMessage());
-                } catch (PriceException exception) {
+                } catch (UpdateException | PriceException exception) {
                     JOptionPane.showMessageDialog(null, exception.getMessage());
                 }
             }

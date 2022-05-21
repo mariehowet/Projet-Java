@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.Objects;
+
 public class Passenger {
     private int id;
     private String lastName;
@@ -24,5 +26,13 @@ public class Passenger {
     }
     public String getInitialMiddleName() {
         return initialMiddleName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Passenger passenger = (Passenger) o;
+        return id == passenger.id && Objects.equals(lastName, passenger.lastName) && Objects.equals(firstName, passenger.firstName) && Objects.equals(initialMiddleName, passenger.initialMiddleName);
     }
 }

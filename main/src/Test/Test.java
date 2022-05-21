@@ -1,4 +1,4 @@
-package test;
+package Test;
 import Model.*;
 import Business.BusinessManager;
 import Exception.*;
@@ -23,7 +23,6 @@ class Test {
         assertEquals(priceExpected, calculator.add(manager.getFlightPrice(1),(double)manager.getActualSeatType(7).getAdditionalPrice(),priceWeights[2]), 0.01);
     }
 
-
     // voir méthode
     @org.junit.jupiter.api.Test
     public void getSeatTypes() throws PriceException, AllSeatTypesException {
@@ -32,5 +31,24 @@ class Test {
         assertArrayEquals(seatTypesExpected, seatTypesActual);
     }
 
+    @org.junit.jupiter.api.Test
+    public void getFlightPrice() throws FlightPriceException {
+        Double priceExpected = 750.0;
+        Double priceActual = manager.getFlightPrice(1);
+        assertEquals(priceExpected, priceActual);
+    }
 
+    @org.junit.jupiter.api.Test
+    public void getActualSeat() throws SeatNumberException, ActualSeatException {
+        Object seatExpected = new Seat(1,1,"A");
+        Object seatActual = manager.getActualSeat(1);
+        assertEquals(seatExpected, seatActual);
+    }
+
+    @org.junit.jupiter.api.Test
+    public void getPassnger() throws ActualPassengerException {
+        Object passengerExpected = new Passenger(1, "Parache", "Melvin", null);
+        Object passengerActual = manager.getActualPassenger(1);
+        assertEquals(passengerExpected, passengerActual);
+    }
 }

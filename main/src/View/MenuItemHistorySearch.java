@@ -39,7 +39,7 @@ public class MenuItemHistorySearch extends JPanel {
             passenger = new JComboBox();
 
             for(Passenger pas : passengerList) {
-                passenger.addItem(pas.getId() + "-" + pas.getFirstName() + " " + pas.getLastName() + (pas.getInitialMiddleName() != null ? pas.getInitialMiddleName() : "" ));
+                passenger.addItem(pas.getId() + "-" + pas.getFirstName() + " " + pas.getLastName() + (pas.getInitialMiddleName() != null ? " " + pas.getInitialMiddleName() : "" ));
             }
 
         } catch (PassengerException e) {

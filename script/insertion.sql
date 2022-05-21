@@ -236,3 +236,7 @@ VALUES('Turpin', 'Guillaume',null, '2000-01-01', 'gt@gmail.com','0478955465', 'R
 INSERT INTO passenger (last_name, first_name, initial_middle_name, birth_date, email, phone_number, street_and_number, city, post_code, country)
 VALUES('Hanquet', 'Julien',null, '2000-01-01', 'jh@gmail.com','0478955465', 'Rue du truc, 10', 'Namur', '5000', 'Belgique');
 
+
+UPDATE passenger
+SET initial_middle_name = 'D.'
+WHERE id = 2;

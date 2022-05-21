@@ -2,6 +2,8 @@ package Model;
 
 import Exception.SeatNumberException;
 
+import java.util.Objects;
+
 public class Seat {
     private int id;
     private int number;
@@ -30,4 +32,13 @@ public class Seat {
         else
             this.number = number;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Seat seat = (Seat) o;
+        return id == seat.id && number == seat.number && Objects.equals(columnLetter, seat.columnLetter);
+    }
+
 }

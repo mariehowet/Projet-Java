@@ -4,7 +4,7 @@ import DataAccess.*;
 import Model.*;
 import Exception.*;
 import Exception.AddBookingException;
-import test.Calculator;
+import Test.Calculator;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Date;
