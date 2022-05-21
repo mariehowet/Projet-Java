@@ -15,41 +15,44 @@ public class AllBookingsJPanel extends JPanel {
     private ListSelectionModel listSelect;
     private ArrayList<Booking> bookings;
     private Container frameContainer;
+    private AllBookingsModel model;
+    private JTable bookingsTable;
+    private JPanel buttonsPanel;
 
     public AllBookingsJPanel(Container frameContainer) {
         try {
+            setLayout(new BorderLayout());
+
             this.frameContainer = frameContainer;
             controller = new ApplicationController();
             bookings = controller.getAllBookings();
-            this.setLayout(new BorderLayout());
-            AllBookingsModel model = new AllBookingsModel(bookings, controller);
-            JTable bookingsTable = new JTable(model);
-            bookingsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            model = new AllBookingsModel(bookings, controller);
+            bookingsTable = new JTable(model);
             listSelect = bookingsTable.getSelectionModel();
+
+            bookingsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             bookingsTable.setPreferredScrollableViewportSize(new Dimension(900, 100));
 
-            this.add(new JScrollPane(bookingsTable), BorderLayout.NORTH);
-            Panel buttonsPanel = new Panel();
+            //-------------ButtonPanel----------------------------------
+            buttonsPanel = new JPanel();
+
             addition = new JButton("Ajout");
             addition.addActionListener(new AddListener());
             buttonsPanel.add(addition);
+
             modification = new JButton("Modification");
             modification.addActionListener(new ModifyListener());
             buttonsPanel.add(modification);
+
             delete = new JButton("Suppression");
             delete.addActionListener(new DeleteListener());
-
             buttonsPanel.add(delete);
-            this.add(buttonsPanel, BorderLayout.CENTER);
 
-            this.setVisible(true);
+            add(new JScrollPane(bookingsTable), BorderLayout.NORTH);
+            add(buttonsPanel, BorderLayout.CENTER);
+            setVisible(true);
         }
-        catch (AllBookingsException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
-        catch (ConnectionException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        } catch (PriceException e) {
+        catch (AllBookingsException | ConnectionException | PriceException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }

@@ -68,7 +68,7 @@ public class AllBookingsModel extends AbstractTableModel {
                     return booking.getFlightID();
                 case 8:
                     return passenger.getFirstName() + " " + passenger.getLastName() + " "
-                            + (passenger.getInitialMiddleName() != null ? passenger.getInitialMiddleName() : "null");
+                            + (passenger.getInitialMiddleName() != null ? passenger.getInitialMiddleName() : "");
                 case 9:
                     return seat.getNumber() + seat.getColumnLetter();
                 default:
