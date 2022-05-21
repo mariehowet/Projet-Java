@@ -42,9 +42,9 @@ public class FlightsOfDepartureAirportModel extends AbstractTableModel {
             case 1:
                 return flightOfDepartureAirport.getArrivalAirportName();
             case 2:
-                return DateFormat.getDateInstance(DateFormat.DATE_FIELD).format(flightOfDepartureAirport.getDepartureDate().getTime());
+                return flightOfDepartureAirport.getDepartureDate().getTime();
             case 3:
-                return DateFormat.getDateInstance(DateFormat.DATE_FIELD).format(flightOfDepartureAirport.getArrivalDate().getTime());
+                return flightOfDepartureAirport.getArrivalDate().getTime();
             case 4:
                 return flightOfDepartureAirport.getRemainingSeats();
             default:
@@ -52,7 +52,7 @@ public class FlightsOfDepartureAirportModel extends AbstractTableModel {
         }
     }
 
-    public Class getColumClass(int column) {
+    public Class getColumnClass(int column) {
         Class c;
         switch(column) {
             case 0:

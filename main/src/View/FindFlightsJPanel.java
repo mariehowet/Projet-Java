@@ -21,30 +21,31 @@ public class FindFlightsJPanel extends JPanel {
     private JButton optionsButton;
     private JPanel researchOptionsPanel, displayPanel;
     private Container frameContainer;
+    private FlightsModel model;
+    private JTable flightsTable;
+    private JLabel title;
 
     public FindFlightsJPanel(Container frameContainer, JPanel displayPanel,Locality departure, Locality arrival, Date startDate, Date endDate) {
+        setLayout(new BorderLayout());
         this.frameContainer = frameContainer;
         this.displayPanel = displayPanel;
 
         try {
             controller = new ApplicationController();
             flightResearches = controller.getFlights(departure, arrival, startDate, endDate);
+
             if (flightResearches.isEmpty()){
                 JOptionPane.showMessageDialog(null, "Il n'y a pas de vols qui correspondent à vos critères de recherche");
             } else {
-                FlightsModel model = new FlightsModel(flightResearches);
-                JTable flightsTable = new JTable(model);
+                model = new FlightsModel(flightResearches);
+                flightsTable = new JTable(model);
                 flightsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                 listSelect = flightsTable.getSelectionModel();
                 flightsTable.setPreferredScrollableViewportSize(new Dimension(900, 100));
 
-                this.setLayout(new BorderLayout());
-
-                optionsButton = new JButton("Voir toutes les options possible");
                 researchOptionsPanel = new JPanel(new FlowLayout());
-
-                OptionsListener optionsListener = new OptionsListener();
-                optionsButton.addActionListener(optionsListener);
+                optionsButton = new JButton("Voir toutes les options possible");
+                optionsButton.addActionListener(new OptionsListener());
 
                 researchOptionsPanel.add(optionsButton);
 
@@ -52,13 +53,8 @@ public class FindFlightsJPanel extends JPanel {
                 this.add(researchOptionsPanel, BorderLayout.SOUTH);
             }
         }
-        catch (FlightsException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
-        catch (ConnectionException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        } catch (PriceException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+        catch (FlightsException | ConnectionException | PriceException exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage());
         }
     }
 

@@ -17,14 +17,14 @@ public class AllBookingsModel extends AbstractTableModel {
     public AllBookingsModel (ArrayList<Booking> contents, ApplicationController controller) {
         this.controller = controller;
         columnNames = new ArrayList<>();
-        columnNames.add("Identifiant");
+        columnNames.add("Numéro");
         columnNames.add("Date");
         columnNames.add("Payé ?");
-        columnNames.add("Poids baggages");
+        columnNames.add("Poids des bagages");
         columnNames.add("Entreprise");
         columnNames.add("Repas");
         columnNames.add("Prix");
-        columnNames.add("Vol");
+        columnNames.add("Numéro de vol");
         columnNames.add("Passager");
         columnNames.add("Place");
         this.contents = contents;
@@ -53,7 +53,7 @@ public class AllBookingsModel extends AbstractTableModel {
                 case 0:
                     return booking.getId();
                 case 1:
-                    return DateFormat.getDateInstance(DateFormat.DATE_FIELD).format(booking.getDate().getTime());
+                    return booking.getDate().getTime();
                 case 2:
                     return booking.getHasPaid();
                 case 3:
@@ -83,13 +83,11 @@ public class AllBookingsModel extends AbstractTableModel {
         }
         return null;
     }
-    public Class getColumClass(int column) {
+    public Class getColumnClass(int column) {
         Class c;
         switch(column) {
             case 0:
             case 7:
-            case 8 :
-            case 9 :
                 c = int.class;
             break;
             case 1 : c = Date.class;
