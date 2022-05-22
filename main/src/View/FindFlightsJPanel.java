@@ -19,16 +19,15 @@ public class FindFlightsJPanel extends JPanel {
     private ListSelectionModel listSelect;
     private ArrayList<FlightResearch> flightResearches;
     private JButton optionsButton;
-    private JPanel researchOptionsPanel, displayPanel;
-    private Container frameContainer;
+    private JPanel researchOptionsPanel, flightOptionsJPanel, optionsPanel;
     private FlightsModel model;
     private JTable flightsTable;
     private JLabel title;
 
-    public FindFlightsJPanel(Container frameContainer, JPanel displayPanel,Locality departure, Locality arrival, Date startDate, Date endDate) {
+    public FindFlightsJPanel(JPanel optionsPanel,Locality departure, Locality arrival, Date startDate, Date endDate) {
         setLayout(new BorderLayout());
-        this.frameContainer = frameContainer;
-        this.displayPanel = displayPanel;
+        this.optionsPanel = optionsPanel;
+
 
         try {
             controller = new ApplicationController();
@@ -49,8 +48,11 @@ public class FindFlightsJPanel extends JPanel {
 
                 researchOptionsPanel.add(optionsButton);
 
-                this.add(new JScrollPane(flightsTable), BorderLayout.NORTH);
-                this.add(researchOptionsPanel, BorderLayout.SOUTH);
+                title = new JLabel("<html><h2>Liste des vols</h2></html>", SwingConstants.CENTER);
+
+                add(title, BorderLayout.NORTH);
+                add(new JScrollPane(flightsTable), BorderLayout.CENTER);
+                add(researchOptionsPanel, BorderLayout.SOUTH);
             }
         }
         catch (FlightsException | ConnectionException | PriceException exception) {
@@ -73,10 +75,12 @@ public class FindFlightsJPanel extends JPanel {
                     FlightResearch flightResearch = flightResearches.get(indSelectedLine);
 
                     try {
-                        FlightOptionsJPanel flightOptionsJPanel = new FlightOptionsJPanel(flightResearch);
-                        frameContainer.revalidate();
-                        frameContainer.repaint();
-                        displayPanel.add(flightOptionsJPanel, BorderLayout.SOUTH);
+                        optionsPanel.removeAll();
+                        optionsPanel.revalidate();
+                        optionsPanel.repaint();
+
+                        flightOptionsJPanel = new FlightOptionsJPanel(flightResearch);
+                        optionsPanel.add(flightOptionsJPanel);
                     }
                     catch (ConnectionException connectionException) {
                         JOptionPane.showMessageDialog(null, connectionException.getMessage(), "Problème", JOptionPane.WARNING_MESSAGE);

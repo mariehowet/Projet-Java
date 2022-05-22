@@ -60,7 +60,7 @@ public class MenuItemFlightsWithOrWhithoutStopover extends JPanel {
         // Boutons escale
         withoutStopover = new JRadioButton("Sans escale");
         researchPanel.add(withoutStopover);
-        withStopover = new JRadioButton("Avec escale");
+        withStopover = new JRadioButton("Avec escales");
         researchPanel.add(withStopover);
 
         stopover = new ButtonGroup();

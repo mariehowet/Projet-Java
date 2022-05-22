@@ -18,7 +18,8 @@ public class MenuItemFindFlight extends JPanel {
     private JDateChooser chooserStartDate, chooserEndDate;
     private Container frameContainer;
     private ApplicationController controller;
-    private JPanel researchPanel, displayPanel, researchDisplay, panelStartDate, panelEndDate, gridFields, buttonPanel, gridResearch;
+    private JPanel researchPanel, displayPanel, researchDisplay, panelStartDate, panelEndDate, gridFields,
+            buttonPanel, gridResearch, optionsPanel;
     private JButton researchButton;
 
     public MenuItemFindFlight(Container frameContainer) throws ConnectionException {
@@ -35,7 +36,7 @@ public class MenuItemFindFlight extends JPanel {
         gridFields.setLayout(new GridLayout(3,2));
 
         // Panel Affichage
-        displayPanel = new JPanel(new BorderLayout());
+        displayPanel = new JPanel(new FlowLayout());
 
         // Récupération des différentes localitées
         try {
@@ -99,8 +100,10 @@ public class MenuItemFindFlight extends JPanel {
 
         researchPanel.add(gridResearch);
 
+        optionsPanel = new JPanel(new FlowLayout());
         add(researchPanel, BorderLayout.NORTH);
         add(displayPanel, BorderLayout.CENTER);
+        add(optionsPanel, BorderLayout.SOUTH);
     }
 
     private class ResearchListener implements ActionListener {
@@ -110,6 +113,9 @@ public class MenuItemFindFlight extends JPanel {
             displayPanel.removeAll();
             displayPanel.revalidate();
             displayPanel.repaint();
+            optionsPanel.removeAll();
+            optionsPanel.revalidate();
+            optionsPanel.repaint();
             try {
                 if (chooserStartDate.getDate() == null) {
                     throw new DatesNullException("début");
@@ -124,10 +130,8 @@ public class MenuItemFindFlight extends JPanel {
                 Locality departure = ConvertManager.stringIntoLocality(departureCity.getSelectedItem().toString());
                 Locality arrival = ConvertManager.stringIntoLocality(arrivalCity.getSelectedItem().toString());
 
-                researchDisplay = new FindFlightsJPanel(frameContainer,displayPanel ,departure, arrival, chooserStartDate.getDate(), chooserEndDate.getDate());
-                frameContainer.revalidate();
-                frameContainer.repaint();
-                displayPanel.add(researchDisplay, BorderLayout.CENTER);
+                researchDisplay = new FindFlightsJPanel(optionsPanel,departure, arrival, chooserStartDate.getDate(), chooserEndDate.getDate());
+                displayPanel.add(researchDisplay);
             }
             catch (DatesException | LocalityException | DatesNullException exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage(), "Problème", JOptionPane.WARNING_MESSAGE);

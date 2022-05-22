@@ -12,9 +12,9 @@ public class FlightOptionsModel extends AbstractTableModel {
     public FlightOptionsModel (ArrayList<FlightOption> contents) {
         columnNames = new ArrayList<>();
         columnNames.add("Type de siège");
-        columnNames.add("Prix du type de siège");
+        columnNames.add("Prix du type de siège (€)");
         columnNames.add("Poids des bagages");
-        columnNames.add("Prix du poids des bagages");
+        columnNames.add("Prix du poids des bagages (€)");
         columnNames.add("Prix Total (€)");
         this.contents = contents;
     }

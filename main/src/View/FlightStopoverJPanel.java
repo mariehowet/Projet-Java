@@ -10,10 +10,11 @@ import Exception.*;
 
 public class FlightStopoverJPanel extends JPanel {
     private ApplicationController controller;
-    private ListSelectionModel listSelect;
     private ArrayList<FlightResearch> flightsStopover;
+    private JLabel title;
 
     public FlightStopoverJPanel(Locality departure, Locality arrival, boolean withStopover) {
+        setLayout(new BorderLayout());
         try {
             controller = new ApplicationController();
             flightsStopover = controller.getFlightsStopover(departure, arrival, withStopover);
@@ -22,12 +23,12 @@ public class FlightStopoverJPanel extends JPanel {
             } else {
                 FlightsModel model = new FlightsModel(flightsStopover);
                 JTable flightsStopoverTable = new JTable(model);
-                flightsStopoverTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-                listSelect = flightsStopoverTable.getSelectionModel();
                 flightsStopoverTable.setPreferredScrollableViewportSize(new Dimension(900, 100));
 
-                this.setLayout(new FlowLayout());
-                this.add(new JScrollPane(flightsStopoverTable));
+                title = new JLabel("<html><h2 style='margin: 30px 0 15px 0'>Liste des vols " + (withStopover?"avec escales":"sans escale") + "</h2></html>", SwingConstants.CENTER);
+
+                add(title, BorderLayout.NORTH);
+                add(new JScrollPane(flightsStopoverTable), BorderLayout.CENTER);
             }
 
         }

@@ -202,6 +202,9 @@ VALUES('2022-06-20', '16:00:00','2022-06-20','18:00:00', 750.0, 1, 3, 10);
 INSERT INTO flight (departure_date, departure_hour, expected_arrival_date, expected_arrival_hour, price, airplane_id, departure_airport_id, arrival_airport_id)
 VALUES('2022-05-10', '14:00:00','2022-06-20','18:00:00', 600, 2, 1, 2);
 
+INSERT INTO flight (departure_date, departure_hour, expected_arrival_date, expected_arrival_hour, price, airplane_id, departure_airport_id, arrival_airport_id)
+VALUES('2022-05-22', '14:00:00','2022-05-22','14:30:00', 500, 2, 1, 2);
+
 -- -------------------- stopover ------------
 INSERT INTO stopover (flight_id, airport_id, duration)
 VALUES (1,7,200);

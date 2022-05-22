@@ -10,18 +10,22 @@ import Model.FlightResearch;
 
 public class FlightOptionsJPanel extends JPanel {
     private ApplicationController controller;
-    private ListSelectionModel listSelect;
     private ArrayList<FlightOption> flightOptions;
+    private JLabel title;
 
     public FlightOptionsJPanel(FlightResearch flight) throws ConnectionException {
+        setLayout(new BorderLayout());
+
         controller = new ApplicationController();
         flightOptions = controller.getFlightOptions(flight);
         FlightOptionsModel model = new FlightOptionsModel(flightOptions);
         JTable flightOptionsTable = new JTable(model);
-        flightOptionsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        listSelect = flightOptionsTable.getSelectionModel();
+
         flightOptionsTable.setPreferredScrollableViewportSize(new Dimension(900, 100));
-        this.setLayout(new FlowLayout());
-        this.add(new JScrollPane(flightOptionsTable));
+
+        title = new JLabel("<html><h2 style='margin: 30px 0 15px 0'>Options disponibles pour ce vol</h2></html>", SwingConstants.CENTER);
+
+        add(title, BorderLayout.NORTH);
+        add(new JScrollPane(flightOptionsTable),BorderLayout.CENTER);
     }
 }
