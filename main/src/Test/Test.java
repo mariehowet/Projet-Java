@@ -46,7 +46,7 @@ class Test {
     }
 
     @org.junit.jupiter.api.Test
-    public void getPassnger() throws ActualPassengerException {
+    public void getPassenger() throws ActualPassengerException {
         Object passengerExpected = new Passenger(1, "Parache", "Melvin", null);
         Object passengerActual = manager.getActualPassenger(1);
         assertEquals(passengerExpected, passengerActual);

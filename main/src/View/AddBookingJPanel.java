@@ -1,169 +1,81 @@
 package View;
 
-import Controller.ApplicationController;
 import Exception.*;
 import Model.*;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class AddBookingJPanel extends JPanel {
-    private JLabel title, passengerLabel, weightLuggageLabel, companyNameLabel, mealTypeLabel, totalPriceLabel, flightLabel, seatLabel;
-    private JButton validationButton;
-    private JPanel formPanel, buttonPanel;
-    private JTextField  companyName, totalPriceText;
-    private JRadioButton buttonYesLuggage, buttonNoLuggage, buttonYesBusinessFlight, buttonNoBusinessFlight, buttonPayNow, buttonPayAfter;
-    private JComboBox seatTypeBox, weightLuggageBox, mealTypeBox, passengerBox, flightBox, seatBox;
-    private ButtonGroup hasLuggage, isBusinessFlight, payment;
-    private ApplicationController controller;
-    private Double flightPrice, seatTypePrice, luggagePrice, totalPrice;
+public class AddBookingJPanel extends FormJPanel {
     private String seatTypeName;
-    private Integer flightID;
-    private Container frameContainer;
-    private ArrayList<SeatType> seatTypeList;
     private ArrayList<Flight> flightList;
     private ArrayList<Passenger> passengerList;
-    private ArrayList<Seat> seatList;
 
     public AddBookingJPanel(Container frameContainer) throws ConnectionException{
-
-        this.frameContainer = frameContainer;
-        controller  = new ApplicationController();
-
-        setLayout(new BorderLayout());
-        setBorder(new EmptyBorder(0,50,50,50));
-        title = new JLabel("<html><h1 style='margin: 30px 0 15px 0'>Créer une réservation</h1></html>", SwingConstants.CENTER);
-
+        super(frameContainer);
+        title.setText("<html><h1 style='margin: 30px 0 15px 0'>Créer une réservation</h1></html>");
         flightPrice = 0.0;
         seatTypePrice = 0.0;
         luggagePrice = 0.0;
 
-        //----------------FormPanel--------------------------------------------------
-        formPanel = new JPanel();
-        formPanel.setBorder(new EmptyBorder(25, 150, 25, 150));
-        formPanel.setLayout(new GridLayout(11,2));
-
         //------------------Flight----------------------------------
-        flightLabel = new JLabel("<html><h3>Votre vol : </h3></html>");
-        formPanel.add(flightLabel);
         try {
             flightList = controller.getAllFlights();
-            flightBox = new JComboBox();
-
             for(Flight fl : flightList) {
                 flightBox.addItem(fl.getId());
             }
-
             flightBox.addActionListener(new SearchSeatListener());
             flightBox.addActionListener(new CalculateListener());
-            formPanel.add(flightBox);
 
         } catch (AllFlightsException | PriceException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
         //--------------------Passenger------------------------------
-        passengerLabel = new JLabel("Votre nom : ");
-        formPanel.add(passengerLabel);
-
         try {
             passengerList = controller.getAllPassengers();
-            passengerBox = new JComboBox();
             for(Passenger pas : passengerList) {
-                passengerBox.addItem(pas.getFirstName() + " " + pas.getLastName() + (pas.getInitialMiddleName() != null ? pas.getInitialMiddleName() : "" ));
+                passengerBox.addItem(pas.getFirstName() + " " + pas.getLastName() +  (pas.getInitialMiddleName() != null ? " "+pas.getInitialMiddleName() : "" ));
             }
-            formPanel.add(passengerBox);
-
         } catch (PassengerException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
         //--------------------SeatType------------------------------REFERENCE
-        seatLabel = new JLabel("Type de siège : ");
-        formPanel.add(seatLabel);
         try {
             seatTypeList = controller.getAllSeatTypes();
-            seatTypeBox = new JComboBox();
 
             for (SeatType st : seatTypeList) {
                 seatTypeBox.addItem(st.getName() + " " + "(+ " + st.getAdditionalPrice() + "€)");
             }
             seatTypeBox.addActionListener(new CalculateListener());
             seatTypeBox.addActionListener(new SearchSeatListener());
-            formPanel.add(seatTypeBox);
-
         } catch (AllSeatTypesException | PriceException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
         //-------------------------Seat--------------------------------------
-        seatLabel = new JLabel("Votre siège :");
-        formPanel.add(seatLabel);
-
-        seatBox = new JComboBox();
         seatBox.setEnabled(false);
-        formPanel.add(seatBox);
 
         //--------------------Luggage------------------------------------------
-        hasLuggage = new ButtonGroup();
-        buttonYesLuggage = new JRadioButton("Je dispose de bagages");
-        formPanel.add(buttonYesLuggage);
-        buttonNoLuggage = new JRadioButton("Je ne dispose pas de bagages");
-        buttonYesLuggage.addItemListener(new LuggageListener());
         buttonNoLuggage.setSelected(true);
-        formPanel.add(buttonNoLuggage);
-        hasLuggage.add(buttonYesLuggage);
-        hasLuggage.add(buttonNoLuggage);
 
         //-----------------------------Weight---------------------------------------------
-        weightLuggageLabel = new JLabel("Poids : ");
-        formPanel.add(weightLuggageLabel);
-        String[] weights = {"","0 < 10 kg (+0€)","10 < 20 kg (+10€)","20 < 30 kg (+20€)","Max 35 kg (+25€)"};
-        weightLuggageBox = new JComboBox(weights);
         weightLuggageBox.addActionListener(new CalculateListener());
         weightLuggageBox.setEnabled(false);
-        formPanel.add(weightLuggageBox);
 
         //--------------------------------Business------------------------------------------
-        isBusinessFlight = new ButtonGroup();
-        buttonYesBusinessFlight = new JRadioButton("Je voyage pour affaire");
-        formPanel.add(buttonYesBusinessFlight);
-        buttonNoBusinessFlight = new JRadioButton("Je ne voyage pas pour affaire");
-        buttonYesBusinessFlight.addItemListener(new CompanyListener());
         buttonNoBusinessFlight.setSelected(true);
-        formPanel.add(buttonNoBusinessFlight);
-        isBusinessFlight.add(buttonYesBusinessFlight);
-        isBusinessFlight.add(buttonNoBusinessFlight);
 
-        companyNameLabel = new JLabel("Nom de la société : ");
-        formPanel.add(companyNameLabel);
-        companyName = new JTextField();
+        //---------------------------CompanyName-------------------------------------------
         companyName.setEnabled(false);
-        formPanel.add(companyName);
 
-        //----------------------------Meal----------------------------------------------
-        mealTypeLabel = new JLabel("Type de repas : ");
-        formPanel.add(mealTypeLabel);
-        String[] mealTypes = {"Poulet","Boeuf","Végétarien","Porc"};
-        mealTypeBox = new JComboBox(mealTypes);
-        formPanel.add(mealTypeBox);
-
-        //------------------------------payement--------------------------------------------
-        payment = new ButtonGroup();
-        buttonPayNow = new JRadioButton("Je paye maintenant");
-        formPanel.add(buttonPayNow);
-        buttonPayAfter = new JRadioButton("Je paye le jour du départ");
+        //------------------------------Payement--------------------------------------------
         buttonPayNow.setSelected(true);
-        formPanel.add(buttonPayAfter);
-        payment.add(buttonPayNow);
-        payment.add(buttonPayAfter);
 
         //------------------------------Price---------------------------------------------
         totalPriceLabel = new JLabel("Prix total en €: ");
@@ -173,47 +85,9 @@ public class AddBookingJPanel extends JPanel {
         formPanel.add(totalPriceText);
 
         //--------------------ButtonPanel-----------------------------------
-
-        validationButton = new JButton("Validation");
-
         validationButton.addActionListener(new ValidationListener());
         validationButton.addActionListener(new CalculateListener());
 
-        buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout());
-        buttonPanel.add(validationButton);
-
-        //--------------------AddPanels----------------------
-
-        add(title, BorderLayout.NORTH);
-        add(formPanel, BorderLayout.CENTER);
-        add(buttonPanel, BorderLayout.SOUTH);
-    }
-
-    private class LuggageListener implements ItemListener {
-
-        @Override
-        public void itemStateChanged(ItemEvent e) {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                weightLuggageBox.setEnabled(true);
-            } else {
-                weightLuggageBox.setEnabled(false);
-                weightLuggageBox.setSelectedItem("");
-            }
-        }
-    }
-
-    private class CompanyListener implements ItemListener {
-
-        @Override
-        public void itemStateChanged(ItemEvent e) {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                companyName.setEnabled(true);
-            } else {
-                companyName.setEnabled(false);
-                companyName.setText("");
-            }
-        }
     }
 
     private class SearchSeatListener implements ActionListener {
@@ -250,6 +124,8 @@ public class AddBookingJPanel extends JPanel {
                 seatTypePrice = Double.parseDouble(matcherST.group(1));
             if(matcherWL.find())
                 luggagePrice = Double.parseDouble(matcherWL.group(1));
+            else
+                luggagePrice = 0.0;
             totalPrice = flightPrice + seatTypePrice + luggagePrice;
             totalPriceText.setText(totalPrice + "");
         }
