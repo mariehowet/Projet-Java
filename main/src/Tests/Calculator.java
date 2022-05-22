@@ -1,4 +1,4 @@
-package Test;
+package Tests;
 
 public class Calculator {
 
