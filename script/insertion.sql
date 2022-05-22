@@ -243,3 +243,12 @@ VALUES('Hanquet', 'Julien',null, '2000-01-01', 'jh@gmail.com','0478955465', 'Rue
 UPDATE passenger
 SET initial_middle_name = 'D.'
 WHERE id = 2;
+
+select f.id, da.name as 'departure_airport', aa.name as 'arrival_airport', f.departure_date, f.expected_arrival_date, f.departure_hour, f.expected_arrival_hour
+from flight f
+inner join airport da on (f.departure_airport_id = da.id)
+inner join airport aa on (f.arrival_airport_id = aa.id)
+where
+da.city = ? and da.post_code = ? and da.country = ?
+and aa.city = ? and aa.post_code = ? and aa.country = ?
+and not exists (select flight_id from stopover s where f.id = s.flight_id)

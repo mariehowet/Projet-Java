@@ -98,10 +98,8 @@ public class BookingDBAccess implements BookingDataAccess {
                 allBookings.add(booking);
             }
 
-        } catch (SQLException exception) {
+        } catch (SQLException | PriceException exception) {
             throw new AllBookingsException();
-        }catch (PriceException exception) {
-            throw new PriceException();
         }
         return allBookings;
     }

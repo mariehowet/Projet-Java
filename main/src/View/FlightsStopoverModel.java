@@ -1,15 +1,17 @@
 package View;
 
-import Model.FlightResearch;
+import Model.FlightStopover;
+
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class FlightsModel extends AbstractTableModel {
-    private ArrayList<String> columnNames;
-    private ArrayList<FlightResearch> contents;
+public class FlightsStopoverModel extends AbstractTableModel {
 
-    public FlightsModel(ArrayList<FlightResearch> contents) {
+    private ArrayList<String> columnNames;
+    private ArrayList<FlightStopover> contents;
+
+    public FlightsStopoverModel(ArrayList<FlightStopover> contents) {
         columnNames = new ArrayList<>();
         columnNames.add("Numéro vol");
         columnNames.add("Aéroport départ");
@@ -18,7 +20,8 @@ public class FlightsModel extends AbstractTableModel {
         columnNames.add("Date arrivée");
         columnNames.add("Heure départ");
         columnNames.add("Heure d'arrivée");
-        columnNames.add("Prix du vol (€)");
+        columnNames.add("Aéroport d'escale");
+        columnNames.add("Durée de l'escale");
         this.contents = contents;
     }
 
@@ -36,25 +39,27 @@ public class FlightsModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        FlightResearch flightResearch = contents.get(rowIndex);
+        FlightStopover  flightStopover = contents.get(rowIndex);
 
         switch (columnIndex) {
             case 0:
-                return flightResearch.getFlightId();
+                return flightStopover.getFlightId();
             case 1:
-                return flightResearch.getDepartureAirportName();
+                return flightStopover.getDepartureAirportName();
             case 2:
-                return flightResearch.getArrivalAirportName();
+                return flightStopover.getArrivalAirportName();
             case 3:
-                return flightResearch.getDepartureDate().getTime();
+                return flightStopover.getDepartureDate().getTime();
             case 4:
-                return flightResearch.getArrivalDate().getTime();
+                return flightStopover.getArrivalDate().getTime();
             case 5:
-                return flightResearch.getDepartureHour();
+                return flightStopover.getDepartureHour();
             case 6:
-                return flightResearch.getArrivalHour();
+                return flightStopover.getArrivalHour();
             case 7:
-                return flightResearch.getPrice();
+                return flightStopover.getStopoverAirportName() ==  null ? "/" : flightStopover.getStopoverAirportName();
+            case 8:
+                return flightStopover.getDurationStopover() == null ? "/" :  flightStopover.getDurationStopover() ;
             default:
                 return null;
         }
@@ -70,12 +75,13 @@ public class FlightsModel extends AbstractTableModel {
             case 4:
                 c = Date.class;
                 break;
-            case 7:
-                c = Double.class;
+            case 8:
+                c = Integer.class;
                 break;
             default:
                 c = String.class;
         }
         return c;
     }
+
 }

@@ -69,7 +69,7 @@ public class ApplicationController {
         return manager.getBookingsHistory(idPassenger);
     }
 
-    public ArrayList<FlightResearch> getFlightsStopover(Locality departure, Locality arrival, boolean withStopover) throws FlightsStopover, PriceException {
+    public ArrayList<FlightStopover> getFlightsStopover(Locality departure, Locality arrival, boolean withStopover) throws FlightsStopover, PriceException {
         return manager.getFlightsStopover(departure, arrival, withStopover);
     }
 
