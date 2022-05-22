@@ -74,10 +74,8 @@ public class FindFlightsDBAccess implements FindFlightsDataAccess {
             }
             return flights;
 
-        } catch (SQLException exception) {
+        } catch (SQLException | PriceException exception) {
             throw new FlightsException();
-        } catch (PriceException exception) {
-            throw new PriceException();
         }
     }
 }

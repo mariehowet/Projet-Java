@@ -1,4 +1,4 @@
-CREATE SCHEMA marvinairline;
+-- CREATE SCHEMA marvinairline;
 
 USE marvinairline;
 
@@ -48,7 +48,7 @@ CREATE TABLE `airport` (
                            CONSTRAINT `locality_airport` FOREIGN KEY (`city`, `post_code`, `country`) REFERENCES `locality` (`city`, `post_code`, `country`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
-CREATE TABLE `flightResearch` (
+CREATE TABLE `flight` (
                           `id` int NOT NULL AUTO_INCREMENT,
                           `departure_date` date NOT NULL,
                           `departure_hour` varchar(15) NOT NULL,
@@ -76,7 +76,7 @@ CREATE TABLE `stopover` (
                             PRIMARY KEY (`flight_id`,`airport_id`),
                             KEY `airport_stopover_fk_idx` (`airport_id`),
                             CONSTRAINT `airport_stopover_fk` FOREIGN KEY (`airport_id`) REFERENCES `airport` (`id`),
-                            CONSTRAINT `flight_stopover_fk` FOREIGN KEY (`flight_id`) REFERENCES `flightResearch` (`id`)
+                            CONSTRAINT `flight_stopover_fk` FOREIGN KEY (`flight_id`) REFERENCES `flight` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 CREATE TABLE `passenger` (
@@ -112,7 +112,7 @@ CREATE TABLE `booking` (
                            KEY `flight_fk_idx` (`flight_id`),
                            KEY `seat_booking_fk_idx` (`seat_id`),
                            KEY `passenger_booking_fk_idx` (`passenger_id`),
-                           CONSTRAINT `flight_fk` FOREIGN KEY (`flight_id`) REFERENCES `flightResearch` (`id`),
+                           CONSTRAINT `flight_fk` FOREIGN KEY (`flight_id`) REFERENCES `flight` (`id`),
                            CONSTRAINT `passenger_booking_fk` FOREIGN KEY (`passenger_id`) REFERENCES `passenger` (`id`),
                            CONSTRAINT `seat_booking_fk` FOREIGN KEY (`seat_id`) REFERENCES `seat` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
@@ -121,13 +121,13 @@ CREATE TABLE `booking` (
 DROP TABLE booking;
 DROP TABLE passenger;
 DROP TABLE stopover;
-DROP TABLE flightResearch;
+DROP TABLE flight;
 DROP TABLE seat;
 DROP TABLE seat_type;
 DROP TABLE airplane;
 DROP TABLE airport;
 DROP TABLE locality;
+*/
 
- */
 
 
