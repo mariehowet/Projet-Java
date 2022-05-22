@@ -23,7 +23,7 @@ public class AllBookingsModel extends AbstractTableModel {
         columnNames.add("Poids des bagages");
         columnNames.add("Entreprise");
         columnNames.add("Repas");
-        columnNames.add("Prix");
+        columnNames.add("Prix (€)");
         columnNames.add("Numéro de vol");
         columnNames.add("Passager");
         columnNames.add("Place");

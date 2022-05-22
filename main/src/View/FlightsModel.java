@@ -19,7 +19,7 @@ public class FlightsModel extends AbstractTableModel {
         columnNames.add("Date arrivée");
         columnNames.add("Heure départ");
         columnNames.add("Heure d'arrivée");
-        columnNames.add("Prix du vol");
+        columnNames.add("Prix du vol (€)");
         this.contents = contents;
     }
 

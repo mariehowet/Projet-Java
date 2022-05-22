@@ -11,10 +11,12 @@ import Model.FlightOfDepartureAirport;
 
 public class FlightsOfDepartureAirportJPanel extends JPanel {
     private ApplicationController controller;
-    private ListSelectionModel listSelect;
+    private JLabel title;
+
     private ArrayList<FlightOfDepartureAirport> flightsOfDepartureAirport;
 
     public FlightsOfDepartureAirportJPanel(Date startDate, Date endDate, int idAirport) {
+        setLayout(new BorderLayout());
         try {
             controller = new ApplicationController();
             flightsOfDepartureAirport = controller.getFlightsOfDepartureAirport(startDate,endDate,idAirport);
@@ -24,19 +26,17 @@ public class FlightsOfDepartureAirportJPanel extends JPanel {
             } else {
                 FlightsOfDepartureAirportModel model = new FlightsOfDepartureAirportModel(flightsOfDepartureAirport);
                 JTable flightsTable = new JTable(model);
-                flightsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-                listSelect = flightsTable.getSelectionModel();
+
                 flightsTable.setPreferredScrollableViewportSize(new Dimension(900, 100));
 
-                this.setLayout(new FlowLayout());
-                this.add(new JScrollPane(flightsTable));
+                title = new JLabel("<html><h2 style='margin: 30px 0 15px 0'>Liste des vols</h2></html>", SwingConstants.CENTER);
+
+                add(title, BorderLayout.NORTH);
+                add(new JScrollPane(flightsTable), BorderLayout.CENTER);
             }
         }
-        catch (FlightsOfDepartureAirportException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
-        catch (ConnectionException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+        catch (FlightsOfDepartureAirportException | ConnectionException exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage());
         }
     }
 }
