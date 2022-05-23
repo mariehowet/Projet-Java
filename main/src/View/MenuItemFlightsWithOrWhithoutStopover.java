@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import Exception.*;
 
 public class MenuItemFlightsWithOrWhithoutStopover extends JPanel {
-    private JPanel researchPanel, researchDisplay, displayPanel;
+    private JPanel researchPanel, researchDisplay, displayPanel, stopoversPanel;
     private JButton researchButton;
     private JLabel departureCityLabel, arrivalCityLabel;
     private JComboBox departureCity, arrivalCity;
@@ -30,7 +30,7 @@ public class MenuItemFlightsWithOrWhithoutStopover extends JPanel {
         researchPanel.setLayout(new FlowLayout());
 
         // Panel Affichage
-        displayPanel = new JPanel();
+        displayPanel = new JPanel(new FlowLayout());
 
         // Récupération des différentes localitées
         try {
@@ -70,33 +70,35 @@ public class MenuItemFlightsWithOrWhithoutStopover extends JPanel {
 
         // Bouton de recherche
         researchButton = new JButton("Rechercher");
-        researchButton.addActionListener(new ResearchListener(displayPanel));
+        researchButton.addActionListener(new ResearchListener());
         researchPanel.add(researchButton);
 
+        stopoversPanel = new JPanel(new FlowLayout());
         add(researchPanel, BorderLayout.NORTH);
         add(displayPanel, BorderLayout.CENTER);
+        add(stopoversPanel, BorderLayout.SOUTH);
     }
 
     private class ResearchListener implements ActionListener {
-        private JPanel panel;
-        public ResearchListener(JPanel panel) {
-            this.panel = panel;
-        };
+
         @Override
         public void actionPerformed(ActionEvent e) {
-            panel.removeAll();
-            panel.revalidate();
-            panel.repaint();
+            displayPanel.removeAll();
+            displayPanel.revalidate();
+            displayPanel.repaint();
+            stopoversPanel.removeAll();
+            stopoversPanel.revalidate();
+            stopoversPanel.repaint();
+
             try {
                 Locality departure = ConvertManager.stringIntoLocality(departureCity.getSelectedItem().toString());
                 Locality arrival = ConvertManager.stringIntoLocality(arrivalCity.getSelectedItem().toString());
-                researchDisplay = new FlightStopoverJPanel(departure, arrival,withStopover.isSelected());
-                panel.add(researchDisplay, BorderLayout.CENTER);
-                frameContainer.revalidate();
-                frameContainer.repaint();
+
+                researchDisplay = new FlightStopoverJPanel(stopoversPanel, departure, arrival,withStopover.isSelected());
+                displayPanel.add(researchDisplay);
             }
-            catch (LocalityException localityException) {
-                System.out.println("erreur");
+            catch (LocalityException exception) {
+                JOptionPane.showMessageDialog(null, exception.getMessage(), "Problème", JOptionPane.WARNING_MESSAGE);
             }
         }
     }
