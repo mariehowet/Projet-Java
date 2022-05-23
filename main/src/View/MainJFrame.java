@@ -24,7 +24,7 @@ public class MainJFrame extends JFrame {
 
         // Container
         frameContainer = this.getContentPane();
-        frameContainer.setLayout(new BorderLayout());
+        //frameContainer.setLayout(new BorderLayout());
 
         // Panneau de bienvenue
         welcomeJPanel = new WelcomeJPanel();
@@ -100,7 +100,7 @@ public class MainJFrame extends JFrame {
         public void actionPerformed(ActionEvent e) {
             frameContainer.removeAll();
             try {
-                frameContainer.add(new MenuItemFlightsOfDepartureAirport(frameContainer), BorderLayout.CENTER);
+                frameContainer.add(new MenuItemFlightsOfDepartureAirport());
             }
             catch (ConnectionException connectionFindFlightsOfDepartureAirportException) {
                 JOptionPane.showMessageDialog(null, connectionFindFlightsOfDepartureAirportException.getMessage());
@@ -115,7 +115,7 @@ public class MainJFrame extends JFrame {
         public void actionPerformed(ActionEvent e) {
             frameContainer.removeAll();
             try {
-                frameContainer.add(new MenuItemFlightsWithOrWhithoutStopover(frameContainer), BorderLayout.CENTER);
+                frameContainer.add(new MenuItemFlightsWithOrWhithoutStopover());
             } catch (ConnectionException stopoverConnectionException) {
                 JOptionPane.showMessageDialog(null, stopoverConnectionException.getMessage());
             }
@@ -127,7 +127,7 @@ public class MainJFrame extends JFrame {
         public void actionPerformed(ActionEvent e) {
             frameContainer.removeAll();
             try{
-                frameContainer.add(new MenuItemHistorySearch(frameContainer), BorderLayout.CENTER);
+                frameContainer.add(new MenuItemHistorySearch());
             } catch (ConnectionException historyConnectionException) {
                 JOptionPane.showMessageDialog(null, historyConnectionException.getMessage());
             }
@@ -140,7 +140,7 @@ public class MainJFrame extends JFrame {
         public void actionPerformed(ActionEvent e) {
             frameContainer.removeAll();
             try {
-                frameContainer.add(new MenuItemFindFlight(frameContainer), BorderLayout.CENTER);
+                frameContainer.add(new MenuItemFindFlight(frameContainer));
             }
             catch (ConnectionException findFlightException) {
                 JOptionPane.showMessageDialog(null, findFlightException.getMessage(), "Problème", JOptionPane.WARNING_MESSAGE);
@@ -153,9 +153,7 @@ public class MainJFrame extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             frameContainer.removeAll();
-            frameContainer.revalidate();
-            frameContainer.repaint();
-            frameContainer.add(new FollowedFlightJPanel(frameContainer), BorderLayout.NORTH);
+            frameContainer.add(new FollowedFlightJPanel());
             setVisible(true);
         }
     }
@@ -164,8 +162,6 @@ public class MainJFrame extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             frameContainer.removeAll();
-            frameContainer.revalidate();
-            frameContainer.repaint();
             frameContainer.add(new MenuItemAllBookings(frameContainer), BorderLayout.CENTER);
             setVisible(true);
         }
@@ -189,8 +185,7 @@ public class MainJFrame extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             frameContainer.removeAll();
-            WelcomeJPanel welcomeJPanel = new WelcomeJPanel();
-            frameContainer.add(welcomeJPanel);
+            frameContainer.add(new WelcomeJPanel());
             setVisible(true);
         }
     }

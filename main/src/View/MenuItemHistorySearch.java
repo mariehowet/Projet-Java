@@ -15,12 +15,10 @@ public class MenuItemHistorySearch extends JPanel {
     private JButton researchButton;
     private JLabel passengerLabel;
     private JComboBox passenger;
-    private Container frameContainer;
     private ApplicationController controller;
 
-    public MenuItemHistorySearch(Container frameContainer) throws ConnectionException {
+    public MenuItemHistorySearch() throws ConnectionException {
         this.controller = new ApplicationController();
-        this.frameContainer = frameContainer;
         this.setLayout(new BorderLayout());
 
         researchPanel = new JPanel();
@@ -64,8 +62,6 @@ public class MenuItemHistorySearch extends JPanel {
                 int idPassenger = ConvertManager.stringIntoId(passenger.getSelectedItem().toString());
                 researchDisplay = new BookingsHistoryJPanel(idPassenger);
                 displayPanel.add(researchDisplay, BorderLayout.CENTER);
-                frameContainer.revalidate();
-                frameContainer.repaint();
             }
             catch (IdException idException) {
                 JOptionPane.showMessageDialog(null, idException.getMessage(), "Problème", JOptionPane.WARNING_MESSAGE);

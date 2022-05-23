@@ -9,6 +9,7 @@ public class ThreadJPanel extends JPanel {
     private JLayeredPane layeredPane;
 
     public ThreadJPanel() {
+        setLayout(new FlowLayout());
         icon = new ImageIcon("main/src/images/aeroplane.png");
         Image iconResizing = icon.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT);
         ImageIcon newIcon = new ImageIcon(iconResizing);
@@ -26,6 +27,7 @@ public class ThreadJPanel extends JPanel {
         layeredPane.add(imageLabel, JLayeredPane.DEFAULT_LAYER);
         layeredPane.add(iconLabel, JLayeredPane.PALETTE_LAYER);
         layeredPane.setOpaque(true);
+
         add(layeredPane);
         setVisible(true);
 

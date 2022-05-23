@@ -18,15 +18,15 @@ public class MenuItemFlightsOfDepartureAirport extends JPanel {
     private JComboBox airport;
     private JPanel researchPanel, displayPanel,researchDisplay,panelStartDate, panelEndDate;
     private JButton researchButton;
-    private Container frameContainer;
+
     private ApplicationController controller;
     private JDateChooser chooserStartDate, chooserEndDate;
     private ArrayList<Airport> airportsList;
 
-    public MenuItemFlightsOfDepartureAirport(Container frameContainer) throws ConnectionException {
+    public MenuItemFlightsOfDepartureAirport() throws ConnectionException {
 
         setLayout(new BorderLayout());
-        this.frameContainer = frameContainer;
+
         controller = new ApplicationController();
 
         researchPanel = new JPanel();
@@ -95,8 +95,7 @@ public class MenuItemFlightsOfDepartureAirport extends JPanel {
 
                 int idAirport = ConvertManager.stringIntoId(airport.getSelectedItem().toString());
                 researchDisplay = new FlightsOfDepartureAirportJPanel(chooserStartDate.getDate(),chooserEndDate.getDate(),idAirport);
-                frameContainer.revalidate();
-                frameContainer.repaint();
+
                 displayPanel.add(researchDisplay, BorderLayout.CENTER);
 
             }

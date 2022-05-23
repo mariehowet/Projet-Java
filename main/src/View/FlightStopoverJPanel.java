@@ -69,7 +69,10 @@ public class FlightStopoverJPanel extends JPanel {
                     FlightWithOrWhithoutStopover flightStopover = flightsStopover.get(indSelectedLine);
 
                     try {
-                        stopoversPanel.removeAll();
+
+                        if (stopoversPanel != null) {
+                            stopoversPanel.removeAll();
+                        }
                         stopoversPanel.revalidate();
                         stopoversPanel.repaint();
 

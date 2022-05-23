@@ -15,14 +15,12 @@ public class MenuItemFlightsWithOrWhithoutStopover extends JPanel {
     private JButton researchButton;
     private JLabel departureCityLabel, arrivalCityLabel;
     private JComboBox departureCity, arrivalCity;
-    private Container frameContainer;
     private ApplicationController controller;
     private ButtonGroup stopover;
     private JRadioButton withStopover, withoutStopover;
 
-    public MenuItemFlightsWithOrWhithoutStopover(Container frameContainer) throws ConnectionException {
+    public MenuItemFlightsWithOrWhithoutStopover() throws ConnectionException {
         this.controller = new ApplicationController();
-        this.frameContainer = frameContainer;
         this.setLayout(new BorderLayout());
 
         researchPanel = new JPanel();
