@@ -19,6 +19,4 @@ public class SingletonConnection {
         }
         return uniqueConnexion;
     }
-
-
 }

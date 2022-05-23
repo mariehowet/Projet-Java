@@ -14,13 +14,11 @@ public class FollowedFlightJPanel extends JPanel{
     public FollowedFlightJPanel(Container frameContainer){
         this.frameContainer = frameContainer;
 
-        // Button
         researchButton = new JButton("Afficher");
 
-        // JLabel
         label = new JLabel("<html><h3>Suivez en direct le vol Paris -> New-York</h3><html>");
         setLayout(new FlowLayout());
-        // Panel de recherche
+
         this.add(label);
         this.add(researchButton);
         researchButton.addActionListener(new ResearchListener());

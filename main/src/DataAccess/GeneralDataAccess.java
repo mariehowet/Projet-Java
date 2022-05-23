@@ -1,6 +1,5 @@
 package DataAccess;
 
-
 import java.util.ArrayList;
 import Exception.CloseDataException;
 import Exception.PassengerException;

@@ -25,14 +25,11 @@ public class MenuItemFlightsWithOrWhithoutStopover extends JPanel {
         this.frameContainer = frameContainer;
         this.setLayout(new BorderLayout());
 
-        // Panel de recherche
         researchPanel = new JPanel();
         researchPanel.setLayout(new FlowLayout());
 
-        // Panel Affichage
         displayPanel = new JPanel(new FlowLayout());
 
-        // Récupération des différentes localitées
         try {
             ArrayList<Locality> localitiesList = controller.getAllLocalities();
             departureCity = new JComboBox();
@@ -43,12 +40,10 @@ public class MenuItemFlightsWithOrWhithoutStopover extends JPanel {
                 arrivalCity.addItem(loc.getCity()+ "-" + loc.getCountry() + "-" + loc.getPostCode());
             }
 
-            // Ville de départ
             departureCityLabel = new JLabel("Ville de départ ");
             researchPanel.add(departureCityLabel);
             researchPanel.add(departureCity);
 
-            // Ville de destination
             arrivalCityLabel = new JLabel("Ville de destination ");
             researchPanel.add(arrivalCityLabel);
             researchPanel.add(arrivalCity);
@@ -57,7 +52,6 @@ public class MenuItemFlightsWithOrWhithoutStopover extends JPanel {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
-        // Boutons escale
         withoutStopover = new JRadioButton("Sans escale");
         researchPanel.add(withoutStopover);
         withStopover = new JRadioButton("Avec escales");
@@ -68,7 +62,6 @@ public class MenuItemFlightsWithOrWhithoutStopover extends JPanel {
         stopover.add(withStopover);
         withoutStopover.setSelected(true);
 
-        // Bouton de recherche
         researchButton = new JButton("Rechercher");
         researchButton.addActionListener(new ResearchListener());
         researchPanel.add(researchButton);

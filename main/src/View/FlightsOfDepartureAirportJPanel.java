@@ -8,7 +8,6 @@ import java.util.Date;
 import Exception.*;
 import Model.FlightOfDepartureAirport;
 
-
 public class FlightsOfDepartureAirportJPanel extends JPanel {
     private ApplicationController controller;
     private JLabel title;

@@ -29,14 +29,11 @@ public class MenuItemFlightsOfDepartureAirport extends JPanel {
         this.frameContainer = frameContainer;
         controller = new ApplicationController();
 
-        // Panel de recherche
         researchPanel = new JPanel();
         researchPanel.setLayout(new FlowLayout());
 
-        // Panel Affichage
         displayPanel = new JPanel();
 
-        // Récupération des différents aéroports
         try {
             airportsList = controller.getAllAirports();
             airport = new JComboBox();;
@@ -50,7 +47,6 @@ public class MenuItemFlightsOfDepartureAirport extends JPanel {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
-        // Date de Début
         chooserStartDate = new JDateChooser();
         chooserStartDate.setLocale(Locale.FRENCH);
         chooserStartDate.setPreferredSize(new Dimension(125,25));
@@ -59,7 +55,6 @@ public class MenuItemFlightsOfDepartureAirport extends JPanel {
         panelStartDate.add(new JLabel("Date de début "));
         panelStartDate.add(chooserStartDate);
 
-        // Date de Fin
         chooserEndDate = new JDateChooser();
         chooserEndDate.setLocale(Locale.FRENCH);
         chooserEndDate.setPreferredSize(new Dimension(125,25));
@@ -68,18 +63,15 @@ public class MenuItemFlightsOfDepartureAirport extends JPanel {
         panelEndDate.add(new JLabel("Date de fin "));
         panelEndDate.add(chooserEndDate);
 
-        // Button
         researchButton = new JButton("Rechercher");
         researchButton.addActionListener(new ResearchListener());
 
-        // Ajout dans panel de recherche
         researchPanel.add(panelStartDate);
         researchPanel.add(panelEndDate);
         researchPanel.add(departureAirportLabel);
         researchPanel.add(airport);
         researchPanel.add(researchButton);
 
-        // Ajout dans la classe
         add(researchPanel, BorderLayout.NORTH);
         add(displayPanel, BorderLayout.CENTER);
     }

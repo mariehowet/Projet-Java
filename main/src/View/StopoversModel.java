@@ -1,7 +1,6 @@
 package View;
 
 import Model.Stopover;
-
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 

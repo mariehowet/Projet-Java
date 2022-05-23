@@ -1,7 +1,6 @@
 package Model;
 
 import Exception.PriceException;
-
 import java.util.Objects;
 
 public class SeatType {
@@ -34,5 +33,4 @@ public class SeatType {
         SeatType seatType = (SeatType) o;
         return additionalPrice == seatType.additionalPrice && Objects.equals(name, seatType.name);
     }
-
 }

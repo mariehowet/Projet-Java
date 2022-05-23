@@ -27,18 +27,14 @@ public class MenuItemFindFlight extends JPanel {
         this.frameContainer = frameContainer;
         controller = new ApplicationController();
 
-        // Panel de recherche
         researchPanel = new JPanel();
         researchPanel.setLayout(new FlowLayout());
 
-        // Panel grille des champs de remplissage
         gridFields = new JPanel();
         gridFields.setLayout(new GridLayout(3,2));
 
-        // Panel Affichage
         displayPanel = new JPanel(new FlowLayout());
 
-        // Récupération des différentes localitées
         try {
             String[] localitiesValues;
 
@@ -54,12 +50,10 @@ public class MenuItemFindFlight extends JPanel {
             departureCity = new JComboBox(localitiesValues);
             arrivalCity = new JComboBox(localitiesValues);
 
-            // Ville de départ
             departureCityLabel = new JLabel("Ville de départ");
             gridFields.add(departureCityLabel);
             gridFields.add(departureCity);
 
-            // Ville de destination
             arrivalCityLabel = new JLabel("Ville de destination");
             gridFields.add(arrivalCityLabel);
             gridFields.add(arrivalCity);
@@ -68,7 +62,7 @@ public class MenuItemFindFlight extends JPanel {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
-        // Date de Début
+
         chooserStartDate = new JDateChooser();
         chooserStartDate.setPreferredSize(new Dimension(150,30));
 
@@ -76,7 +70,6 @@ public class MenuItemFindFlight extends JPanel {
         panelStartDate.add(new JLabel("Date de début "));
         panelStartDate.add(chooserStartDate);
 
-        // Date de Fin
         chooserEndDate = new JDateChooser();
         chooserEndDate.setPreferredSize(new Dimension(150,30));
 
@@ -84,13 +77,11 @@ public class MenuItemFindFlight extends JPanel {
         panelEndDate.add(new JLabel("Date de fin "));
         panelEndDate.add(chooserEndDate);
 
-        // Button
         buttonPanel = new JPanel(new FlowLayout());
         researchButton = new JButton("Rechercher");
         researchButton.addActionListener(new ResearchListener());
         buttonPanel.add(researchButton);
 
-        // Panel de recherche
         gridFields.add(panelStartDate);
         gridFields.add(panelEndDate);
 

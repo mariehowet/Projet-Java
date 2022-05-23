@@ -85,7 +85,7 @@ public class MainJFrame extends JFrame {
         bookingsMenuItem = new JMenuItem("Liste des réservations");
         addBookingMenuItem = new JMenuItem("Ajouter une réservation");
         addBookingMenuItem.addActionListener(new AddBookingListener());
-        bookingsMenuItem.addActionListener(new ListeningListener());
+        bookingsMenuItem.addActionListener(new ListingListener());
         bookings.add(bookingsMenuItem);
         bookings.add(addBookingMenuItem);
 
@@ -160,7 +160,7 @@ public class MainJFrame extends JFrame {
         }
     }
 
-    public class ListeningListener implements ActionListener {
+    public class ListingListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             frameContainer.removeAll();
@@ -203,11 +203,8 @@ public class MainJFrame extends JFrame {
                 ApplicationController controller = new ApplicationController();
                 controller.closeConnection();
             }
-            catch (ConnectionException connectionException) {
-                JOptionPane.showMessageDialog(null, connectionException.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-            }
-            catch (CloseDataException closeDataException) {
-                JOptionPane.showMessageDialog(null, closeDataException.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            catch (ConnectionException  | CloseDataException exception) {
+                JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
             System.exit(0);
         }
@@ -221,11 +218,8 @@ public class MainJFrame extends JFrame {
                 ApplicationController controller = new ApplicationController();
                 controller.closeConnection();
             }
-            catch (ConnectionException connectionException) {
-                JOptionPane.showMessageDialog(null, connectionException.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-            }
-            catch (CloseDataException closeDataException) {
-                JOptionPane.showMessageDialog(null, closeDataException.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            catch (ConnectionException  | CloseDataException exception) {
+                JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
             System.exit(0);
         }

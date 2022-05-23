@@ -9,7 +9,6 @@ public class WelcomeJPanel extends JPanel {
 
     public WelcomeJPanel(){
         setLayout(new GridLayout(3,1));
-
         label = new JLabel("<html><h1 style='margin: 30px 0 15px 0'>Bienvenue sur Marvin Airline !</h1></html>", SwingConstants.CENTER);
         this.add(label);
         test = new JPanel();

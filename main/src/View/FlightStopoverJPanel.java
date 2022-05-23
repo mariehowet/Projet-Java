@@ -47,9 +47,7 @@ public class FlightStopoverJPanel extends JPanel {
                     researchStopoversPanel.add(stopoversButton);
                     add(researchStopoversPanel, BorderLayout.SOUTH);
                 }
-
             }
-
         }
         catch (FlightsStopoverException | ConnectionException | PriceException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());

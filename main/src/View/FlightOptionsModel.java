@@ -4,7 +4,6 @@ import Model.FlightOption;
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 
-
 public class FlightOptionsModel extends AbstractTableModel {
     private ArrayList<String> columnNames;
     private ArrayList<FlightOption> contents;

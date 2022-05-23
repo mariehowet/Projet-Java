@@ -6,5 +6,4 @@ public class Calculator {
         return nb1 + nb2 + nb3;
     }
 
-
 }

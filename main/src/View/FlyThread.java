@@ -1,6 +1,5 @@
 package View;
 
-
 public class FlyThread extends Thread{
     private ThreadJPanel threadJPanel;
 

@@ -23,7 +23,6 @@ class Test {
         assertEquals(priceExpected, calculator.add(manager.getFlightPrice(1),(double)manager.getActualSeatType(7).getAdditionalPrice(),priceWeights[2]), 0.01);
     }
 
-    // voir méthode
     @org.junit.jupiter.api.Test
     public void getSeatTypes() throws PriceException, AllSeatTypesException {
         Object [] seatTypesExpected = {new SeatType("Economic", 30),new SeatType("Business", 100), new SeatType("First", 200)};

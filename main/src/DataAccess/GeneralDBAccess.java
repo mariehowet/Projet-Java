@@ -85,6 +85,4 @@ public class GeneralDBAccess implements GeneralDataAccess {
             throw new AllLocalitiesException();
         }
     }
-
-
 }

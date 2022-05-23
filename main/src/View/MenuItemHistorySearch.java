@@ -23,17 +23,13 @@ public class MenuItemHistorySearch extends JPanel {
         this.frameContainer = frameContainer;
         this.setLayout(new BorderLayout());
 
-        // Panel de recherche
         researchPanel = new JPanel();
         researchPanel.setLayout(new FlowLayout());
 
-        // Panel Affichage
         displayPanel = new JPanel();
 
-        // Label
         passengerLabel = new JLabel("Passager");
 
-        // Récupération des différents passagers
         try {
             ArrayList<Passenger> passengerList = controller.getAllPassengers();
             passenger = new JComboBox();
@@ -46,11 +42,9 @@ public class MenuItemHistorySearch extends JPanel {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
-        // Boutton de recherche
         researchButton = new JButton("Rechercher");
         researchButton.addActionListener(new ResearchListener());
 
-        // Panel de recherche
         researchPanel.add(passengerLabel);
         researchPanel.add(passenger);
         researchPanel.add(researchButton);

@@ -1,7 +1,6 @@
 package View;
 
 import Model.FlightWithOrWhithoutStopover;
-
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.Date;
@@ -74,5 +73,4 @@ public class FlightsStopoverModel extends AbstractTableModel {
         }
         return c;
     }
-
 }

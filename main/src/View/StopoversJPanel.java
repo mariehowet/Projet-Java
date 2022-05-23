@@ -2,12 +2,11 @@ package View;
 
 import Controller.ApplicationController;
 import Model.Stopover;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-
-import Exception.*;
+import Exception.FlightStopoversException;
+import Exception.ConnectionException;
 
 public class StopoversJPanel extends JPanel {
     private ApplicationController controller;

@@ -1,7 +1,6 @@
 package Model;
 
 import Exception.SeatNumberException;
-
 import java.util.Objects;
 
 public class Seat {

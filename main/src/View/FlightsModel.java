@@ -12,11 +12,11 @@ public class FlightsModel extends AbstractTableModel {
     public FlightsModel(ArrayList<FlightResearch> contents) {
         columnNames = new ArrayList<>();
         columnNames.add("Numéro vol");
-        columnNames.add("Aéroport départ");
-        columnNames.add("Aéroport arrivée");
-        columnNames.add("Date départ");
-        columnNames.add("Date arrivée");
-        columnNames.add("Heure départ");
+        columnNames.add("Aéroport de départ");
+        columnNames.add("Aéroport d'arrivée");
+        columnNames.add("Date de départ");
+        columnNames.add("Date d'arrivée");
+        columnNames.add("Heure de départ");
         columnNames.add("Heure d'arrivée");
         columnNames.add("Prix du vol (€)");
         this.contents = contents;
