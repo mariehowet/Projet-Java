@@ -24,15 +24,14 @@ public class FlightsOfDepartureAirportDBAccess implements FlightsOfDepartureAirp
     public ArrayList<FlightOfDepartureAirport> getFlightsOfDepartureAirport(Date startDate, Date endDate, int idAirport) throws FlightsOfDepartureAirportException {
         String sqlInstruction =
                 "select f.id, aa.name as 'arrival_airport', f.departure_date, f.expected_arrival_date, " +
-                "((select count(*) from seat inner join airplane a1 on seat.airplane_id = a1.id " +
-                "where a1.id = a.id) - count(*)) as 'remaining_seats' " +
+                        "((select count(*) from seat inner join airplane a1 on seat.airplane_id = a1.id where a1.id = a.id) - " +
+                        "(select count(*) from booking inner join flight f2 on booking.flight_id = f2.id where f2.id = f.id)) " +
+                        "as 'remaining_seats' " +
                 "from flight f " +
                     "inner join airport aa on (f.arrival_airport_id = aa.id) " +
                     "inner join airplane a on (f.airplane_id = a.id) " +
-                    "inner join booking b on f.id = b.flight_id " +
                 "where f.departure_airport_id = ? " +
-                        "and f.departure_date between ? and ? " +
-                "group by f.id, aa.name, f.departure_date, f.expected_arrival_date";
+                        "and f.departure_date between ? and ? ";
 
         ArrayList<FlightOfDepartureAirport> flightsOfDepartureAirport = new ArrayList<>();
 

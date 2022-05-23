@@ -1,4 +1,4 @@
-package Test;
+package Tests;
 import Model.*;
 import Business.BusinessManager;
 import Exception.*;

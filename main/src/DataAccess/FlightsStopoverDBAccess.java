@@ -1,6 +1,6 @@
 package DataAccess;
 
-import Model.FlightStopover;
+import Model.FlightWithOrWhithoutStopover;
 import Model.Locality;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,10 +8,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
-import Exception.FlightsStopover;
+import Exception.FlightsStopoverException;
 import Exception.PriceException;
 import Exception.ConnectionException;
-import View.FlightsStopoverModel;
+import Exception.FlightStopoversException;
+import Model.Stopover;
 
 
 public class FlightsStopoverDBAccess implements FlightsStopoverDataAccess {
@@ -22,20 +23,18 @@ public class FlightsStopoverDBAccess implements FlightsStopoverDataAccess {
         connection = SingletonConnection.getInstance();
     }
 
-    public ArrayList<FlightStopover> getFlightsStopover(Locality departure, Locality arrival, boolean withStopover) throws FlightsStopover, PriceException {
+    public ArrayList<FlightWithOrWhithoutStopover> getFlightsStopover(Locality departure, Locality arrival, boolean withStopover) throws FlightsStopoverException, PriceException {
         String sqlInstruction;
 
         if(withStopover) {
-            sqlInstruction = "select f.id, da.name as 'departure_airport', aa.name as 'arrival_airport', f.departure_date, f.expected_arrival_date, f.departure_hour, f.expected_arrival_hour, sa.name as 'stopover_airport', s.duration as 'duration'" +
+            sqlInstruction = "select f.id, da.name as 'departure_airport', aa.name as 'arrival_airport', f.departure_date, f.expected_arrival_date, f.departure_hour, f.expected_arrival_hour " +
                     "from flight f " +
                     "inner join airport da on (f.departure_airport_id = da.id) " +
                     "inner join airport aa on (f.arrival_airport_id = aa.id) " +
-                    "inner join stopover s on (f.id = s.flight_id)" +
-                    "inner join airport sa on (s.airport_id = sa.id)" +
                     "where " +
                     "da.city = ? and da.post_code = ? and da.country = ? " +
                     "and aa.city = ? and aa.post_code = ? and aa.country = ? " +
-                    "and exists (select s.flight_id from stopover s where f.id = s.flight_id)";
+                    "and exists (select flight_id from stopover s where f.id = s.flight_id)";
         } else {
             sqlInstruction = "select f.id, da.name as 'departure_airport', aa.name as 'arrival_airport', f.departure_date, f.expected_arrival_date, f.departure_hour, f.expected_arrival_hour " +
                     "from flight f " +
@@ -47,7 +46,7 @@ public class FlightsStopoverDBAccess implements FlightsStopoverDataAccess {
                     "and not exists (select flight_id from stopover s where f.id = s.flight_id)";
         }
 
-        ArrayList<FlightStopover> flightsStopovers = new ArrayList<>();
+        ArrayList<FlightWithOrWhithoutStopover> flightsStopovers = new ArrayList<>();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
@@ -59,18 +58,16 @@ public class FlightsStopoverDBAccess implements FlightsStopoverDataAccess {
             preparedStatement.setString(6, arrival.getCountry());
 
             ResultSet data = preparedStatement.executeQuery();
-            FlightStopover flightStopover;
+            FlightWithOrWhithoutStopover flightStopover;
             GregorianCalendar departureDate;
             GregorianCalendar arrivalDate;
-            String stopoverAirport;
-            Integer duration;
             while(data.next()) {
                 departureDate = new GregorianCalendar();
                 departureDate.setTime(data.getDate("departure_date"));
                 arrivalDate = new GregorianCalendar();
                 arrivalDate.setTime(data.getDate("expected_arrival_date"));
 
-                flightStopover = new FlightStopover(
+                flightStopover = new FlightWithOrWhithoutStopover(
                         data.getInt("id"),
                         data.getString("departure_airport"),
                         data.getString("arrival_airport"),
@@ -79,21 +76,42 @@ public class FlightsStopoverDBAccess implements FlightsStopoverDataAccess {
                         data.getString("departure_hour"),
                         data.getString("expected_arrival_hour")
                 );
-
-                if(withStopover) {
-                    stopoverAirport = data.getString("stopover_airport");
-                    if (!data.wasNull())
-                        flightStopover.setStopoverAirportName(stopoverAirport);
-                    duration = data.getInt("duration");
-                    if (!data.wasNull())
-                        flightStopover.setDurationStopover(duration);
-                }
                 flightsStopovers.add(flightStopover);
             }
 
         } catch (SQLException exception) {
-            throw new FlightsStopover();
+            throw new FlightsStopoverException();
         }
         return flightsStopovers;
+    }
+
+    public ArrayList<Stopover> getStopoversOfFlight(int flightID) throws FlightStopoversException {
+        String sqlInstruction =
+                "select a.name, duration from stopover " +
+                "inner join airport a on stopover.airport_id = a.id " +
+                "where flight_id = ?";
+
+        ArrayList<Stopover> stopovers = new ArrayList<>();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+            preparedStatement.setInt(1, flightID);
+
+            ResultSet data = preparedStatement.executeQuery();
+            Stopover stopover;
+
+            while(data.next()) {
+
+                stopover = new Stopover(
+                        data.getString("name"),
+                        data.getInt("duration")
+                );
+
+                stopovers.add(stopover);
+            }
+
+        } catch (SQLException exception) {
+            throw new FlightStopoversException();
+        }
+        return stopovers;
     }
 }

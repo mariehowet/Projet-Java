@@ -4,7 +4,7 @@ import DataAccess.*;
 import Model.*;
 import Exception.*;
 import Exception.AddBookingException;
-import Test.Calculator;
+import Tests.Calculator;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -84,7 +84,7 @@ public class BusinessManager {
         return daoBookingsHistory.getBookingsHistory(idPassenger);
     }
 
-    public ArrayList<FlightStopover> getFlightsStopover(Locality departure, Locality arrival, boolean withStopover) throws FlightsStopover, PriceException {
+    public ArrayList<FlightWithOrWhithoutStopover> getFlightsStopover(Locality departure, Locality arrival, boolean withStopover) throws FlightsStopoverException, PriceException {
         return daoFlightsStopover.getFlightsStopover(departure, arrival, withStopover);
     }
 
@@ -101,6 +101,10 @@ public class BusinessManager {
 
     public ArrayList<FlightResearch> getFlights(Locality departure, Locality arrival, Date startDate, Date endDate) throws FlightsException, PriceException {
         return daoFlights.getFlights(departure, arrival, startDate, endDate);
+    }
+
+    public ArrayList<Stopover> getStopoversOfFlight(int flightID) throws FlightStopoversException {
+        return daoFlightsStopover.getStopoversOfFlight(flightID);
     }
 
     public ArrayList<FlightOption> getFlightOptions(FlightResearch flight) {
