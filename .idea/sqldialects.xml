@@ -4,5 +4,6 @@
     <file url="file://$PROJECT_DIR$/main" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/script/creation.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/script/insertion.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/scripts-sql/setupDocker.sql" dialect="MySQL" />
   </component>
 </project>

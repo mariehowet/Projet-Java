@@ -127,7 +127,7 @@ DROP TABLE seat_type;
 DROP TABLE airplane;
 DROP TABLE airport;
 DROP TABLE locality;
-*/
+
 
 
 
