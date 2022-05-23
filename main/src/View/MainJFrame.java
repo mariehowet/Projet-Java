@@ -161,7 +161,7 @@ public class MainJFrame extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             frameContainer.removeAll();
-            frameContainer.add(new MenuItemAllBookings(frameContainer), BorderLayout.CENTER);
+            frameContainer.add(new MenuItemAllBookings(frameContainer));
             setVisible(true);
         }
     }
@@ -171,7 +171,7 @@ public class MainJFrame extends JFrame {
         public void actionPerformed(ActionEvent e) {
             frameContainer.removeAll();
             try {
-                frameContainer.add(new AddBookingJPanel(frameContainer), BorderLayout.CENTER);
+                frameContainer.add(new AddBookingJPanel(frameContainer));
             } catch(ConnectionException exception) {
                 JOptionPane.showMessageDialog(null,exception.getMessage());
             }
