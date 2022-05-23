@@ -72,9 +72,9 @@ public class FlightStopoverJPanel extends JPanel {
 
                         if (stopoversPanel != null) {
                             stopoversPanel.removeAll();
+                            stopoversPanel.revalidate();
+                            stopoversPanel.repaint();
                         }
-                        stopoversPanel.revalidate();
-                        stopoversPanel.repaint();
 
                         flightStopoversPanel = new StopoversJPanel(flightStopover.getFlightId());
                         stopoversPanel.add(flightStopoversPanel);

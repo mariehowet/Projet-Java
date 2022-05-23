@@ -12,14 +12,16 @@ public class FlightOptionsJPanel extends JPanel {
     private ApplicationController controller;
     private ArrayList<FlightOption> flightOptions;
     private JLabel title;
+    private FlightOptionsModel model;
+    private JTable flightOptionsTable;
 
     public FlightOptionsJPanel(FlightResearch flight) throws ConnectionException {
         setLayout(new BorderLayout());
 
         controller = new ApplicationController();
         flightOptions = controller.getFlightOptions(flight);
-        FlightOptionsModel model = new FlightOptionsModel(flightOptions);
-        JTable flightOptionsTable = new JTable(model);
+        model = new FlightOptionsModel(flightOptions);
+        flightOptionsTable = new JTable(model);
 
         flightOptionsTable.setPreferredScrollableViewportSize(new Dimension(900, 100));
 

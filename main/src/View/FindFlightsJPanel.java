@@ -1,9 +1,7 @@
 package View;
 
 import Controller.ApplicationController;
-import Model.Booking;
 import Model.FlightResearch;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

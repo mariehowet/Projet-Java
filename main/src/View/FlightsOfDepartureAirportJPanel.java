@@ -11,6 +11,8 @@ import Model.FlightOfDepartureAirport;
 public class FlightsOfDepartureAirportJPanel extends JPanel {
     private ApplicationController controller;
     private JLabel title;
+    private FlightsOfDepartureAirportModel model;
+    private JTable flightsTable;
 
     private ArrayList<FlightOfDepartureAirport> flightsOfDepartureAirport;
 
@@ -23,8 +25,8 @@ public class FlightsOfDepartureAirportJPanel extends JPanel {
             if (flightsOfDepartureAirport.isEmpty()){
                 JOptionPane.showMessageDialog(null, "Il n'y a pas de vols qui correspondent à vos critères de recherche");
             } else {
-                FlightsOfDepartureAirportModel model = new FlightsOfDepartureAirportModel(flightsOfDepartureAirport);
-                JTable flightsTable = new JTable(model);
+                model = new FlightsOfDepartureAirportModel(flightsOfDepartureAirport);
+                flightsTable = new JTable(model);
 
                 flightsTable.setPreferredScrollableViewportSize(new Dimension(900, 100));
 

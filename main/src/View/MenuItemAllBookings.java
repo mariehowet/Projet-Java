@@ -53,8 +53,7 @@ public class MenuItemAllBookings extends JPanel {
 
             bookingsPanel = new JPanel(new BorderLayout());
 
-            displayPanel = new JPanel();
-            displayPanel.setLayout(new FlowLayout());
+            displayPanel = new JPanel(new FlowLayout());
             displayPanel.add(new JScrollPane(bookingsTable));
 
             bookingsPanel.add(displayPanel, BorderLayout.NORTH);

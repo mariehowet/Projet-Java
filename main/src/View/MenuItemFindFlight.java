@@ -16,15 +16,13 @@ public class MenuItemFindFlight extends JPanel {
     private JLabel departureCityLabel, arrivalCityLabel;
     private JComboBox departureCity, arrivalCity;
     private JDateChooser chooserStartDate, chooserEndDate;
-    private Container frameContainer;
     private ApplicationController controller;
     private JPanel researchPanel, displayPanel, researchDisplay, panelStartDate, panelEndDate, gridFields,
             buttonPanel, gridResearch, optionsPanel;
     private JButton researchButton;
 
-    public MenuItemFindFlight(Container frameContainer) throws ConnectionException {
+    public MenuItemFindFlight() throws ConnectionException {
         setLayout(new BorderLayout());
-        this.frameContainer = frameContainer;
         controller = new ApplicationController();
 
         researchPanel = new JPanel();

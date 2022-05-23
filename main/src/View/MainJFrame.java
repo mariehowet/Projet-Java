@@ -24,7 +24,6 @@ public class MainJFrame extends JFrame {
 
         // Container
         frameContainer = this.getContentPane();
-        //frameContainer.setLayout(new BorderLayout());
 
         // Panneau de bienvenue
         welcomeJPanel = new WelcomeJPanel();
@@ -140,7 +139,7 @@ public class MainJFrame extends JFrame {
         public void actionPerformed(ActionEvent e) {
             frameContainer.removeAll();
             try {
-                frameContainer.add(new MenuItemFindFlight(frameContainer));
+                frameContainer.add(new MenuItemFindFlight());
             }
             catch (ConnectionException findFlightException) {
                 JOptionPane.showMessageDialog(null, findFlightException.getMessage(), "Problème", JOptionPane.WARNING_MESSAGE);
