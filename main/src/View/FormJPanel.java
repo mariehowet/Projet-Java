@@ -43,25 +43,25 @@ public class FormJPanel extends JPanel{
         formPanel.setLayout(new GridLayout(11, 2));
 
         //------------------Flight---------------------------------------------------
-        flightLabel = new JLabel("Votre vol :");
+        flightLabel = new JLabel("Numéro de vol :");
         formPanel.add(flightLabel);
         flightBox = new JComboBox();
         formPanel.add(flightBox);
 
         //--------------------Passenger----------------------------------------------
-        passengerLabel = new JLabel("Votre nom : ");
+        passengerLabel = new JLabel("Nom du passager : ");
         formPanel.add(passengerLabel);
         passengerBox = new JComboBox();
         formPanel.add(passengerBox);
 
         //--------------------SeatType-----------------------------------------------
-        seatLabel = new JLabel("Type de siège : ");
+        seatLabel = new JLabel("Classe du siège : ");
         formPanel.add(seatLabel);
         seatTypeBox = new JComboBox();
         formPanel.add(seatTypeBox);
 
         //-------------------------Seat----------------------------------------------
-        seatLabel = new JLabel("Votre siège :");
+        seatLabel = new JLabel("Siège :");
         formPanel.add(seatLabel);
         seatBox = new JComboBox();
         formPanel.add(seatBox);
