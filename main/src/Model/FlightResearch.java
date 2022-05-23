@@ -25,6 +25,16 @@ public class FlightResearch {
         setPrice(price);
     }
 
+    public FlightResearch(int flightId, String departureAirportName, String arrivalAirportName, GregorianCalendar departureDate, GregorianCalendar arrivalDate, String departureHour, String arrivalHour) {
+        this.flightId = flightId;
+        this.departureAirportName = departureAirportName;
+        this.arrivalAirportName = arrivalAirportName;
+        this.departureDate = departureDate;
+        this.arrivalDate = arrivalDate;
+        this.departureHour = departureHour;
+        this.arrivalHour = arrivalHour;
+    }
+
     public double getPrice() {return price;}
     public int getFlightId() {
         return flightId;

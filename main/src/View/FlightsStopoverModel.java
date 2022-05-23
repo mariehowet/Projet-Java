@@ -1,6 +1,6 @@
 package View;
 
-import Model.FlightWithOrWhithoutStopover;
+import Model.FlightResearch;
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,9 +8,9 @@ import java.util.Date;
 public class FlightsStopoverModel extends AbstractTableModel {
 
     private ArrayList<String> columnNames;
-    private ArrayList<FlightWithOrWhithoutStopover> contents;
+    private ArrayList<FlightResearch> contents;
 
-    public FlightsStopoverModel(ArrayList<FlightWithOrWhithoutStopover> contents) {
+    public FlightsStopoverModel(ArrayList<FlightResearch> contents) {
         columnNames = new ArrayList<>();
         columnNames.add("Numéro vol");
         columnNames.add("Aéroport départ");
@@ -36,7 +36,7 @@ public class FlightsStopoverModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        FlightWithOrWhithoutStopover flightStopover = contents.get(rowIndex);
+        FlightResearch flightStopover = contents.get(rowIndex);
 
         switch (columnIndex) {
             case 0:

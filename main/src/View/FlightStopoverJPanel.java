@@ -1,7 +1,7 @@
 package View;
 
 import Controller.ApplicationController;
-import Model.FlightWithOrWhithoutStopover;
+import Model.FlightResearch;
 import Model.Locality;
 import javax.swing.*;
 import java.awt.*;
@@ -10,10 +10,11 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import Exception.*;
 
+
 public class FlightStopoverJPanel extends JPanel {
     private ApplicationController controller;
     private ListSelectionModel listSelect;
-    private ArrayList<FlightWithOrWhithoutStopover> flightsStopover;
+    private ArrayList<FlightResearch> flightsStopover;
     private JLabel title;
     private JPanel stopoversPanel, flightStopoversPanel, researchStopoversPanel;
     private FlightsStopoverModel model;
@@ -49,7 +50,7 @@ public class FlightStopoverJPanel extends JPanel {
                 }
             }
         }
-        catch (FlightsStopoverException | ConnectionException | PriceException e) {
+        catch (FlightsStopoverException | ConnectionException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
@@ -66,7 +67,7 @@ public class FlightStopoverJPanel extends JPanel {
                 int response = JOptionPane.showConfirmDialog(null, "Etes-vous sûr de vouloir afficher toutes les escales pour ce vol ?", "Validation", JOptionPane.YES_NO_OPTION);
 
                 if (response == 0) {
-                    FlightWithOrWhithoutStopover flightStopover = flightsStopover.get(indSelectedLine);
+                    FlightResearch flightStopover = flightsStopover.get(indSelectedLine);
 
                     try {
 
