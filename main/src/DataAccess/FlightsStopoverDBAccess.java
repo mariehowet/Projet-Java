@@ -1,6 +1,5 @@
 package DataAccess;
 
-import Model.FlightWithOrWhithoutStopover;
 import Model.Locality;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,6 +12,7 @@ import Exception.PriceException;
 import Exception.ConnectionException;
 import Exception.FlightStopoversException;
 import Model.Stopover;
+import Model.FlightResearch;
 
 
 public class FlightsStopoverDBAccess implements FlightsStopoverDataAccess {
@@ -23,7 +23,7 @@ public class FlightsStopoverDBAccess implements FlightsStopoverDataAccess {
         connection = SingletonConnection.getInstance();
     }
 
-    public ArrayList<FlightWithOrWhithoutStopover> getFlightsStopover(Locality departure, Locality arrival, boolean withStopover) throws FlightsStopoverException, PriceException {
+    public ArrayList<FlightResearch> getFlightsStopover(Locality departure, Locality arrival, boolean withStopover) throws FlightsStopoverException {
         String sqlInstruction;
 
         if(withStopover) {
@@ -46,7 +46,7 @@ public class FlightsStopoverDBAccess implements FlightsStopoverDataAccess {
                     "and not exists (select flight_id from stopover s where f.id = s.flight_id)";
         }
 
-        ArrayList<FlightWithOrWhithoutStopover> flightsStopovers = new ArrayList<>();
+        ArrayList<FlightResearch> flightsStopovers = new ArrayList<>();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
@@ -58,7 +58,7 @@ public class FlightsStopoverDBAccess implements FlightsStopoverDataAccess {
             preparedStatement.setString(6, arrival.getCountry());
 
             ResultSet data = preparedStatement.executeQuery();
-            FlightWithOrWhithoutStopover flightStopover;
+            FlightResearch flightStopover;
             GregorianCalendar departureDate;
             GregorianCalendar arrivalDate;
             while(data.next()) {
@@ -67,7 +67,7 @@ public class FlightsStopoverDBAccess implements FlightsStopoverDataAccess {
                 arrivalDate = new GregorianCalendar();
                 arrivalDate.setTime(data.getDate("expected_arrival_date"));
 
-                flightStopover = new FlightWithOrWhithoutStopover(
+                flightStopover = new FlightResearch (
                         data.getInt("id"),
                         data.getString("departure_airport"),
                         data.getString("arrival_airport"),

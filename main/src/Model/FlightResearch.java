@@ -13,7 +13,6 @@ public class FlightResearch {
     private String arrivalHour;
     private double price;
 
-
     public FlightResearch(int flightId, String departureAirportName, String arrivalAirportName, GregorianCalendar departureDate, GregorianCalendar arrivalDate, String departureHour, String arrivalHour, Double price) throws PriceException{
         this.flightId = flightId;
         this.departureAirportName = departureAirportName;
@@ -23,6 +22,10 @@ public class FlightResearch {
         this.departureHour = departureHour;
         this.arrivalHour = arrivalHour;
         setPrice(price);
+    }
+
+    public FlightResearch(int flightId, String departureAirportName, String arrivalAirportName, GregorianCalendar departureDate, GregorianCalendar arrivalDate, String departureHour, String arrivalHour) throws PriceException {
+        this(flightId, departureAirportName, arrivalAirportName, departureDate, arrivalDate, departureHour, arrivalHour, null);
     }
 
     public double getPrice() {return price;}
